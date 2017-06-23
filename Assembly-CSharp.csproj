@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace></RootNamespace>
+    <ProjectGuid>{D79B258E-A10D-83DD-B3E6-EFABA1B32C6A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <BaseDirectory>Assets</BaseDirectory>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Temp\bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_0;UNITY_5_6;UNITY_5;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_ANDROID;ENABLE_SUBSTANCE;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;ENABLE_VR;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_2_0_SUBSET;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_HAS_GOOGLEVR</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Temp\bin\Release\</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>0169</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="UnityEngine">
+      <HintPath>C:/Users/nhs40200/Desktop/HAL/Unity/Unity5.6/Editor/Data/Managed/UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>C:/Users/nhs40200/Desktop/HAL/Unity/Unity5.6/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+     <Compile Include="Assets\HARATA\Fade\Samples\FadeTest.cs" />
+     <Compile Include="Assets\HARATA\Fade\Scripts\Fade.cs" />
+     <Compile Include="Assets\HARATA\Fade\Scripts\FadeImage.cs" />
+     <Compile Include="Assets\HARATA\Fade\Scripts\FadeUI.cs" />
+     <Compile Include="Assets\HARATA\Fade\Scripts\IFade.cs" />
+     <Compile Include="Assets\HARATA\Script\StageSelect\CameraBillboard.cs" />
+     <Compile Include="Assets\HARATA\Script\StageSelect\StageManager.cs" />
+     <Compile Include="Assets\HARATA\Script\StageSelect\StageSelect_Button.cs" />
+     <Compile Include="Assets\HARATA\Script\StageSelect\StageSelect_Camera.cs" />
+     <Compile Include="Assets\HARATA\Script\StageSelect\StageSelect_Char.cs" />
+     <Compile Include="Assets\HARATA\Script\StageSelect\StageSelect_Manager.cs" />
+     <Compile Include="Assets\HARATA\Script\StageSelect\StageSelect_Warp.cs" />
+     <Compile Include="Assets\HARATA\Script\StageSelect\WhiteOut.cs" />
+     <Compile Include="Assets\HARATA\Script\System\InputManager.cs" />
+     <Compile Include="Assets\HARATA\Script\System\Scenemanager.cs" />
+     <Compile Include="Assets\HARATA\Script\System\SingletonMonoBehaviour.cs" />
+     <Compile Include="Assets\HARATA\Script\System\SortingLayer.cs" />
+     <Compile Include="Assets\HARATA\Script\test.cs" />
+     <Compile Include="Assets\HIOKI\Script\Enemy\EnemyManager.cs" />
+     <Compile Include="Assets\HIOKI\Script\Enemy\EnemyRot.cs" />
+     <Compile Include="Assets\HIOKI\Script\Enemy\EnemySideAdvance.cs" />
+     <Compile Include="Assets\HIOKI\Script\Enemy\EnemySquareRotation.cs" />
+     <Compile Include="Assets\HIOKI\Script\Enemy\EnemyTriangleVertical.cs" />
+     <Compile Include="Assets\HIOKI\Script\Enemy\EnemyVS.cs" />
+     <Compile Include="Assets\HIOKI\Script\Enemy\EnemyVerticalAdvance.cs" />
+     <Compile Include="Assets\HIOKI\Script\Enemy\StageEnemy.cs" />
+     <Compile Include="Assets\HIOKI\Script\Result\ElapsedTime.cs" />
+     <Compile Include="Assets\HIOKI\Script\Result\FinalScore.cs" />
+     <Compile Include="Assets\HIOKI\Script\Result\Hane.cs" />
+     <Compile Include="Assets\HIOKI\Script\Result\NestQuestButton.cs" />
+     <Compile Include="Assets\HIOKI\Script\Result\Quest.cs" />
+     <Compile Include="Assets\HIOKI\Script\Result\RequestButton.cs" />
+     <Compile Include="Assets\HIOKI\Script\Result\RequestForm.cs" />
+     <Compile Include="Assets\HIOKI\Script\Result\ResultLogo.cs" />
+     <Compile Include="Assets\HIOKI\Script\Result\ResultManager.cs" />
+     <Compile Include="Assets\HIOKI\Script\Title\Door.cs" />
+     <Compile Include="Assets\HIOKI\Script\Title\TitleCamera.cs" />
+     <Compile Include="Assets\HIOKI\Script\Title\TitleLog.cs" />
+     <Compile Include="Assets\HIOKI\Script\Title\TitleManager.cs" />
+     <Compile Include="Assets\HIOKI\Script\Title\TitleStart.cs" />
+     <Compile Include="Assets\HIOKI\Script\Title\magic.cs" />
+     <Compile Include="Assets\HIOKI\Script\Title\whiteandblack.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\EnemyBase.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\FinisherAtack.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\FinisherAtackObj.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\GameMainCamera.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\MagicSquare.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\Manager\BGMManager.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\Manager\GameManager.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\Manager\PlayerManager.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\Manager\SEManager.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\Manager\ScoreManager.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\Manager\TargetManager.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\NumberImage.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\Player.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\SummonsBeast.cs" />
+     <Compile Include="Assets\YAMADA\Script\ParticleController.cs" />
+     <Compile Include="Assets\YAMADA\Script\ParticleManager.cs" />
+     <Compile Include="Assets\YAMADA\Script\TapEffect.cs" />
+     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />
+     <None Include="Assets\HARATA\Fade\Materials\UI-Fade-Alpha.shader" />
+     <None Include="Assets\WASIDU\Resources\StageData\StageData.txt" />
+     <None Include="Assets\HARATA\Fade\Materials\UI-Fade-Cutout.shader" />
+     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
+     <None Include="Assets\HARATA\Fade\Materials\UI-Mask.shader" />
+     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
+     <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Users/nhs40200/Desktop/HAL/Unity/Unity5.6/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>C:/Users/nhs40200/Desktop/HAL/Unity/Unity5.6/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.TestRunner">
+ <HintPath>C:/Users/nhs40200/Desktop/HAL/Unity/Unity5.6/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="nunit.framework">
+ <HintPath>C:/Users/nhs40200/Desktop/HAL/Unity/Unity5.6/Editor/Data/UnityExtensions/Unity/TestRunner/nunit.framework.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Analytics">
+ <HintPath>C:/Users/nhs40200/Desktop/HAL/Unity/Unity5.6/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.HoloLens">
+ <HintPath>C:/Users/nhs40200/Desktop/HAL/Unity/Unity5.6/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.VR">
+ <HintPath>C:/Users/nhs40200/Desktop/HAL/Unity/Unity5.6/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  
+</Project>

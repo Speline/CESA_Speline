@@ -1,0 +1,9 @@
+diff a/Assets/HARATA/Fade/Scripts/FadeImage.cs b/Assets/HARATA/Fade/Scripts/FadeImage.cs	(rejected hunks)
+@@ -89,6 +89,7 @@
+ 	{
+ 		base.OnValidate ();
+ 		UpdateMaskCutout (Range);
++		UpdateMaskTexture (maskTexture[0]);
+ 	}
+ 	#endif
+ }
