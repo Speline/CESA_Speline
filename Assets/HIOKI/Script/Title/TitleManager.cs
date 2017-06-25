@@ -34,6 +34,8 @@ public class TitleManager : MonoBehaviour {
 		_MagicObj = _Magic.GetComponent<magic> ();
 		_DoorObj = _Door.GetComponent<Door> ();
 		_CameraObj = _Camera.GetComponent<TitleCamera> ();
+
+        BGMManager.Instance.Play("Title");
 	}
 	
 	// Update is called once per frame

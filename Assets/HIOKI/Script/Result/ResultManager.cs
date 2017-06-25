@@ -87,6 +87,8 @@ public class ResultManager : MonoBehaviour {
 		nTime_3 = (int)(fSetTime * 100) - nTime_0 * 1000 - nTime_1 * 100 - nTime_2 * 10;
 
 		#endregion
+
+        BGMManager.Instance.Play("Game_Result");
 	}
 	
 	// Update is called once per frame

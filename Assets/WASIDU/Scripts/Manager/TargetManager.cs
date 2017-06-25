@@ -42,7 +42,7 @@ public class TargetManager : MonoBehaviour
 
     //--- 小目標表示用
     [SerializeField] private GameObject m_NumberObjectPrefub;   // 番号表示オブジェクトプレハブ
-    [SerializeField] private GameObject m_DrawTargetParent;          // 小目標の親オブジェクト
+    [SerializeField] private GameObject m_DrawTargetParent;     // 小目標の親オブジェクト
     private List<GameObject> m_TargetNumImageList;
 
     private float m_GameElapsedTime;    // 経過時間
@@ -216,7 +216,7 @@ public class TargetManager : MonoBehaviour
         GameObject NumberObj = Instantiate(m_NumberObjectPrefub);
         NumberObj.transform.SetParent(m_DrawTargetParent.transform);
         NumberObj.transform.position = m_DrawTargetParent.transform.position;
-        NumberObj.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+        NumberObj.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
         m_TargetNumImageList.Add(NumberObj);
 
@@ -225,7 +225,7 @@ public class TargetManager : MonoBehaviour
         if (Count > 1)
         {
             Vector3 pos = m_TargetNumImageList[Count - 2].transform.position;
-            pos.x -= 15.0f;
+            pos.x -= 70.0f;
             m_TargetNumImageList[Count - 1].transform.position = pos;
         }
     }

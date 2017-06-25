@@ -147,7 +147,7 @@ public class ScoreManager : MonoBehaviour
         GameObject NumberObj = Instantiate(m_NumberObjectPrefub);
         NumberObj.transform.SetParent(ParentObj.transform);
         NumberObj.transform.position = ParentObj.transform.position;
-        NumberObj.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
+        NumberObj.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
         AddImageList.Add(NumberObj);
 
@@ -156,7 +156,7 @@ public class ScoreManager : MonoBehaviour
         if (Count > 1)
         {
             Vector3 pos = AddImageList[Count - 2].transform.position;
-            pos.x -= 15.0f;
+            pos.x -= 70.0f;
             AddImageList[Count - 1].transform.position = pos;
         }
     }
