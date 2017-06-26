@@ -64,16 +64,16 @@ public class EnemyManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		#region 他のスクリプト設定
-        //_EnemyBase = _EnemyB.GetComponent<EnemyBase> ();
+		//_EnemyBase = _EnemyB.GetComponent<EnemyBase> ();
 		_EnemyVeObj = _EnemyVe.GetComponent<EnemyVerticalAdvance> ();
-		_EnemySiObj = _EnemySi.GetComponent<EnemySideAdvance>();
-		_EnemySqObj = _EnemySq.GetComponent<EnemySquareRotation>();
-		_EnemyRotObj = _EnemyRot.GetComponent<EnemyRot>();
-		_StageEObj = _StageE.GetComponent<StageEnemy>();
+		_EnemySiObj = _EnemySi.GetComponent<EnemySideAdvance> ();
+		_EnemySqObj = _EnemySq.GetComponent<EnemySquareRotation> ();
+		_EnemyRotObj = _EnemyRot.GetComponent<EnemyRot> ();
+		_StageEObj = _StageE.GetComponent<StageEnemy> ();
 		#endregion
 
-		nSt = nStStageEnemy;
-		//nSt = 8;
+		nSt = nStStageEnemy;							//ステージセット
+		nNowEnemy = 0;									//初期化
 
         myList.Clear();
 	}
@@ -81,6 +81,7 @@ public class EnemyManager : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
+		Debug.Log (GameManager.GetStage);
         switch (GameManager.Instance.NowState)
         {
             case GameManager.GameState.SETTING:
@@ -116,7 +117,7 @@ public class EnemyManager : MonoBehaviour {
 			int nSpawPoint = Random.Range (0, SpawPos.Length);
 			int nSpawPointSq = Random.Range (0, SpawPos_Sq.Length);
 
-			int nMoveEnemies = _StageEObj.SetEnemyStage (nSt);
+			int nMoveEnemies = _StageEObj.SetEnemyStage (GameManager.GetStage);
 
 			int nNowNomber;
 			Vector3 vecSpaw = SpawPos [nSpawPoint];
@@ -165,6 +166,7 @@ public class EnemyManager : MonoBehaviour {
         if (myList.Count > 0)
         {
             myList.RemoveAt(nNom);
+			nNowEnemy--;
 
             myList.ForEach(x =>
             {
@@ -174,14 +176,14 @@ public class EnemyManager : MonoBehaviour {
 					Script.SetNomber = Script.GetNomber - 1;
             });
         }
-		nNowEnemy--;
+
 
 	}
 
-	static public void StageEnemy(int i)
-	{
-		nStStageEnemy = i;
-	}
+	//static public void StageEnemy(int i)
+	//{
+	//	nStStageEnemy = i;
+	//}
 
     public static void AllMoveStart()
     {

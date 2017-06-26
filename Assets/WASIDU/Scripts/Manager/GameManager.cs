@@ -61,7 +61,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         switch (m_NowState)
         {
             case GameManager.GameState.SETTING:
-                EnemyManager.StageEnemy(m_StageNum);    // ステージ情報設定
+                //EnemyManager.StageEnemy(m_StageNum);    // ステージ情報設定
                 ChangeState(GameState.MAGIC_SQUARE_SETTING);
                 break;
 

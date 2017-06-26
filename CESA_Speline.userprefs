@@ -1,8 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\HIOKI\Script\Enemy\EnemyManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\HIOKI\Script\Title\TitleManager.cs">
     <Files>
-      <File FileName="Assets\HIOKI\Script\Enemy\EnemyManager.cs" Line="75" Column="3" />
+      <File FileName="Assets\HIOKI\Script\Enemy\EnemyManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\HIOKI\Script\Title\Door.cs" Line="1" Column="1" />
+      <File FileName="Assets\HIOKI\Script\Result\ResultManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\WASIDU\Scripts\Manager\GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\HIOKI\Script\Title\TitleLog.cs" Line="78" Column="18" />
+      <File FileName="Assets\HIOKI\Script\Title\magic.cs" Line="87" Column="19" />
+      <File FileName="Assets\HIOKI\Script\Title\TitleManager.cs" Line="96" Column="36" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

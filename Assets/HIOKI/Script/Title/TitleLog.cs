@@ -12,6 +12,7 @@ public class TitleLog : MonoBehaviour {
 	private float fMaxY;
 
 	private int nSelect = 0;
+	private bool bTodi = false;
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +29,9 @@ public class TitleLog : MonoBehaviour {
 			MoveMagic ();
 			break;
 		case 2:
+			ToDisappear ();
+			break;
+		case 3:
 			break;
 		}
 	}
@@ -58,5 +62,28 @@ public class TitleLog : MonoBehaviour {
 		}
 
 		transform.localPosition = pos;
+	}
+
+	private void ToDisappear()
+	{
+		if (!bTodi)
+			return;
+		
+		Color color = _Log.color;
+
+		color.a -= 0.01f;
+
+		if (color.a <= 0.0f) {
+			color.a = 0.0f;
+			bTodi = false;
+			nSelect++;
+		}
+
+		_Log.color = color;
+	}
+
+	public void ChangeFlg()
+	{
+		bTodi = true;
 	}
 }
