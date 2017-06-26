@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d416d1715bbc06d4789612d1211da8d4
+timeCreated: 1496820695
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - FadeCanvas: {fileID: 1834345843113654, guid: 53c22e1773be7f84aad8ed8b7b58fa6e,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
