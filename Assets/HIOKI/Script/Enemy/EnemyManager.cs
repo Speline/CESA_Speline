@@ -162,16 +162,16 @@ public class EnemyManager : MonoBehaviour {
 	}
 	public static void DestroyEnemy(int nNom)
     {
+        myList.RemoveAt(nNom);
+
         if (myList.Count > 0)
         {
-            myList.RemoveAt(nNom);
-
             myList.ForEach(x =>
             {
                 EnemyBase Script = x.GetComponent<EnemyBase>();
 
                 if (Script.GetNomber > 0)
-					Script.SetNomber = Script.GetNomber - 1;
+                    Script.SetNomber = Script.GetNomber - 1;
             });
         }
 		nNowEnemy--;

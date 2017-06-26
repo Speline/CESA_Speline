@@ -142,6 +142,10 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case GameManager.GameState.GAME_CLEAR:
+                m_PairObjDataList.ForEach(x =>
+                {
+                    Destroy(x.AtackLine);                           // ガイド線削除
+                });
                 break;
 
             case GameManager.GameState.GAME_OVER:
