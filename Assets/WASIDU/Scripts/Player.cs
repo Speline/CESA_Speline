@@ -151,12 +151,14 @@ public class Player : MonoBehaviour
 
     }
 
+    //--- 必殺技アニメーション再生
     public void FinisherAtackAnim()
     {
         m_ChildObj.GetComponent<Animator>().SetBool("FinisherAtack", true);
         m_ChildObj.transform.rotation = Quaternion.Euler(new Vector3(0.0f, m_SettingRot.y, m_SettingRot.z));
     }
 
+    //--- 必殺技終了時処理
     public void EndFinisherAtack()
     {
         m_ChildObj.GetComponent<Animator>().SetBool("FinisherAtack", false);

@@ -8,31 +8,30 @@ using UnityEngine;
 
 public class MagicSquare : MonoBehaviour
 {
+    //--- メンバ変数 ------------------------------------------------------------------------------------------------------------
+    //--- メンバ定数
+
+    //--- 静的メンバ変数
+    private static GameObject   m_FireBoal = null;
+
     //--- メンバ変数
-    // メンバ定数
-
-    // メンバ変数
-    private static GameObject m_SummonsBeast;
-    private static bool m_ObjectLoad = false;
-
     private Vector3 m_SummonsVec;   // 召喚方向
 
-    private bool m_bUseFinisher;
-    private Material m_Material;
+    private bool        m_UseFinisher;
+    private Material    m_Material;
 
-    //--- メンバ関数
+    //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
     MagicSquare()
     {
-        m_bUseFinisher = false;
+        m_UseFinisher = false;
     }
 
     // Use this for initialization
     void Start()
     {
-        if (!m_ObjectLoad)
+        if (m_FireBoal == null)
         {
-            m_SummonsBeast = Resources.Load("FireBoal") as GameObject;
-            m_ObjectLoad = true;
+            m_FireBoal = Resources.Load("FireBoal") as GameObject;
         }
 
         if (GameManager.Instance.NowState == GameManager.GameState.MAGIC_SQUARE_SETTING)
@@ -48,7 +47,7 @@ public class MagicSquare : MonoBehaviour
     {
         transform.Rotate(new Vector3(0, 1.0f, 0), 1.0f);
 
-        if (m_bUseFinisher)
+        if (m_UseFinisher)
         {
             float r = Mathf.Cos(2 * Mathf.PI * 3.0f * Time.fixedTime / 3 + 0.0f);
             float g = Mathf.Cos(2 * Mathf.PI * 3.0f * Time.fixedTime / 3 + 2.0f);
@@ -75,6 +74,15 @@ public class MagicSquare : MonoBehaviour
             case GameManager.GameState.START:
                 Destroy(this.gameObject);
                 break;
+
+            case GameManager.GameState.GAME_MAIN:
+                break;
+
+            case GameManager.GameState.GAME_CLEAR:
+                break;
+
+            case GameManager.GameState.GAME_OVER:
+                break;
         }
     }
 
@@ -83,7 +91,7 @@ public class MagicSquare : MonoBehaviour
     public GameObject Summon()
     {
         Quaternion SetRot = Quaternion.LookRotation(m_SummonsVec);
-        GameObject SummonsBeastData = Instantiate(m_SummonsBeast, transform.position, SetRot);
+        GameObject SummonsBeastData = Instantiate(m_FireBoal, transform.position, SetRot);
 
         SummonsBeastData.GetComponent<SummonsBeast>().SetMoveVec = m_SummonsVec;
 
@@ -94,7 +102,7 @@ public class MagicSquare : MonoBehaviour
         return SummonsBeastData;
     }
 
-    public void UseFinisher() { m_bUseFinisher = true; }
+    public void UseFinisher() { m_UseFinisher = true; }
 
     public Vector3 SetSummonsVec { set { m_SummonsVec = value; } }
 }

@@ -25,11 +25,11 @@ public class FinisherAtackObj : MonoBehaviour
     //--- メンバ定数
     private const float CHECK_SIZE = 0.6f;
 
-    //--- メンバ変数
-    // 静的メンバ変数
+    //--- 静的メンバ変数
     private static GameObject m_EnemyParent;
     private static Material m_FinisherAtackMaterial;    // マテリアル
 
+    //--- メンバ変数
     GameObject[] m_TriangleVertexPosObject; // 三角形の頂点位置のオブジェクト情報
     Vector3[] m_TriangleVertex;             // 三角形の頂点情報
     float m_LiveTime;                       // 生存時間

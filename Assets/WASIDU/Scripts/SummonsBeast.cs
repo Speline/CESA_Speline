@@ -7,38 +7,34 @@ using UnityEngine;
 
 public class SummonsBeast : MonoBehaviour
 {
-    //--- メンバ変数
-    // メンバ定数
+    //--- メンバ変数 -----------------------------------------------------------------------------------
+    //--- メンバ定数
     protected const float MOVE_SIZE = 5.0f;   // 移動量
 
-    // 静的メンバ変数
+    //--- メンバ変数
+    protected Vector3 m_MoveVec; // 移動方向
+    private bool m_bEnemyHit;   // 敵に当たっているか
 
-    // メンバ変数
-    protected Vector3 m_StartPos    = Vector3.zero; // 初期位置
-    protected Vector3 m_MoveVec     = Vector3.zero; // 移動方向
-
-    private bool m_bEnemyHit;
-
-    //--- メンバ関数
+    //--- メンバ関数 -----------------------------------------------------------------------------------
     SummonsBeast()
     {
-        m_StartPos  = Vector3.zero;
         m_MoveVec   = Vector3.zero;
         m_bEnemyHit = false;
     }
 
     protected void Start()
     {
+        //--- オブジェクトに設定すれば不要
         ParticleManager.Instance.FireBoll.Play();
-        m_StartPos = gameObject.transform.position;
+
     }
 
     void OnDestroy()
     {
+
+        //--- オブジェクトに設定すれば不要
         ParticleManager.Instance.FireBoll.Stop();
-
         ParticleManager.Instance.MagicCollision.Play();
-
         ParticleManager.Instance.MagicCollisionObj.transform.position = transform.position;
     }
 
@@ -46,8 +42,8 @@ public class SummonsBeast : MonoBehaviour
     {
         MoveUpdate();
 
+        //--- オブジェクトに設定すれば不要
         ParticleManager.Instance.FireBollObj.transform.position = transform.position;
-
 
     }
 
@@ -59,12 +55,6 @@ public class SummonsBeast : MonoBehaviour
         //--- 位置移動
         gameObject.transform.position += Movement;
     }
-
-    // 設定
-    public Vector3 SetMoveVec { set { m_MoveVec = value; } }
-
-    // 取得
-    public Vector3 MoveVec { get { return m_MoveVec; } }
 
     // 当たり判定
     void OnTriggerEnter(Collider col)
@@ -107,5 +97,10 @@ public class SummonsBeast : MonoBehaviour
         }
     }
 
-    public bool EnemyHit { get { return m_bEnemyHit; } }
+    // 設定
+    public Vector3 SetMoveVec { set { m_MoveVec = value; } }
+
+    // 取得
+    public Vector3  MoveVec     { get { return m_MoveVec; } }
+    public bool     EnemyHit    { get { return m_bEnemyHit; } }
 }
