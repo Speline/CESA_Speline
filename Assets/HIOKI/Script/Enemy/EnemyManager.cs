@@ -72,8 +72,8 @@ public class EnemyManager : MonoBehaviour {
 		_StageEObj = _StageE.GetComponent<StageEnemy>();
 		#endregion
 
-		//nSt = nStStageEnemy;
-		nSt = 8;
+		nSt = nStStageEnemy;
+		//nSt = 8;
 
         myList.Clear();
 	}

@@ -9,30 +9,41 @@ public class GameMainCamera : SingletonMonoBehaviour<GameMainCamera>
     private const float FINISSHER_CAMERA_ROT_X = -45.0f;
 
     //--- メンバ変数
-    private bool m_CameraRotChange;         // 角度を変えるか
+    private bool m_CameraRotChange;         // 角度が変わっているか
     private bool m_FinisherAnimationStart;  // 必殺技アニメーション開始か
     private float m_MoveTime;
+
+    private bool m_UseTopViewCamera;    // トップビューにするかの情報
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
     GameMainCamera()
     {
         m_CameraRotChange = false;
         m_FinisherAnimationStart = false;
-        m_MoveTime = 0.0f;
+        m_MoveTime  = 0.0f;
+
+        m_UseTopViewCamera = true;
     }
 
 	// Update is called once per frame
 	void Update ()
     {
-        if (m_CameraRotChange)
+        if (m_UseTopViewCamera)
         {
             RotChangeUpdate();
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0.0f, -45.0f, 0.0f);
         }
 	}
 
     //--- 角度更新
     void RotChangeUpdate()
     {
+        if (!m_CameraRotChange)
+            return;
+
         Quaternion From, To;
 
         m_MoveTime += Time.deltaTime;
@@ -57,11 +68,13 @@ public class GameMainCamera : SingletonMonoBehaviour<GameMainCamera>
         }
     }
 
+    //--- 角度変更
     public void ChangeRot()
     {
         m_CameraRotChange = true;
         m_FinisherAnimationStart ^= true;
     }
 
+    //--- 情報取得
     public bool MoveCamera { get { return m_CameraRotChange; } }
 }

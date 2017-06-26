@@ -99,6 +99,7 @@
      <Compile Include="Assets\WASIDU\Scripts\Manager\SEManager.cs" />
      <Compile Include="Assets\WASIDU\Scripts\Manager\ScoreManager.cs" />
      <Compile Include="Assets\WASIDU\Scripts\Manager\TargetManager.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\NumberDraw.cs" />
      <Compile Include="Assets\WASIDU\Scripts\NumberImage.cs" />
      <Compile Include="Assets\WASIDU\Scripts\Player.cs" />
      <Compile Include="Assets\WASIDU\Scripts\SummonsBeast.cs" />
