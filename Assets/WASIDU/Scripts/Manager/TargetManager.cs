@@ -30,23 +30,19 @@ public class TargetManager : MonoBehaviour
     //--- メンバ定数
 
     //--- メンバ変数
+    private float   m_GameElapsedTime;  // 経過時間
     private float   m_TimeLimitCounter; // 制限時間
     private bool    m_UpdateTime;
 
-    private List<TargetData> m_TargetDataList; // 目標情報(ステージにより変更できるようにList)
-    private int m_NowTargetNumber;  // 現在の目標
+    private List<TargetData> m_TargetDataList;  // 目標情報(ステージにより変更できるようにList)
+    private int m_NowTargetNumber;              // 現在の目標
 
-    [SerializeField] private FinisherAtack m_FinisherAtackScript;
+    [SerializeField] private FinisherAtack  m_FinisherAtackScript;  // 必殺技ストック追加用
     [SerializeField] private ScoreManager   m_ScoreManagerScript;   // 現在のスコア取得用
     [SerializeField] private Image m_TimeImage;                     // 残り時間情報画像
 
     //--- 小目標表示用
-    [SerializeField] private GameObject m_NumberObjectPrefub;   // 番号表示オブジェクトプレハブ
-    [SerializeField] private GameObject m_DrawTargetParent;     // 小目標の親オブジェクト
-    private List<GameObject> m_TargetNumImageList;
-
-    private float m_GameElapsedTime;    // 経過時間
-
+    [SerializeField] private NumberDraw m_TargetNumberDrawScript;
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
     TargetManager()
@@ -81,8 +77,6 @@ public class TargetManager : MonoBehaviour
 
         StageOneData.ToList().ForEach(x =>m_TargetDataList.Add(new TargetData(int.Parse(x), 10f)));
 
-        m_TargetNumImageList = new List<GameObject>();
-        AddNumberObject();
     }
 	
 	// Update is called once per frame
@@ -106,7 +100,7 @@ public class TargetManager : MonoBehaviour
         switch (GameManager.Instance.NowState)
         {
             case GameManager.GameState.SETTING:
-                SetDrawTarget();
+                m_TargetNumberDrawScript.SetNumber(m_TargetDataList[m_NowTargetNumber].TargetScore);
                 break;
 
             case GameManager.GameState.MAGIC_SQUARE_SETTING:
@@ -166,7 +160,7 @@ public class TargetManager : MonoBehaviour
                 m_FinisherAtackScript.AddFinisherStock();
 
             if (m_NowTargetNumber < m_TargetDataList.Count)
-                SetDrawTarget();
+                m_TargetNumberDrawScript.SetNumber(m_TargetDataList[m_NowTargetNumber].TargetScore);
         }
 
         if (m_TimeLimitCounter <= 0.0f)
@@ -182,51 +176,6 @@ public class TargetManager : MonoBehaviour
             GameManager.Instance.ChangeState(GameManager.GameState.GAME_CLEAR);
 
             ResultManager.TimeandScore(m_GameElapsedTime,m_ScoreManagerScript.Score);
-        }
-    }
-
-    //--- コンボ表示設定
-    private void SetDrawTarget()
-    {
-        int OneDigit = 0;           // 一桁の情報
-        int TargetData = m_TargetDataList[m_NowTargetNumber].TargetScore;
-        int DigitNum = 0;           // 桁数
-
-        while (true)
-        {
-            OneDigit = TargetData % 10;
-
-            if (m_TargetNumImageList.Count <= DigitNum)
-            {
-                AddNumberObject();
-            }
-
-            m_TargetNumImageList[DigitNum].GetComponent<NumberImage>().SetNumber(OneDigit);
-
-            DigitNum++;
-            TargetData = TargetData / 10;
-
-            if (TargetData <= 0)
-                break;
-        }
-    }
-    //--- 番号表示オブジェクト追加
-    private void AddNumberObject()
-    {
-        GameObject NumberObj = Instantiate(m_NumberObjectPrefub);
-        NumberObj.transform.SetParent(m_DrawTargetParent.transform);
-        NumberObj.transform.position = m_DrawTargetParent.transform.position;
-        NumberObj.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
-
-        m_TargetNumImageList.Add(NumberObj);
-
-        int Count = m_TargetNumImageList.Count;
-
-        if (Count > 1)
-        {
-            Vector3 pos = m_TargetNumImageList[Count - 2].transform.position;
-            pos.x -= 70.0f;
-            m_TargetNumImageList[Count - 1].transform.position = pos;
         }
     }
 
