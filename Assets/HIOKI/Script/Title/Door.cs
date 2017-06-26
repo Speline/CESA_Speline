@@ -16,19 +16,60 @@ public class Door : MonoBehaviour {
 	private float fRotSpeed;
 	[SerializeField]
 	private float fRotMax;
+	[SerializeField]
+	private GameObject _fR;
+	[SerializeField]
+	private GameObject _fL;
+	[SerializeField]
+	private SpriteRenderer fFadeDoorR;
+	[SerializeField]
+	private SpriteRenderer fFadeDoorL;
 
 
 	private bool bMoveFlg = false;
+	private int nSelect = 0;
 
 	// Use this for initialization
 	void Start () {
 		_CameraObj = _Camera.GetComponent<TitleCamera> ();
+		fFadeDoorR = _fR.GetComponent<SpriteRenderer> ();
+		fFadeDoorL = _fL.GetComponent<SpriteRenderer> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		RotDoorR ();
-		RotDoorL ();
+
+		switch(nSelect){
+		case 0:
+			FadeDoor ();
+			break;
+		case 1:
+			RotDoorR ();
+			RotDoorL ();
+			break;
+		}
+
+	}
+
+	private void FadeDoor()
+	{
+		if (!bMoveFlg)
+			return;
+		Color FadeCoR = fFadeDoorR.color;
+		Color FadeCoL = fFadeDoorL.color;
+
+		FadeCoR.a += 0.03f;
+		FadeCoL.a += 0.03f;
+
+		if (FadeCoR.a >= 1.0f) {
+			FadeCoR.a = 1.0f;
+			FadeCoL.a = 1.0f;
+			nSelect++;
+		}
+
+		fFadeDoorR.color = FadeCoR;
+		fFadeDoorL.color = FadeCoL;
+
 	}
 
 	private void RotDoorR()

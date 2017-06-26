@@ -5,9 +5,9 @@ using UnityEngine;
 public class EnemyManager : MonoBehaviour {
 
 	#region 他のスクリプト呼びよう
-	[SerializeField]
-	private GameObject _EnemyB;
-	private EnemyBase _EnemyBase;
+	//[SerializeField]
+	//private GameObject _EnemyB;
+	//private EnemyBase _EnemyBase;
 
 	[SerializeField]
 	private GameObject _EnemyVe;
@@ -41,7 +41,7 @@ public class EnemyManager : MonoBehaviour {
 
 	private int nMax = 3;
 
-	private int nNowEnemy = 0;
+	private static int nNowEnemy = 0;
 
 	private int nCnt = 0;
 
@@ -109,6 +109,7 @@ public class EnemyManager : MonoBehaviour {
 		if (nCnt >= 30) {
 
 			if (nNowEnemy >= EnemyMax[nSt] || nNowEnemy >= nMax) {
+				nCnt = 0;
 				return;
 			}
 
@@ -170,9 +171,11 @@ public class EnemyManager : MonoBehaviour {
                 EnemyBase Script = x.GetComponent<EnemyBase>();
 
                 if (Script.GetNomber > 0)
-                    Script.SetNomber = Script.GetNomber - 1;
+					Script.SetNomber = Script.GetNomber - 1;
             });
         }
+		nNowEnemy--;
+
 	}
 
 	static public void StageEnemy(int i)
