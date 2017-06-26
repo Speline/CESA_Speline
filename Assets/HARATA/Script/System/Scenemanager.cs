@@ -6,10 +6,11 @@ using UnityEngine.SceneManagement;
 public class Scenemanager : MonoBehaviour
 {
 	private static Scenemanager instance;
+	FadeImage fadeimage;
 
 	private bool isFading = false;  // フェード中かどうか
 
-	static Color FadeColor;				// フェードの色
+	static Color FadeColor;			// フェードの色
 
 
 	public static Scenemanager Instance
@@ -45,22 +46,43 @@ public class Scenemanager : MonoBehaviour
 	// 描画遷移
 	public void LoadLevel(string scene, float fadeinTime, float waitTime, float fadeoutTime)
 	{
-		if (this.isFading)
-			return;
+		StartCoroutine( aaa(scene, fadeinTime, waitTime, fadeoutTime) );
+	}
+
+	IEnumerator aaa(string scene, float fadeinTime, float waitTime, float fadeoutTime)
+	{
+		bool bFadeIn = false;
+
 
 		Fade.Instance.SetColor(FadeColor);				// 色変更
 
+		yield return null;
+		yield return null;
+
+		Fade.Instance.SetColor(FadeColor);				// 色変更
+
+		fadeimage.UpdateMaskTexture(SceneManager.GetActiveScene().name, scene, true);	// フェード画像切り替え
+
+		// フェードイン
 		Fade.Instance.FadeIn(fadeinTime, () =>
 		{
-			// シーン切り替え
-			SceneManager.LoadScene(scene);
+			bFadeIn = true;
+		});
 
-			Fade.Instance.SetColor(FadeColor);			// 色変更
-			
-			Fade.Instance.FadeOut(fadeoutTime, () =>
-			{
-				FadeColor = Color.black;
-			});
+		// フェードインが終わるまではここで処理ストップ
+		while(!bFadeIn)
+			yield return null;
+
+		Fade.Instance.SetColor(FadeColor);		// 色変更
+		fadeimage.UpdateMaskTexture(SceneManager.GetActiveScene().name, scene, false);	// フェード画像切り替え
+
+		// シーン切り替え
+		SceneManager.LoadScene(scene);
+		
+		// フェードアウト
+		Fade.Instance.FadeOut(fadeoutTime, () =>
+		{
+			//FadeColor = Color.black;
 		});
 	}
 	
@@ -73,24 +95,15 @@ public class Scenemanager : MonoBehaviour
 		LoadLevel(scene, fadeinTime, waitTime, fadeoutTime);
 	}
 
-	// フェードインなし
-	public void LoadLevel_NoFadeIn(string scene, float waitTime, float fadeoutTime)
-	{
-		if (this.isFading)
-			return;
-
-		// シーン切り替え
-		SceneManager.LoadScene(scene);
-
-		Fade.Instance.FadeOut(fadeoutTime, () =>
-		{
-
-		});
-	}
-
 	// フェードしているか
 	public bool GetisFading()
 	{
 		return isFading;
+	}
+
+	// FadeImage.csを設定する
+	public void SetFadeImage(FadeImage cs)
+	{
+		fadeimage = cs;
 	}
 }

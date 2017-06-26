@@ -30,8 +30,6 @@ public class Fade : MonoBehaviour
 
 	IFade fade;
 
-	Color FadeColor;
-
 
 	public static Fade Instance
 	{
@@ -44,7 +42,6 @@ public class Fade : MonoBehaviour
 				if (instance == null)
 				{
 					GameObject go = Instantiate(Resources.Load("HARATA/FadeCanvas") as GameObject);
-					//go = new GameObject("Fade");
 					instance = go.GetComponent<Fade>();
 				}
 			}
@@ -138,9 +135,6 @@ public class Fade : MonoBehaviour
 
 	public Coroutine FadeIn (float time, System.Action action)
 	{
-		// 色変更
-		fade.FadeColor = this.FadeColor;
-
 		StopAllCoroutines ();
 		return StartCoroutine (FadeinCoroutine (time, action));
 	}
@@ -153,6 +147,18 @@ public class Fade : MonoBehaviour
 	// 色を指定する
 	public void SetColor(Color color)
 	{
-		FadeColor = color;
+		if (instance == null)
+		{
+			instance = (Fade)FindObjectOfType(typeof(Fade));
+
+			if (instance == null)
+			{
+				GameObject go = Instantiate(Resources.Load("HARATA/FadeCanvas") as GameObject);
+				instance = go.GetComponent<Fade>();
+			}
+		}
+
+		// 色変更
+		fade.FadeColor = color;
 	}
 }

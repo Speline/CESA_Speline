@@ -39,7 +39,7 @@ public class StageSelect_Button : MonoBehaviour {
 		if (!bCanPush)
 			return;
 
-		SM.ButtonMoveSet(true);
+		SM.ButtonMoveSet(false);
 	}
 
 	public void OnTapRightButton()
@@ -47,7 +47,7 @@ public class StageSelect_Button : MonoBehaviour {
 		if (!bCanPush)
 			return;
 
-		SM.ButtonMoveSet(false);
+		SM.ButtonMoveSet(true);
 	}
 
 

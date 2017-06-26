@@ -348,9 +348,7 @@ public class StageSelect_Manager : MonoBehaviour
 		if (CheckFlgs())
 		{
 			// シーン遷移
-			//Scenemanager.Instance.LoadLevel_NoFadeIn("GameMain", 0.5f, 0.5f);
 			Scenemanager.Instance.LoadLevel("GameMain", 0.5f, 0.5f, 0.5f, Color.white);
-			//SceneManager.LoadScene("GameMain");
 
 			bInitializ = true;						// 初期化可能状態にする
 			State = State_StageSelect.FIN;			// 終了
