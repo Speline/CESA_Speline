@@ -29,8 +29,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     //--- メンバ変数
     private GameState m_NowState;           // 現在のステート
     private GameState m_NextChangeState;    // 変更するステート
-    private float m_NowStateElapsedTime;    // 現在のステートの経過時間
-	private bool m_bEndFlg;					// シーン遷移の関数を1回しか呼ばないためのフラグ
+    private float   m_NowStateElapsedTime;  // 現在のステートの経過時間
+    private bool    m_EndFlg;				// シーン遷移の関数を1回しか呼ばないためのフラグ
 
     // SerializeField
     [SerializeField] private GameObject m_EnemyParent;      // 敵の親オブジェクト
@@ -41,7 +41,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         m_NowState = GameState.SETTING;
         m_NextChangeState = GameState.MAGIC_SQUARE_SETTING;
-		m_bEndFlg = false;
+		m_EndFlg = false;
 
         //--- 敵親設定
         FinisherAtackObj.EnemyParent = m_EnemyParent;
@@ -77,9 +77,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                 break;
 
             case GameManager.GameState.GAME_CLEAR:
-                if (m_NowStateElapsedTime > 2.0f && !m_bEndFlg)
+                if (m_NowStateElapsedTime > 2.0f && !m_EndFlg)
                 {
-					m_bEndFlg = true;
+					m_EndFlg = true;
                     Scenemanager.Instance.LoadLevel("Result", 1.0f, 1.0f, 1.0f);
                 }
                 break;
