@@ -80,6 +80,7 @@
      <Compile Include="Assets\HIOKI\Script\Result\RequestButton.cs" />
      <Compile Include="Assets\HIOKI\Script\Result\RequestForm.cs" />
      <Compile Include="Assets\HIOKI\Script\Result\ResultLogo.cs" />
+     <Compile Include="Assets\HIOKI\Script\Result\ResultMagic.cs" />
      <Compile Include="Assets\HIOKI\Script\Result\ResultManager.cs" />
      <Compile Include="Assets\HIOKI\Script\Title\Door.cs" />
      <Compile Include="Assets\HIOKI\Script\Title\TitleCamera.cs" />

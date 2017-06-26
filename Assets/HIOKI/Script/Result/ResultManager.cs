@@ -37,6 +37,10 @@ public class ResultManager : MonoBehaviour {
 	private GameObject _Quest;
 	private Quest _QuestObj;
 
+	[SerializeField]
+	private GameObject _Mag;
+	private ResultMagic _MagObj;
+
 	#endregion
 
 
@@ -66,6 +70,7 @@ public class ResultManager : MonoBehaviour {
 		_NestBObj = _NestB.GetComponent<NestQuestButton>();
 		_ReqBObj = _ReqB.GetComponent<RequestButton>();
 		_QuestObj = _Quest.GetComponent<Quest>();
+		_MagObj = _Mag.GetComponent<ResultMagic>();
 		#endregion
 
 		#region スコアの設定
@@ -161,8 +166,12 @@ public class ResultManager : MonoBehaviour {
 	{
 		if (!_QuestObj.CheckFlg ()) {
 			_LogoObj.ChangeFlgLogo();
-			_NestBObj.DisplayActive ();
+			int nT = GameManager.GetStage;
+			Debug.Log (nT);
+			if(nT != 9)
+				_NestBObj.DisplayActive ();
 			_ReqBObj.DisplayActive();
+			_MagObj.FlgChenge();
 			nSelect++;
 		}
 	}
@@ -226,9 +235,13 @@ public class ResultManager : MonoBehaviour {
 		_ElTimeObj.LastDisplay();							//タイムの最終画面
 		_FinScObj.LastDisplayScore();						//スコアの最終画面
 		_LogoObj.ChangeFlgLogo();							//リザルトのロゴが動く
-		_NestBObj.DisplayActive();							//ボタン表示
+		int nT = GameManager.GetStage;
+		Debug.Log (nT);
+		if(nT != 9)
+			_NestBObj.DisplayActive();							//ボタン表示
 		_ReqBObj.DisplayActive();							//ボタン表示
 		_QuestObj.LastQuest();								//ハンコ
+		_MagObj.FlgChenge();
 		nSelect = 5;										//最終画面
 	}
 
@@ -237,7 +250,6 @@ public class ResultManager : MonoBehaviour {
 	{
 		fSetTime = fTime;
 		nSetScore = nScore;
-		//nSetStage = nScore;
 	}
 
 
