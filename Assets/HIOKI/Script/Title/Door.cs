@@ -58,8 +58,8 @@ public class Door : MonoBehaviour {
 		Color FadeCoR = fFadeDoorR.color;
 		Color FadeCoL = fFadeDoorL.color;
 
-		FadeCoR.a += 0.03f;
-		FadeCoL.a += 0.03f;
+		FadeCoR.a += 0.01f;
+		FadeCoL.a += 0.01f;
 
 		if (FadeCoR.a >= 1.0f) {
 			FadeCoR.a = 1.0f;

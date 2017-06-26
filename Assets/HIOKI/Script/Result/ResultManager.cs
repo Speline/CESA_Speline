@@ -44,7 +44,6 @@ public class ResultManager : MonoBehaviour {
 	private int nSelect = 0;
 	private static float fSetTime;
 	private static int nSetScore;
-	private static int nSetStage;
 	private int nCnt = 0;
 
 	private int nScore_0 = 0;
@@ -174,6 +173,9 @@ public class ResultManager : MonoBehaviour {
 		if (_NestBObj.LookCheckFlg()) {
 			if (nCnt == 0) {
 				//次へ
+				int nSet = GameManager.GetStage;
+				nSet++;
+				GameManager.SetStage = nSet;
 				Scenemanager.Instance.LoadLevel("GameMain", 0.5f, 0.5f, 0.5f);
 				nCnt++;
 			}
@@ -182,7 +184,6 @@ public class ResultManager : MonoBehaviour {
 		//StageSelect
 		if (_ReqBObj.LookCheckFlg ()) {
 			if (nCnt == 0) {
-				GameManager.SetStage = nSetStage;
 				Scenemanager.Instance.LoadLevel("StageSelect", 0.5f, 0.5f, 0.5f);
 				nCnt++;
 			}

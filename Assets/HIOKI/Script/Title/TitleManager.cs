@@ -21,6 +21,10 @@ public class TitleManager : MonoBehaviour {
 	private GameObject _Camera;
 	private TitleCamera _CameraObj;
 
+	[SerializeField]
+	private GameObject _Log;
+	private TitleLog _LogObj;
+
 	#endregion
 
 	private int nSelect = 0;				//Select
@@ -34,6 +38,7 @@ public class TitleManager : MonoBehaviour {
 		_MagicObj = _Magic.GetComponent<magic> ();
 		_DoorObj = _Door.GetComponent<Door> ();
 		_CameraObj = _Camera.GetComponent<TitleCamera> ();
+		_LogObj = _Log.GetComponent<TitleLog> ();
 
         BGMManager.Instance.Play("Title");
 	}
@@ -75,6 +80,7 @@ public class TitleManager : MonoBehaviour {
 
 			_TStartObj.StopFade ();			//Startのフェードを止める
 			_MagicObj.StopMove();			//魔法陣を止める
+			_LogObj.ChangeFlg();			//タイトルを消す
 			_DoorObj.ChangeMoveFlg();		//ドアを開く
 			nSelect = 2;
 			//ここに画面遷移の設定をいれる
@@ -87,6 +93,7 @@ public class TitleManager : MonoBehaviour {
 			Debug.Log ("マウス");
 			_TStartObj.StopFade ();			//Startのフェードを止める
 			_MagicObj.StopMove();			//魔法陣を止める
+			_LogObj.ChangeFlg();			//タイトルを消す
 			_DoorObj.ChangeMoveFlg();		//ドアを開く
 			nSelect = 2;
 		}
