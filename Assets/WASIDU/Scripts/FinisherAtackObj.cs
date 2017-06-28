@@ -71,6 +71,15 @@ public class FinisherAtackObj : MonoBehaviour
         }
     }
 
+    void OnDestroy()
+    {
+        float PosX = (m_TriangleVertex[0].x + m_TriangleVertex[1].x + m_TriangleVertex[2].x) / 3.0f;
+        float PosZ = (m_TriangleVertex[0].z + m_TriangleVertex[1].z + m_TriangleVertex[2].z) / 3.0f;
+
+        ParticleManager.Instance.MainExplosion.Play();
+        ParticleManager.Instance.MainExplosionObj.transform.position = new Vector3(PosX, 0.0f, PosZ);
+    }
+
     public void CheckHit()
     {
         //--- 子オブジェクト

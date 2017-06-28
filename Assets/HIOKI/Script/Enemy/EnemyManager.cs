@@ -81,7 +81,6 @@ public class EnemyManager : MonoBehaviour {
 	// Update is called once per frame
     void Update()
     {
-		Debug.Log (GameManager.GetStage);
         switch (GameManager.Instance.NowState)
         {
             case GameManager.GameState.SETTING:
@@ -119,7 +118,7 @@ public class EnemyManager : MonoBehaviour {
 
 			int nMoveEnemies = _StageEObj.SetEnemyStage (GameManager.GetStage);
 
-			int nNowNomber;
+			int nNowNomber = 0;
 			Vector3 vecSpaw = SpawPos [nSpawPoint];
 			Vector3 vecSpawSq = SpawPos_Sq [nSpawPointSq];
 
@@ -161,24 +160,38 @@ public class EnemyManager : MonoBehaviour {
 			nCnt = 0;
 		}
 	}
+
 	public static void DestroyEnemy(int nNom)
     {
-        if (myList.Count > 0)
-        {
-            myList.RemoveAt(nNom);
-			nNowEnemy--;
+        ////if (myList.Count > 0)
+        ////{
 
-            myList.ForEach(x =>
-            {
-                EnemyBase Script = x.GetComponent<EnemyBase>();
+        //    myList.ForEach(x =>
+        //    {
+        //        EnemyBase Script = x.GetComponent<EnemyBase>();
 
-                if (Script.GetNomber > 0)
-					Script.SetNomber = Script.GetNomber - 1;
-            });
-        }
+        //        if (Script.GetNomber > nNom)
+        //            Script.SetNomber = Script.GetNomber - 1;
+        //    });
+        ////}
 
+        //foreach (GameObject EnemyList in myList)
+        //{
+        //    EnemyBase Script = EnemyList.GetComponent<EnemyBase>();
+
+        //    if (Script.GetNomber > nNom)
+        //        Script.SetNomber = Script.GetNomber - 1;
+        //}
+
+        //myList.RemoveAt(nNom);
+		nNowEnemy--;
 
 	}
+    public static void DestroyEnemy(GameObject DestryObj)
+    {
+        myList.Remove(DestryObj);
+        nNowEnemy--;
+    }
 
 	//static public void StageEnemy(int i)
 	//{

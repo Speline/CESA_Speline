@@ -93,7 +93,8 @@ public class StageManager : MonoBehaviour
 
 			StartPos[i] = fPos;
 			Trans[i].localPosition = new Vector3(fPos, Trans[i].localPosition.y, Trans[i].localPosition.z);
-		}
+        }
+        BGMManager.Instance.Play("Stage_select");
 	}
 
 	// Update is called once per frame

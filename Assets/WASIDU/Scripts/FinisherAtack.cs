@@ -124,6 +124,7 @@ public class FinisherAtack : MonoBehaviour
 
             case FinisherState.CHECK_HIT:
                 m_FinishSqript.CheckHit();
+                GameMainCamera.Instance.ChangeRot();
                 ChangeState(FinisherState.EFECT);
                 break;
 
@@ -135,7 +136,7 @@ public class FinisherAtack : MonoBehaviour
                 m_UseFinisher = false;
                 m_TargetManagerScript.UpdateTime = true;
                 EnemyManager.AllMoveStart();
-                GameMainCamera.Instance.ChangeRot();
+                //GameMainCamera.Instance.ChangeRot();
                 ChangeState(FinisherState.START);
                 m_TriangleVertexPosObject.ToList().ForEach(x => x.GetComponent<Player>().EndFinisherAtack());
                 break;
@@ -174,8 +175,6 @@ public class FinisherAtack : MonoBehaviour
 
     void StartUpdate()
     {
-        GameMainCamera.Instance.ChangeRot();
-
         CutinObjAllSetActive(true);
 
         m_TriangleVertexPosObject[0].GetComponent<Player>().SetFinisherAtackImage(m_CutInImageA);

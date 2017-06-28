@@ -62,6 +62,27 @@ public class EnemyBase : MonoBehaviour
         }
 	}
 
+    //--- 更新(ループ中最後)
+    void LateUpdate()
+    {
+        switch (GameManager.Instance.NowState)
+        {
+            case GameManager.GameState.SETTING:
+            case GameManager.GameState.MAGIC_SQUARE_SETTING:
+            case GameManager.GameState.PLAYER_SETTING:
+            case GameManager.GameState.START:
+            case GameManager.GameState.GAME_MAIN:
+                break;
+
+            case GameManager.GameState.GAME_CLEAR:
+                DestryEnemy(true);
+                break;
+
+            case GameManager.GameState.GAME_OVER:
+                break;
+        }
+    }
+
     // 当たり判定
     protected void OnTriggerEnter(Collider col)
     {
@@ -108,20 +129,23 @@ public class EnemyBase : MonoBehaviour
             m_HitFlgDictionary["+X,-Z"] && m_HitFlgDictionary["-X,+Z"])
         {
             // 挟まれた時のエフェクト
-
             DestryEnemy();
         }
     }
 
     //--- 消滅
-    public void DestryEnemy()
+    public void DestryEnemy(bool GameEnd = false)
     {
-        m_ScoreManagerScript.AddScore(m_AddScoreNum); // 得点加算
+        if (!GameEnd)
+        {
+            m_ScoreManagerScript.AddScore(m_AddScoreNum); // 得点加算
 
-        //--- コンボ加算
-        m_ScoreManagerScript.AddCombo();
+            //--- コンボ加算
+            m_ScoreManagerScript.AddCombo();
+        }
 
-        EnemyManager.DestroyEnemy(m_Number);
+        //EnemyManager.DestroyEnemy(m_Number);
+        EnemyManager.DestroyEnemy(this.gameObject);
 
         ParticleManager.Instance.NormalDeath.Play();
         ParticleManager.Instance.NormalDeathObj.transform.position = transform.position;

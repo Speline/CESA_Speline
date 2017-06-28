@@ -22,28 +22,14 @@ public class SummonsBeast : MonoBehaviour
         m_bEnemyHit = false;
     }
 
-    protected void Start()
+    void Start()
     {
-        //--- オブジェクトに設定すれば不要
-        ParticleManager.Instance.FireBoll.Play();
-
-    }
-
-    void OnDestroy()
-    {
-
-        //--- オブジェクトに設定すれば不要
-        ParticleManager.Instance.FireBoll.Stop();
-        ParticleManager.Instance.MagicCollision.Play();
-        ParticleManager.Instance.MagicCollisionObj.transform.position = transform.position;
+        transform.FindChild("Bullet_Core").GetComponent<ParticleSystem>().Play();
     }
 
     void Update()
     {
         MoveUpdate();
-
-        //--- オブジェクトに設定すれば不要
-        ParticleManager.Instance.FireBollObj.transform.position = transform.position;
 
     }
 
@@ -72,7 +58,7 @@ public class SummonsBeast : MonoBehaviour
         {
             // 方向を取得して消すかの判定を付けるか
             SummonsBeast HitBeastSqript = HitObject.GetComponent<SummonsBeast>();
-            Vector3 InversionHitMoveVec = HitBeastSqript.MoveVec;// *-1f; // 移動方向反転
+            Vector3 InversionHitMoveVec = HitBeastSqript.MoveVec;
             Vector3 CheckVector = m_MoveVec + InversionHitMoveVec;
 
             if (CheckVector.x >= -0.1f && CheckVector.x <= 0.1f &&

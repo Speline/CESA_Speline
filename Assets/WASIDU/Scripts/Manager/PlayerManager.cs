@@ -142,6 +142,11 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case GameManager.GameState.GAME_CLEAR:
+                //--- 攻撃ガイド線消滅
+                m_PairObjDataList.ForEach(x =>
+                {
+                        Destroy(x.AtackLine);                           // ガイド線削除
+                });
                 break;
 
             case GameManager.GameState.GAME_OVER:
@@ -189,7 +194,7 @@ public class PlayerManager : MonoBehaviour
 
             case InputManager.CLICK_STATE.ONECLICK:
                 ClickRayCheck();
-                //--- エフェクト出す(予定)
+                //--- エフェクト出す
                 ParticleManager.Instance.TapEffect.Play();
                 ParticleManager.Instance.TapEffectObj.transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition + new Vector3(0.0f, 0.0f, 10.0f)) + new Vector3(0.0f, -1.0f, 0.0f);
                 break;

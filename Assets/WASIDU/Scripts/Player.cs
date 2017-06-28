@@ -53,15 +53,35 @@ public class Player : MonoBehaviour
         m_FinisherCameraObj = transform.FindChild("FinissherCamera").gameObject;
         m_FinisherCameraObj.SetActive(false);
 
+        //--- スタート時の演出用
         SetMagicSquare();
 
     }
 
     void Update()
     {
-        if (GameManager.Instance.NowState == GameManager.GameState.PLAYER_SETTING)
+        switch (GameManager.Instance.NowState)
         {
-            PreStartUpdate();
+            case GameManager.GameState.SETTING:
+            case GameManager.GameState.MAGIC_SQUARE_SETTING:
+                break;
+
+            case GameManager.GameState.PLAYER_SETTING:
+                PreStartUpdate();
+                break;
+
+            case GameManager.GameState.START:
+                AtackCancel();
+                break;
+
+            case GameManager.GameState.GAME_MAIN:
+                break;
+
+            case GameManager.GameState.GAME_CLEAR:
+                break;
+
+            case GameManager.GameState.GAME_OVER:
+                break;
         }
 
         //--- 攻撃アニメーション終了後に魔方陣削除
@@ -131,6 +151,7 @@ public class Player : MonoBehaviour
 
         //--- 攻撃アニメーション
 
+
         return SummonObj;
     }
 
@@ -155,7 +176,9 @@ public class Player : MonoBehaviour
     public void FinisherAtackAnim()
     {
         m_ChildObj.GetComponent<Animator>().SetBool("FinisherAtack", true);
-        m_ChildObj.transform.rotation = Quaternion.Euler(new Vector3(0.0f, m_SettingRot.y, m_SettingRot.z));
+        Vector3 Rotate = m_ChildObj.transform.rotation.eulerAngles;
+        Rotate.x = 0.0f;
+        m_ChildObj.transform.rotation = Quaternion.Euler(Rotate);
     }
 
     //--- 必殺技終了時処理

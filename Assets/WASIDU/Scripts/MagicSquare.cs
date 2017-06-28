@@ -20,6 +20,8 @@ public class MagicSquare : MonoBehaviour
     private bool        m_UseFinisher;
     private Material    m_Material;
 
+    private GameObject m_Effect;
+
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
     MagicSquare()
     {
@@ -29,14 +31,16 @@ public class MagicSquare : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        m_Effect = transform.FindChild("SkillEnchant").gameObject;
+
         if (m_FireBoal == null)
         {
             m_FireBoal = Resources.Load("FireBoal") as GameObject;
         }
 
-        if (GameManager.Instance.NowState == GameManager.GameState.MAGIC_SQUARE_SETTING)
+        if (GameManager.Instance.NowState == GameManager.GameState.SETTING)
         {
-            transform.localScale = new Vector3(0.0f,0.0f,0.0f);
+            m_Effect.transform.localScale = new Vector3(0.0f, 0.0f, 0.0f);
         }
 
         m_Material = transform.FindChild("Mahoujinn").GetComponent<MeshRenderer>().material;
@@ -45,7 +49,7 @@ public class MagicSquare : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(new Vector3(0, 1.0f, 0), 1.0f);
+        //transform.Rotate(new Vector3(0, 1.0f, 0), 1.0f);
 
         if (m_UseFinisher)
         {
@@ -62,10 +66,7 @@ public class MagicSquare : MonoBehaviour
                 break;
 
             case GameManager.GameState.MAGIC_SQUARE_SETTING:
-                transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
-
-                if (transform.localScale.x >= 1.0f)
-                    GameManager.Instance.ChangeState(GameManager.GameState.PLAYER_SETTING);
+                SquareSettingUpdate();
                 break;
 
             case GameManager.GameState.PLAYER_SETTING:
@@ -84,6 +85,14 @@ public class MagicSquare : MonoBehaviour
             case GameManager.GameState.GAME_OVER:
                 break;
         }
+    }
+
+    void SquareSettingUpdate()
+    {
+        m_Effect.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
+
+        if (m_Effect.transform.localScale.x >= 0.7f)
+            GameManager.Instance.ChangeState(GameManager.GameState.PLAYER_SETTING);
     }
 
     // 召喚

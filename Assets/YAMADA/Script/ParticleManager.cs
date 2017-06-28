@@ -1,4 +1,3 @@
-
 ﻿//////////////////////////////////////////////////
 //ソース名　　　：ParticleManager.cs			//
 //**********************************************//
@@ -6,13 +5,12 @@
 //**********************************************//
 //作成者　　　　：山田雄太						//
 //**********************************************//
-//更新履歴	     :2017/06/19					//
+//更新履歴	     :2017/06/26					//
 //////////////////////////////////////////////////
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 
 public class ParticleManager : MonoBehaviour {
 
@@ -34,10 +32,13 @@ public class ParticleManager : MonoBehaviour {
 		NormalDeath = 0,	//死亡時（エネミー）
 		Deathblow,			//必殺技時
 		Deathblow_Death,	//必殺技時の死亡（エネミー）
-		FireBoll,			//ファイアーボール（炎）
 		TapEffect,			//タップエフェクト
 		Summon_Circle,		//エネミー出現時用魔法陣
-		MagicCollision,		//魔法衝突時
+		MagicCollision,     //魔法衝突時
+		MainExplosion,      //必殺技後爆発
+		Star,               //クリア時
+		SkillEnchant,       //攻撃待機時
+		Bullet_Core,        //ファイアーボール
 		NoneAndMax
 	}
 	#endregion
@@ -98,20 +99,6 @@ public class ParticleManager : MonoBehaviour {
 			return GetParticleSystemObj(ParticleNum.Deathblow_Death);
 		}
 	}
-	public ParticleSystem FireBoll
-	{
-		get
-		{
-			return GetParticleSystem(ParticleNum.FireBoll);
-		}
-	}
-	public GameObject FireBollObj
-	{
-		get
-		{
-			return GetParticleSystemObj(ParticleNum.FireBoll);
-		}
-	}
 	public ParticleSystem TapEffect
 	{
 		get
@@ -154,6 +141,62 @@ public class ParticleManager : MonoBehaviour {
 			return GetParticleSystemObj(ParticleNum.MagicCollision);
 		}
 	}
+	public ParticleSystem MainExplosion
+	{
+		get
+		{
+			return GetParticleSystem(ParticleNum.MainExplosion);
+		}
+	}
+	public GameObject MainExplosionObj
+	{
+		get
+		{
+			return GetParticleSystemObj(ParticleNum.MainExplosion);
+		}
+	}
+	public ParticleSystem Star
+	{
+		get
+		{
+			return GetParticleSystem(ParticleNum.Star);
+		}
+	}
+	public GameObject StarObj
+	{
+		get
+		{
+			return GetParticleSystemObj(ParticleNum.Star);
+		}
+	}
+	public ParticleSystem SkillEnchant
+	{
+		get
+		{
+			return GetParticleSystem(ParticleNum.SkillEnchant);
+		}
+	}
+	public GameObject SkillEnchantObj
+	{
+		get
+		{
+			return GetParticleSystemObj(ParticleNum.SkillEnchant);
+		}
+	}
+	public ParticleSystem Bullet_Core
+	{
+		get
+		{
+			return GetParticleSystem(ParticleNum.Bullet_Core);
+		}
+	}
+	public GameObject Bullet_CoreObj
+	{
+		get
+		{
+			return GetParticleSystemObj(ParticleNum.Bullet_Core);
+		}
+	}
 	#endregion
 
 	// Use this for initialization
@@ -172,10 +215,13 @@ public class ParticleManager : MonoBehaviour {
 		ParticleName.Add("NormalDeath");		//0
 		ParticleName.Add("DeathBlow");			//1
 		ParticleName.Add("Deathblow_Death");    //2
-		ParticleName.Add("FireBoll_Fire");      //3
-		ParticleName.Add("TapEffect");          //4
-		ParticleName.Add("Summon_Circle");      //5
-		ParticleName.Add("MagicCollision");		//6
+		ParticleName.Add("TapEffect");          //3
+		ParticleName.Add("Summon_Circle");      //4
+		ParticleName.Add("MagicCollision");		//5
+		ParticleName.Add("MainExplosion");      //6
+		ParticleName.Add("Star");               //7
+		ParticleName.Add("SkillEnchant");       //8
+		ParticleName.Add("Bullet_Core");        //9
 		#endregion
 
 		pObject = new GameObject[ParticleName.Count];

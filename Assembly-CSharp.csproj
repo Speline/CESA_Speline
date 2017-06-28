@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{C7AEEA37-BA54-5704-C7DE-342345BC9635}</ProjectGuid>
+    <ProjectGuid>{22FA6B2B-14BE-EB5B-D7F0-BB9733B6357A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -104,15 +104,14 @@
      <Compile Include="Assets\WASIDU\Scripts\NumberImage.cs" />
      <Compile Include="Assets\WASIDU\Scripts\Player.cs" />
      <Compile Include="Assets\WASIDU\Scripts\SummonsBeast.cs" />
-     <Compile Include="Assets\YAMADA\Script\ParticleController.cs" />
      <Compile Include="Assets\YAMADA\Script\ParticleManager.cs" />
      <Compile Include="Assets\YAMADA\Script\TapEffect.cs" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />
      <None Include="Assets\HARATA\Fade\Materials\UI-Fade-Alpha.shader" />
-     <None Include="Assets\WASIDU\Resources\StageData\StageData.txt" />
      <None Include="Assets\HARATA\Fade\Materials\UI-Fade-Cutout.shader" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasicOutline.shader" />
      <None Include="Assets\HARATA\Fade\Materials\UI-Mask.shader" />
+     <None Include="Assets\WASIDU\Resources\StageData\StageData.txt" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
  <Reference Include="UnityEngine.UI">
