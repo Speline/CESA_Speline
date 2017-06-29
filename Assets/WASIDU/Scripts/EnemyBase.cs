@@ -35,15 +35,21 @@ public class EnemyBase : MonoBehaviour
     }
 
     // Update is called once per frame
-    protected void Update()
+    void Update()
     {
         switch (GameManager.Instance.NowState)
         {
             case GameManager.GameState.SETTING:
             case GameManager.GameState.MAGIC_SQUARE_SETTING:
             case GameManager.GameState.PLAYER_SETTING:
-            case GameManager.GameState.START:
+            case GameManager.GameState.GAME_START:
+                break;
+
             case GameManager.GameState.GAME_MAIN:
+                if (m_Move)
+                {
+                    Move();
+                }
                 break;
 
             case GameManager.GameState.GAME_CLEAR:
@@ -68,7 +74,7 @@ public class EnemyBase : MonoBehaviour
             case GameManager.GameState.SETTING:
             case GameManager.GameState.MAGIC_SQUARE_SETTING:
             case GameManager.GameState.PLAYER_SETTING:
-            case GameManager.GameState.START:
+            case GameManager.GameState.GAME_START:
             case GameManager.GameState.GAME_MAIN:
                 break;
 
@@ -81,7 +87,9 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    // 当たり判定
+    protected virtual void Move(){}
+
+    //--- 当たり判定
     protected void OnTriggerEnter(Collider col)
     {
         //障害物との判定

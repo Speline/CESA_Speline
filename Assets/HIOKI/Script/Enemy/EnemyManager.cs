@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour {
+public class EnemyManager : MonoBehaviour
+{
 
 	#region 他のスクリプト呼びよう
 	//[SerializeField]
@@ -89,7 +90,7 @@ public class EnemyManager : MonoBehaviour {
             case GameManager.GameState.SETTING:
             case GameManager.GameState.MAGIC_SQUARE_SETTING:
             case GameManager.GameState.PLAYER_SETTING:
-            case GameManager.GameState.START:
+            case GameManager.GameState.GAME_START:
                 break;
 
             case GameManager.GameState.GAME_MAIN:
@@ -104,6 +105,8 @@ public class EnemyManager : MonoBehaviour {
         }
 
 	}
+
+
 
 	private void Create()
 	{

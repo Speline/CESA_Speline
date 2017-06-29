@@ -40,14 +40,7 @@ public class EnemyVS : EnemyBase {
         m_AddScoreNum = 160;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		base.Update ();
-		Move ();
-
-	}
-
-	private void Move()
+    protected override void Move()
     {
         if (!m_Move)
             return;

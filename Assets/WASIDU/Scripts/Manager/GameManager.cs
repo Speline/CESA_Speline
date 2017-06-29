@@ -13,8 +13,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         SETTING,
         MAGIC_SQUARE_SETTING,   // 魔方陣
         PLAYER_SETTING,         // プレイヤーキャラ
-        START,                  // スタート時
+        GAME_START,             // スタート時
         GAME_MAIN,              // ゲームメイン
+        PAUSE,                  // ポーズ
         GAME_CLEAR,             // ゲーム終了(成功)
         GAME_OVER,              // ゲーム終了(失敗)
     };
@@ -33,7 +34,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     // SerializeField
     [SerializeField] private GameObject m_EnemyParent;      // 敵の親オブジェクト
     [SerializeField] private GameObject m_GameOverCanvas;   // ゲームオーバーキャンバス
-    [SerializeField] private GameObject m_ComboDrawObj;     // コンボ表示オブジェクト
+    [SerializeField]
+    private GameObject m_ComboDrawObj;     // コンボ表示オブジェクト
+    [SerializeField]
+    private GameObject m_ConfigCanvas;     // コンフィグ表示オブジェクト
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
 	void Awake ()
@@ -48,6 +52,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         BGMManager.Instance.Play("Game_Main");
 
         m_GameOverCanvas.SetActive(false);
+        m_ConfigCanvas.SetActive(false);
+        m_ComboDrawObj.SetActive(false);
 
         m_NowStateElapsedTime = 0.0f;
 	}
@@ -65,21 +71,19 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
         switch (m_NowState)
         {
-            case GameManager.GameState.SETTING:
-                m_ComboDrawObj.SetActive(false);
-                ChangeState(GameState.MAGIC_SQUARE_SETTING);
-                break;
-
             case GameManager.GameState.MAGIC_SQUARE_SETTING:
             case GameManager.GameState.PLAYER_SETTING:
                 break;
 
-            case GameManager.GameState.START:
+            case GameManager.GameState.GAME_START:
                 m_ComboDrawObj.SetActive(true);
                 ChangeState(GameState.GAME_MAIN);
                 break;
 
             case GameManager.GameState.GAME_MAIN:
+                break;
+
+            case GameManager.GameState.PAUSE:
                 break;
 
             case GameManager.GameState.GAME_CLEAR:
@@ -126,6 +130,24 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     //--- 情報設定
     public static int SetStage { set { m_StageNum = value; } }
+
+    public void ConfigCamvas(bool Active)
+    {
+        if (m_NowState != GameState.GAME_MAIN &&
+            m_NowState != GameState.PAUSE)
+            return;
+
+        m_ConfigCanvas.SetActive(Active);
+
+        if (Active)
+        {
+            ChangeState(GameState.PAUSE);
+        }
+        else
+        {
+            ChangeState(GameState.GAME_MAIN);
+        }
+    }
 
     public void ChangeScence(string ScenceName)
     {

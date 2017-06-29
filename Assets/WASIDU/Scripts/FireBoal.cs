@@ -46,6 +46,32 @@ public class FireBoal : MonoBehaviour
 
     void Update()
     {
+        //--- ステートによる変更処理
+        switch (GameManager.Instance.NowState)
+        {
+            case GameManager.GameState.SETTING:
+            case GameManager.GameState.MAGIC_SQUARE_SETTING:
+            case GameManager.GameState.PLAYER_SETTING:
+            case GameManager.GameState.GAME_START:
+                break;
+
+            case GameManager.GameState.GAME_MAIN:
+                GameMain();
+                break;
+
+            case GameManager.GameState.GAME_CLEAR:
+                Destroy(this.gameObject);
+                break;
+
+            case GameManager.GameState.GAME_OVER:
+                Destroy(this.gameObject);
+                break;
+        }
+
+    }
+
+    void GameMain()
+    {
         if (m_MoveStart)
         {
             MoveUpdate();
@@ -57,8 +83,8 @@ public class FireBoal : MonoBehaviour
             float BulletCoreScale = BULLET_CORE_SCALE * m_StartTime;
             float BulletParticleScale = BULLET_PARTICLE_SCALE * m_StartTime;
 
-            m_BulletCore.transform.localScale       = new Vector3(BulletCoreScale, BulletCoreScale, BulletCoreScale);
-            m_BulletParticle.transform.localScale   = new Vector3(BulletParticleScale, BulletParticleScale, BulletParticleScale);
+            m_BulletCore.transform.localScale = new Vector3(BulletCoreScale, BulletCoreScale, BulletCoreScale);
+            m_BulletParticle.transform.localScale = new Vector3(BulletParticleScale, BulletParticleScale, BulletParticleScale);
 
             if (m_StartTime >= 1.0f)
                 m_MoveStart = true;

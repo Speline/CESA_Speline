@@ -50,23 +50,26 @@ public class Player : MonoBehaviour
 
         //--- スタート時の演出用
         SetMagicSquare();
-
     }
 
+    // Update is called once per frame
     void Update()
     {
+        //--- ステートによる変更処理
         switch (GameManager.Instance.NowState)
         {
             case GameManager.GameState.SETTING:
+                break;
+
             case GameManager.GameState.MAGIC_SQUARE_SETTING:
                 break;
 
             case GameManager.GameState.PLAYER_SETTING:
-                PreStartUpdate();
+                PlayerSetting();
                 break;
 
-            case GameManager.GameState.START:
-                AtackCancel();
+            case GameManager.GameState.GAME_START:
+                GameStart();
                 break;
 
             case GameManager.GameState.GAME_MAIN:
@@ -79,12 +82,9 @@ public class Player : MonoBehaviour
                 break;
         }
 
-        //--- 攻撃アニメーション終了後に魔方陣削除
-
     }
 
-    //--- スタート前の更新
-    void PreStartUpdate()
+    void PlayerSetting()
     {
         m_SettingScale += 20.0f * Time.deltaTime;
 
@@ -95,8 +95,13 @@ public class Player : MonoBehaviour
 
         if (m_ChildObj.transform.localScale.x >= 20.0f)
         {
-            GameManager.Instance.ChangeState(GameManager.GameState.START);
+            GameManager.Instance.ChangeState(GameManager.GameState.GAME_START);
         }
+    }
+
+    void GameStart()
+    {
+        AtackCancel();
     }
 
     //--- 必殺技使用設定

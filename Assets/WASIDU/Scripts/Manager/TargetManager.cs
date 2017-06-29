@@ -105,7 +105,7 @@ public class TargetManager : MonoBehaviour
 
             case GameManager.GameState.MAGIC_SQUARE_SETTING:
             case GameManager.GameState.PLAYER_SETTING:
-            case GameManager.GameState.START:
+            case GameManager.GameState.GAME_START:
                 Setting();
                 break;
 

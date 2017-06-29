@@ -27,13 +27,7 @@ public class EnemyVerticalAdvance : EnemyBase {
         m_AddScoreNum = 100;
 	}
 	
-	// Update is called once per frame
-	new void Update () {
-		base.Update ();
-		Move ();	//移動
-	}
-
-	private void Move()
+	protected override void Move()
     {
         if (!m_Move)
             return;

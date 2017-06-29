@@ -23,16 +23,6 @@ public class EnemyRot : EnemyBase {
         m_AddScoreNum = 110;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-        if (m_Move)
-        {
-            Rot();
-            Move();
-        }
-		base.Update ();
-	}
-
 	private void Rot()
 	{
 		Vector3 Rot = transform.localEulerAngles;
@@ -42,9 +32,11 @@ public class EnemyRot : EnemyBase {
 		transform.localEulerAngles = Rot;
 	}
 
-	private void Move()
+    protected override void Move()
 	{
 		transform.position -= transform.forward * fSpeedMove;
+
+        Rot();
 	}
 
 	public GameObject CreateEnemyRot()

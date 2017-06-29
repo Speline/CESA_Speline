@@ -70,7 +70,7 @@ public class MagicSquare : MonoBehaviour
             case GameManager.GameState.PLAYER_SETTING:
                 break;
 
-            case GameManager.GameState.START:
+            case GameManager.GameState.GAME_START:
                 Destroy(this.gameObject);
                 break;
 

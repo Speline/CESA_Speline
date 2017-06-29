@@ -33,14 +33,8 @@ public class EnemySquareRotation : EnemyBase {
 
         m_AddScoreNum = 120;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		base.Update ();
-		Move ();
-	}
 
-	private void Move ()
+    protected override void Move()
     {
         if (!m_Move)
             return;
