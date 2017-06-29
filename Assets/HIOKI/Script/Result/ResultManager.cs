@@ -72,6 +72,17 @@ public class ResultManager : MonoBehaviour {
 		_QuestObj = _Quest.GetComponent<Quest>();
 		_MagObj = _Mag.GetComponent<ResultMagic>();
 		#endregion
+		for (int i = 0; i < 10; i++) {
+			if (!(PlayerPrefs.HasKey ("Stage" + i))) {
+				PlayerPrefs.SetFloat ("TimeStage" + i, 0.0f);
+				PlayerPrefs.SetInt ("ScoreStage" + i, 0);
+			}
+		}
+
+		PlayerPrefs.SetFloat ("TimeStage" + GameManager.GetStage, fSetTime);
+		PlayerPrefs.SetInt ("ScoreStage" + GameManager.GetStage, nSetScore);
+
+		PlayerPrefs.Save ();
 
 		#region スコアの設定
 		//nSetScore = 12345;
@@ -107,25 +118,33 @@ public class ResultManager : MonoBehaviour {
 			HanePen();
 			DisplayTouchCheck ();
 			break;
-		case 2:					//羽ペン+スコア+タイム移動表示
-			TimeScore();
+		case 2:					//羽ペン+タイム移動表示
+			TimeHane();
 			DisplayTouchCheck ();
 			break;
-		case 3:					//羽ペン画面外移動
+		case 3:					//羽ペン移動
+			HanePen();
+			DisplayTouchCheck ();
+			break;
+		case 4:					//羽ペン+スコア移動表示
+			TimeHane();
+			DisplayTouchCheck ();
+			break;
+		case 5:					//羽ペン画面外移動
 			HaneDisplayOut();
 			DisplayTouchCheck ();
 			break;
-		case 4:					//ハンコ押す
+		case 6:					//ハンコ押す
 			HankoMove();
 			DisplayTouchCheck ();
 			break;
-		case 5:					//最終画面
+		case 7:					//最終画面
 			LastDisplayResult();
 			break;
 		}
 	}
 
-
+	//０
 	private void RequestFormMove()
 	{
 		//変更用
@@ -137,16 +156,20 @@ public class ResultManager : MonoBehaviour {
 		}
 	}
 
+	//１+３
 	private void HanePen()
 	{
 		if (_HaneObj.HaneFlg ()) {
+			if(nSelect == 1)
+				_ElTimeObj.MoveTime ();
+			else
+				_FinScObj.ChageFlg ();
 			nSelect++;
-			_ElTimeObj.MoveTime ();
-			_FinScObj.ChageFlg ();
 		}
 	}
 
-	private void TimeScore()
+	//２+4
+	private void TimeHane()
 	{
 
 		if (!_HaneObj.HaneFlg ()) {
@@ -154,6 +177,7 @@ public class ResultManager : MonoBehaviour {
 		}
 	}
 
+	//5
 	private void HaneDisplayOut()
 	{
 		if (_HaneObj.HaneFlg ()) {
@@ -162,20 +186,19 @@ public class ResultManager : MonoBehaviour {
 		}
 	}
 
+	//6
 	private void HankoMove()
 	{
 		if (!_QuestObj.CheckFlg ()) {
 			_LogoObj.ChangeFlgLogo();
-			int nT = GameManager.GetStage;
-			Debug.Log (nT);
-			if(nT != 9)
-				_NestBObj.DisplayActive ();
+			_NestBObj.DisplayActive (GameManager.GetStage);
 			_ReqBObj.DisplayActive();
 			_MagObj.FlgChenge();
 			nSelect++;
 		}
 	}
 
+	//7
 	private void LastDisplayResult()
 	{
 		//NestStage
@@ -230,19 +253,22 @@ public class ResultManager : MonoBehaviour {
 		case 3:
 			_HaneObj.LastHane();
 			break;
+		case 4:
+			_HaneObj.LastHane();
+			break;
+		case 5:
+			_HaneObj.LastHane();
+			break;
 		}
 
 		_ElTimeObj.LastDisplay();							//タイムの最終画面
 		_FinScObj.LastDisplayScore();						//スコアの最終画面
 		_LogoObj.ChangeFlgLogo();							//リザルトのロゴが動く
-		int nT = GameManager.GetStage;
-		Debug.Log (nT);
-		if(nT != 9)
-			_NestBObj.DisplayActive();							//ボタン表示
+		_NestBObj.DisplayActive(GameManager.GetStage);							//ボタン表示
 		_ReqBObj.DisplayActive();							//ボタン表示
 		_QuestObj.LastQuest();								//ハンコ
 		_MagObj.FlgChenge();
-		nSelect = 5;										//最終画面
+		nSelect = 7;										//最終画面
 	}
 
 

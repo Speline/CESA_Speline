@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TitleManager : MonoBehaviour {
 
-	#region 他のスプリクト呼ぶよう
+	#region 他のスクリプト呼ぶよう
 	[SerializeField]
 	private GameObject _TStart;
 	private TitleStart　_TStartObj;
@@ -27,19 +27,22 @@ public class TitleManager : MonoBehaviour {
 
 	#endregion
 
-	private int nSelect = 0;				//Select
-	private Touch touch;
-	private int nMaCnt = 0;
+	private int nSelect = 0;				//イベント
+	private Touch touch;					//Touch
+	private int nMaCnt = 0;					//タッチ関係
 
 	// Use this for initialization
 	void Start () {
-		//ここにBGMを呼び込む設定を入れる
+		
+		#region 他のスクリプト呼ぶよう
 		_TStartObj = _TStart.GetComponent<TitleStart> ();
 		_MagicObj = _Magic.GetComponent<magic> ();
 		_DoorObj = _Door.GetComponent<Door> ();
 		_CameraObj = _Camera.GetComponent<TitleCamera> ();
 		_LogObj = _Log.GetComponent<TitleLog> ();
 
+		#endregion
+		//ここにBGMを呼び込む設定を入れる
         BGMManager.Instance.Play("Title");
 	}
 	
@@ -47,7 +50,7 @@ public class TitleManager : MonoBehaviour {
 	void Update () {
 		switch(nSelect){
 		case 0:
-			StartTitle ();
+			StartTitle ();	//最初
 			break;
 		case 1:
 			Touch ();		//画面タッチ
@@ -68,7 +71,7 @@ public class TitleManager : MonoBehaviour {
 
 		if (bFlg) {
 			_TStart.gameObject.SetActive (true);	//表示
-			nSelect++;
+			nSelect++;							//変更
 		}
 	}
 
@@ -83,14 +86,11 @@ public class TitleManager : MonoBehaviour {
 			_LogObj.ChangeFlg();			//タイトルを消す
 			_DoorObj.ChangeMoveFlg();		//ドアを開く
 			nSelect = 2;
-			//ここに画面遷移の設定をいれる
 
-			Debug.Log ("押したよ");
 		}
 
 		// Mouseって書いてあるけど、タッチもこれで反応する。
 		if (Input.GetMouseButtonDown (0)) {
-			Debug.Log ("マウス");
 			_TStartObj.StopFade ();			//Startのフェードを止める
 			_MagicObj.StopMove();			//魔法陣を止める
 			_LogObj.ChangeFlg();			//タイトルを消す

@@ -5,36 +5,37 @@ using UnityEngine;
 public class whiteandblack : MonoBehaviour {
 
 	[SerializeField]
-	private SpriteRenderer _White;
+	private SpriteRenderer _White;		//fade
 
 	[SerializeField]
-	private float fSpeed;
+	private float fSpeed;				//fadeスピード
 
-	private bool bEndFlg = false;
+	private bool bEndFlg = false;		//終わったフラグ
 
 	// Use this for initialization
 	void Start () {
-		_White = GetComponent<SpriteRenderer> ();
+		_White = GetComponent<SpriteRenderer> ();	//設定
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		WhiteorBlack ();
+		WhiteorBlack ();					//フェードインアウト
 	}
 
 	private void WhiteorBlack()
 	{
 
-		Color color = _White.color;
+		Color color = _White.color;			//値設定
 
-		color.a -= fSpeed;
+		color.a -= fSpeed;					//変更
 
+		//補正
 		if (color.a <= 0.0f) {
-			color.a = 0.0f;
-			bEndFlg = true;
+			color.a = 0.0f;					//補正
+			bEndFlg = true;					//ストップ
 		}
 
-		_White.color = color;
+		_White.color = color;				//値代入
 	}
 
 	public bool CheckFlg()

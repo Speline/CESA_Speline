@@ -35,6 +35,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     // SerializeField
     [SerializeField] private GameObject m_EnemyParent;      // 敵の親オブジェクト
     [SerializeField] private GameObject m_GameOverCanvas;   // ゲームオーバーキャンバス
+    [SerializeField] private GameObject m_ComboDrawObj;     // コンボ表示オブジェクト
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
 	void Awake ()
@@ -61,6 +62,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         switch (m_NowState)
         {
             case GameManager.GameState.SETTING:
+                m_ComboDrawObj.SetActive(false);
                 ChangeState(GameState.MAGIC_SQUARE_SETTING);
                 break;
 
@@ -69,6 +71,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                 break;
 
             case GameManager.GameState.START:
+                m_ComboDrawObj.SetActive(true);
                 ChangeState(GameState.GAME_MAIN);
                 break;
 
@@ -76,7 +79,14 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                 break;
 
             case GameManager.GameState.GAME_CLEAR:
-                if (m_NowStateElapsedTime > 2.0f && !m_EndFlg)
+
+                if (ParticleManager.Instance.Star.isPlaying == false)
+                {
+                    ParticleManager.Instance.Star.Play();
+                    ParticleManager.Instance.StarObj.transform.position = new Vector3(0.0f, 10.0f, 0.0f);
+                }
+
+                if (m_NowStateElapsedTime > 5.0f && !m_EndFlg)
                 {
 					m_EndFlg = true;
                     Scenemanager.Instance.LoadLevel("Result", 1.0f, 1.0f, 1.0f);

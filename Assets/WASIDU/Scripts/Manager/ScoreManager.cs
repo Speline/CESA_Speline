@@ -15,17 +15,9 @@ public class ScoreManager : MonoBehaviour
     private NumberDraw m_ScoreNumberDrawScript;
     [SerializeField]
     private NumberDraw m_ComboNumberDrawScript;
-    //[SerializeField]
-    //private GameObject m_NumberObjectPrefub;   // 番号表示オブジェクトプレハブ
-    //[SerializeField] private GameObject m_ScoreParent;          // スコアの親オブジェクト
-    //[SerializeField] private GameObject m_ComboParent;          // コンボの親オブジェクト
 
     private int m_Score;    // スコア
     private int m_ComboCnt;   // コンボ数
-
-    //private List<GameObject> m_ScoreNumImageList;
-    //private List<GameObject> m_ComboNumImageList;
-
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
     ScoreManager()

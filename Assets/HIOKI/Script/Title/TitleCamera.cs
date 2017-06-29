@@ -5,39 +5,42 @@ using UnityEngine;
 public class TitleCamera : MonoBehaviour {
 
 	[SerializeField]
-	private float fMoveSpeed;
+	private float fMoveSpeed;				//カメラスピード
 	[SerializeField]
-	private float fMaxZ;
+	private float fMaxZ;					//ストップする座標
 
-	private bool bMoveFlg = false;
-	private bool bChange = false;
+	private bool bMoveFlg = false;			//移動フラグ
+	private bool bChange = false;			//チェンジフラグ
 
 	// Use this for initialization
-	void Start () {
+	//void Start () {
 		
-	}
+	//}
 	
 	// Update is called once per frame
 	void Update () {
-		MoveCamera ();
+		MoveCamera ();				//移動
 	}
 
 	private void MoveCamera()
 	{
 		if (!bMoveFlg)
 			return;
-		Vector3 pos = transform.localPosition;
+		
+		Vector3 pos = transform.localPosition;		//値セット
 
-		pos.z += fMoveSpeed;
+		pos.z += fMoveSpeed;						//変更
 
+		#region 補正
 		if (pos.z >= fMaxZ)
 		{
-			pos.z = fMaxZ;
-			bMoveFlg = false;
-			bChange = true;
+			pos.z = fMaxZ;							//補正
+			bMoveFlg = false;						//移動ストップ
+			bChange = true;							//チェンジon
 		}
+		#endregion
 
-		transform.localPosition = pos;
+		transform.localPosition = pos;				//値代入
 
 	}
 

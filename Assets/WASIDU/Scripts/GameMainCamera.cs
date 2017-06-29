@@ -39,22 +39,7 @@ public class GameMainCamera : SingletonMonoBehaviour<GameMainCamera>
         if (!m_CameraRotChange)
             return;
 
-        //Quaternion From, To;
-
         m_MoveTime += Time.deltaTime / 2.0f;
-
-        //if (m_FinisherAnimationStart)
-        //{
-        //    From = Quaternion.Euler(CAMERA_ROT_X, 0.0f, 0.0f);
-        //    To = Quaternion.Euler(CAMERA_ROT_X, FINISSHER_CAMERA_ROT_Y, 0.0f); ;
-        //}
-        //else
-        //{
-        //    From = Quaternion.Euler(CAMERA_ROT_X, FINISSHER_CAMERA_ROT_Y, 0.0f); ;
-        //    To = Quaternion.Euler(CAMERA_ROT_X, 0.0f, 0.0f); ;
-        //}
-
-        //transform.rotation = Quaternion.Slerp(From, To, m_MoveTime);
 
         m_Rotate.y += FINISSHER_CAMERA_ROT_Y * Time.deltaTime / 2.0f;
 

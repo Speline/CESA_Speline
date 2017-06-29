@@ -24,7 +24,6 @@ public class Player : MonoBehaviour
     // スタート前の処理用
     private float m_SettingScale = 0.0f;
     private Vector3 m_SettingRot;
-    private bool m_TurnEnd;
 
     // 必殺技用
     private ParticleSystem m_UseFinissherParticle;  // 必殺技使用設定時のパーティクル
@@ -43,7 +42,6 @@ public class Player : MonoBehaviour
         m_ChildObj = transform.FindChild("chara_model").gameObject;
         m_ChildObj.transform.localScale = new Vector3(m_SettingScale, m_SettingScale, m_SettingScale);
         m_SettingRot = transform.rotation.eulerAngles;
-        m_TurnEnd = false;
 
 
         // 必殺技用
@@ -91,28 +89,16 @@ public class Player : MonoBehaviour
     //--- スタート前の更新
     void PreStartUpdate()
     {
-        if (!m_TurnEnd)
+        m_SettingScale += 20.0f * Time.deltaTime;
+
+        m_SettingRot.y += 360f * Time.deltaTime;
+
+        m_ChildObj.transform.localScale = new Vector3(m_SettingScale, m_SettingScale, m_SettingScale);
+        m_ChildObj.transform.rotation = Quaternion.Euler(m_SettingRot);
+
+        if (m_ChildObj.transform.localScale.x >= 20.0f)
         {
-            m_SettingScale += 20.0f * Time.deltaTime;
-
-            m_SettingRot.y += 360f * Time.deltaTime;
-
-            m_ChildObj.transform.localScale = new Vector3(m_SettingScale, m_SettingScale, m_SettingScale);
-            m_ChildObj.transform.rotation = Quaternion.Euler(m_SettingRot);
-
-            if (m_ChildObj.transform.localScale.x >= 20.0f)
-            {
-                m_TurnEnd = true;
-            }
-        }
-        else
-        {
-            m_SettingRot.x += SET_ROT_X * Time.deltaTime;
-
-            m_ChildObj.transform.rotation = Quaternion.Euler(m_SettingRot);
-
-            if (m_SettingRot.x <= SET_ROT_X)
-                GameManager.Instance.ChangeState(GameManager.GameState.START);
+            GameManager.Instance.ChangeState(GameManager.GameState.START);
         }
     }
 
@@ -176,9 +162,6 @@ public class Player : MonoBehaviour
     public void FinisherAtackAnim()
     {
         m_ChildObj.GetComponent<Animator>().SetBool("FinisherAtack", true);
-        Vector3 Rotate = m_ChildObj.transform.rotation.eulerAngles;
-        Rotate.x = 0.0f;
-        m_ChildObj.transform.rotation = Quaternion.Euler(Rotate);
     }
 
     //--- 必殺技終了時処理

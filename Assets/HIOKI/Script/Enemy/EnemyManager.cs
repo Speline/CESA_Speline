@@ -33,6 +33,9 @@ public class EnemyManager : MonoBehaviour {
 	[SerializeField]
 	private Vector3[] SpawPos;
 
+    [SerializeField]
+    private Vector3[] SpawPos_V;
+
 	[SerializeField]
 	private Vector3[] SpawPos_Sq;
 
@@ -112,18 +115,23 @@ public class EnemyManager : MonoBehaviour {
 				nCnt = 0;
 				return;
 			}
-
-			int nSpawPoint = Random.Range (0, SpawPos.Length);
-			int nSpawPointSq = Random.Range (0, SpawPos_Sq.Length);
+            
+			//int nSpawPoint = Random.Range (0, SpawPos.Length);
+			//int nSpawPointSq = Random.Range (0, SpawPos_Sq.Length);
 
 			int nMoveEnemies = _StageEObj.SetEnemyStage (GameManager.GetStage);
 
 			int nNowNomber = 0;
-			Vector3 vecSpaw = SpawPos [nSpawPoint];
-			Vector3 vecSpawSq = SpawPos_Sq [nSpawPointSq];
+            int nSpawPoint = 0;
+            Vector3 vecSpaw = Vector3.zero;
+            
+			//Vector3 vecSpaw = SpawPos [nSpawPoint];
+			//Vector3 vecSpawSq = SpawPos_Sq [nSpawPointSq];
 
 			switch (nMoveEnemies) {
 			case (int)EnemyMove.VerticalAdvance:			//縦移動
+                    nSpawPoint = Random.Range(0, SpawPos_V.Length);
+                    vecSpaw = SpawPos_V[nSpawPoint];
 				GameObject EnemyVertical = Instantiate (_EnemyVeObj.CreateEnemyVertical (), vecSpaw, _EnemyVeObj.RotVertical (Random.Range (0, 2)));	//生成
 				myList.Add (EnemyVertical);													//追加
 				nNowNomber = myList.Count - 1;												//セット
@@ -132,6 +140,8 @@ public class EnemyManager : MonoBehaviour {
 				break;
 
 			case (int)EnemyMove.SideAdvance:				//横移動
+                    nSpawPoint = Random.Range(0, SpawPos.Length);
+                    vecSpaw = SpawPos[nSpawPoint];
 				GameObject EnemySide = Instantiate (_EnemySiObj.CreateEnemySide (), vecSpaw, _EnemySiObj.RotSide (Random.Range (0, 2)));	//生成
 				myList.Add (EnemySide);													//追加
 				nNowNomber = myList.Count - 1;												//セット
@@ -148,7 +158,9 @@ public class EnemyManager : MonoBehaviour {
 				break;
 
 			case (int)EnemyMove.SqRot:
-				GameObject EnemyRotation = Instantiate (_EnemyRotObj.CreateEnemyRot (), vecSpawSq, _EnemyRotObj.RotRot (Random.Range (0, 2),nSpawPointSq));
+                    nSpawPoint = Random.Range(0, SpawPos_Sq.Length);
+                    vecSpaw = SpawPos_Sq[nSpawPoint];
+                    GameObject EnemyRotation = Instantiate(_EnemyRotObj.CreateEnemyRot(), vecSpaw, _EnemyRotObj.RotRot(Random.Range(0, 2), nSpawPoint));
 				myList.Add (EnemyRotation);
 				nNowNomber = myList.Count - 1;												//セット
 				EnemyRotation.GetComponent<EnemyBase> ().SetNomber = nNowNomber;

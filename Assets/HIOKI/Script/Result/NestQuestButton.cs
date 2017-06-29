@@ -13,6 +13,7 @@ public class NestQuestButton : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		this.gameObject.SetActive (true);
 		NestBut = GetComponent<Image>();
 	}
 	
@@ -45,9 +46,13 @@ public class NestQuestButton : MonoBehaviour {
 		}
 	}
 
-	public void DisplayActive()
+	public void DisplayActive(int nSt)
 	{
-		bMoveFlg = true;
+		if (nSt != 9) {
+			bMoveFlg = true;
+		} else {
+			this.gameObject.SetActive (false);
+		}
 	}
 
 	public bool LookCheckFlg()

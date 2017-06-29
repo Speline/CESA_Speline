@@ -4,71 +4,34 @@ using UnityEngine;
 
 public class Door : MonoBehaviour {
 
+	#region 他のスクリプト呼ぶよう
 	[SerializeField]
 	private GameObject _Camera;
 	private TitleCamera _CameraObj;
 
+	#endregion
+
 	[SerializeField]
-	private GameObject DoorR;
+	private GameObject DoorR;				//RightDoor
 	[SerializeField]
-	private GameObject DoorL;
+	private GameObject DoorL;				//LeftDoor
 	[SerializeField]
-	private float fRotSpeed;
+	private float fRotSpeed;				//回転スピード
 	[SerializeField]
-	private float fRotMax;
-	[SerializeField]
-	private GameObject _fR;
-	[SerializeField]
-	private GameObject _fL;
-	[SerializeField]
-	private SpriteRenderer fFadeDoorR;
-	[SerializeField]
-	private SpriteRenderer fFadeDoorL;
+	private float fRotMax;					//回転最大値
 
 
-	private bool bMoveFlg = false;
-	private int nSelect = 0;
+	private bool bMoveFlg = false;			//回転フラグ
 
 	// Use this for initialization
 	void Start () {
-		_CameraObj = _Camera.GetComponent<TitleCamera> ();
-		fFadeDoorR = _fR.GetComponent<SpriteRenderer> ();
-		fFadeDoorL = _fL.GetComponent<SpriteRenderer> ();
+		_CameraObj = _Camera.GetComponent<TitleCamera> ();		//設定
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-		switch(nSelect){
-		case 0:
-			FadeDoor ();
-			break;
-		case 1:
-			RotDoorR ();
-			RotDoorL ();
-			break;
-		}
-
-	}
-
-	private void FadeDoor()
-	{
-		if (!bMoveFlg)
-			return;
-		Color FadeCoR = fFadeDoorR.color;
-		Color FadeCoL = fFadeDoorL.color;
-
-		FadeCoR.a += 0.01f;
-		FadeCoL.a += 0.01f;
-
-		if (FadeCoR.a >= 1.0f) {
-			FadeCoR.a = 1.0f;
-			FadeCoL.a = 1.0f;
-			nSelect++;
-		}
-
-		fFadeDoorR.color = FadeCoR;
-		fFadeDoorL.color = FadeCoL;
+		RotDoorR ();			//開く処理Right
+		RotDoorL ();			//開く処理Left
 
 	}
 
@@ -78,17 +41,17 @@ public class Door : MonoBehaviour {
 		if (!bMoveFlg)
 			return;
 
-		Vector3 RotR = DoorR.transform.localEulerAngles;
+		Vector3 RotR = DoorR.transform.localEulerAngles;	//値セット
 
-		RotR.y += fRotSpeed;
+		RotR.y += fRotSpeed;								//変更
 		//チェック
 		if (RotR.y >= fRotMax) {
-			RotR.y = fRotMax;
-			bMoveFlg = false;
-			_CameraObj.CameraMoveFlg ();
+			RotR.y = fRotMax;								//補正
+			bMoveFlg = false;								//回転ストップ
+			_CameraObj.CameraMoveFlg ();					//カメラ移動させる
 		}
 
-		DoorR.transform.localEulerAngles = RotR;
+		DoorR.transform.localEulerAngles = RotR;			//値代入
 		#endregion
 
 	}
@@ -99,11 +62,11 @@ public class Door : MonoBehaviour {
 		if (!bMoveFlg)
 			return;
 
-		Vector3 RotL = DoorL.transform.localEulerAngles;
+		Vector3 RotL = DoorL.transform.localEulerAngles;	//値セット
 
-		RotL.y -= fRotSpeed;
+		RotL.y -= fRotSpeed;								//変更
 
-		DoorL.transform.localEulerAngles = RotL;
+		DoorL.transform.localEulerAngles = RotL;			//値代入
 		#endregion
 	}
 

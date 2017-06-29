@@ -5,11 +5,11 @@ using UnityEngine;
 public class TitleLog : MonoBehaviour {
 
 	[SerializeField]
-	private SpriteRenderer _Log;
+	private SpriteRenderer _Log;		//フェード
 	[SerializeField]
-	private float fMoveSpeed;
+	private float fMoveSpeed;			//フェードスピード
 	[SerializeField]
-	private float fMaxY;
+	private float fMaxY;				//
 
 	private int nSelect = 0;
 	private bool bTodi = false;

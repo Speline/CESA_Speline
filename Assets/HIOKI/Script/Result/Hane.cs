@@ -5,19 +5,21 @@ using UnityEngine;
 public class Hane : MonoBehaviour {
 
 	[SerializeField]
-	private float fMoveSpeed;
+	private float fMoveSpeed;				//移動スピード
 	[SerializeField]
-	private float fMaxPosY;
+	private float[] fMaxPosY;				//上下移動Max
 	[SerializeField]
-	private float fMinPosY;
+	private float[] fMinPosY;				//上下移動Min
+
 	[SerializeField]
-	private float fMoveMax;
+	private float[] fMoveMax;					//移動最大値
 	[SerializeField]
 	private float fStartSpeedX;
 	[SerializeField]
 	private float fStartSpeedY;
 	[SerializeField]
-	private float fStartStop;
+	private float[] fStartStop;				//ストップする場所
+
 	[SerializeField]
 	private Vector3 LastPos;
 
@@ -39,20 +41,28 @@ public class Hane : MonoBehaviour {
 			Move ();
 			break;
 		case 2:
-			DisplayOut ();
+			SecondStop ();
 			break;
 		case 3:
+			MoveScore ();
+			break;
+		case 4:
+			DisplayOut ();
+			break;
+		case 5:
 			break;
 		}
 	}
+
+
 	private void StartMove()
 	{
 		Vector3 pos = transform.localPosition;
 		pos.x -= fStartSpeedX;
 		pos.y -= fStartSpeedY;
 
-		if (pos.x <= fStartStop) {
-			pos.x = fStartStop;
+		if (pos.y <= fStartStop[0]) {
+			pos.y = fStartStop[0];
 			nMove++;
 			bMoveFlg = true;
 		}
@@ -69,25 +79,76 @@ public class Hane : MonoBehaviour {
 
 		switch(nSelect){
 		case 0:
-			pos.x += fMoveSpeed;
+			pos.x += fMoveSpeed * 0.6f;
 			pos.y += fMoveSpeed;
-			if (pos.y >= fMaxPosY) {
-				pos.y = fMaxPosY;
+			if (pos.y >= fMaxPosY[0]) {
+				pos.y = fMaxPosY[0];
 				nSelect++;
 			}
 			break;
 		case 1:
 			pos.x -= fMoveSpeed * 0.1f;
 			pos.y -= fMoveSpeed;
-			if (pos.y <= fMinPosY) {
-				pos.y = fMinPosY;
+			if (pos.y <= fMinPosY[0]) {
+				pos.y = fMinPosY[0];
 				nSelect = 0;
 			}
 			break;
 		}
 
-		if (pos.x >= fMoveMax) {
-			pos.x = fMoveMax;
+		if (pos.x >= fMoveMax[0]) {
+			pos.x = fMoveMax[0];
+			bMoveFlg = false;
+			nMove++;
+			nSelect = 1;
+		}
+
+		transform.localPosition = pos;
+	}
+
+	private void SecondStop()
+	{
+		Vector3 pos = transform.localPosition;
+		pos.x -= 0.1f;
+		pos.y -= 0.03f;
+
+		if (pos.y <= fStartStop[1]) {
+			Debug.Log ("ストップ");
+			pos.y = fStartStop[1];
+			nMove++;
+			bMoveFlg = true;
+		}
+
+		transform.localPosition = pos;
+	}
+	private void MoveScore()
+	{
+		if (!bMoveFlg)
+			return;
+
+		Vector3 pos = transform.localPosition;
+
+		switch(nSelect){
+		case 0:
+			pos.x += fMoveSpeed * 0.7f;
+			pos.y += fMoveSpeed;
+			if (pos.y >= fMaxPosY[1]) {
+				pos.y = fMaxPosY[1];
+				nSelect++;
+			}
+			break;
+		case 1:
+			pos.x -= fMoveSpeed * 0.1f;
+			pos.y -= fMoveSpeed;
+			if (pos.y <= fMinPosY[1]) {
+				pos.y = fMinPosY[1];
+				nSelect = 0;
+			}
+			break;
+		}
+
+		if (pos.x >= fMoveMax[1]) {
+			pos.x = fMoveMax[1];
 			bMoveFlg = false;
 			nMove++;
 		}
@@ -103,7 +164,7 @@ public class Hane : MonoBehaviour {
 
 		if (pos.x >= LastPos.x) {
 			pos.x = LastPos.x;
-			nMove = 3;
+			nMove = 5;
 			bMoveFlg = true;
 		}
 
@@ -123,6 +184,6 @@ public class Hane : MonoBehaviour {
 	public void LastHane()
 	{
 		transform.localPosition = new Vector3 (LastPos.x, LastPos.y, LastPos.z);
-		nMove = 3;
+		nMove = 5;
 	}
 }
