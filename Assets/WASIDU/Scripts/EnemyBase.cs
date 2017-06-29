@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class EnemyBase : MonoBehaviour
 {
-    //--- メンバ変数
-    // メンバ定数
-
+    //--- メンバ変数 -----------------------------------------------------------------------------------
     // 静的メンバ変数
     private static ScoreManager m_ScoreManagerScript;  // 目標管理スクリプト
 
     // メンバ変数
     protected Dictionary<string, bool> m_HitFlgDictionary;  // 当たっているフラグ
-    protected bool m_bMove;
+    protected bool m_Move;
     protected int m_Number;
     protected int m_AddScoreNum = 100;
 
@@ -32,7 +30,7 @@ public class EnemyBase : MonoBehaviour
             { "-X,-Z", false }, // 左手前方向
         };
 
-        m_bMove     = true;
+        m_Move     = true;
         m_Number    = 0;
     }
 
@@ -53,10 +51,10 @@ public class EnemyBase : MonoBehaviour
 
             case GameManager.GameState.GAME_OVER:
                 if (transform.parent != null &&
-                    transform.parent.tag == "SummonsBeast")
+                    transform.parent.tag == "FireBoal")
                 {
                     transform.parent = null;
-                    m_bMove = true;
+                    m_Move = true;
                 }
                 break;
         }
@@ -87,10 +85,10 @@ public class EnemyBase : MonoBehaviour
     protected void OnTriggerEnter(Collider col)
     {
         //障害物との判定
-        if (col.gameObject.tag == "SummonsBeast")
+        if (col.gameObject.tag == "FireBoal")
         {
             //--- フラグ設定
-            SummonsBeast BeastData = col.gameObject.GetComponent<SummonsBeast>();
+            FireBoal BeastData = col.gameObject.GetComponent<FireBoal>();
 
             float X = BeastData.MoveVec.x;
             float Z = BeastData.MoveVec.z;
@@ -114,7 +112,7 @@ public class EnemyBase : MonoBehaviour
             m_HitFlgDictionary[HitVec] = true;
 
             transform.SetParent(col.gameObject.transform);
-            m_bMove = false;
+            m_Move = false;
 
             CheckDestry();
         }
@@ -156,14 +154,14 @@ public class EnemyBase : MonoBehaviour
     //--- 移動開始(アニメーション関係の設定がされてないので追加あるか)
     public void MoveStart()
     {
-        m_bMove = true;
+        m_Move = true;
         //gameObject.transform.FindChild("EnemyA").GetComponent<Animator>().speed = 1.0f;
     }
 
     // 移動停止(アニメーション関係の設定がされてないので追加あるか)
     public void MoveStop()
     {
-        m_bMove = false;
+        m_Move = false;
         //gameObject.transform.FindChild("EnemyA").GetComponent<Animator>().speed = 0.0f;
     }
 

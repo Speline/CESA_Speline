@@ -25,7 +25,7 @@ public class EnemyRot : EnemyBase {
 	
 	// Update is called once per frame
 	void Update () {
-        if (m_bMove)
+        if (m_Move)
         {
             Rot();
             Move();

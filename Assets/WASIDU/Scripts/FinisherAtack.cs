@@ -1,5 +1,5 @@
 ﻿//========================================================
-// 必殺技処理
+// 必殺技情報管理
 //========================================================
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class FinisherAtack : MonoBehaviour
 {
-    //--- ゲームステート
+    //--- 必殺技ステート
     public enum FinisherState
     {
         START,
@@ -21,35 +21,9 @@ public class FinisherAtack : MonoBehaviour
         END,
     };
 
-    // カットインオブジェクトの位置情報クラス
-    class CutinObjPosData
-    {
-        private Vector3 m_InitPos;     // 初期位置
-        private Vector3 m_MovePos;     // 移動位置
-
-        public CutinObjPosData(Vector3 InitPos, Vector3 MovePos)
-        {
-            m_InitPos = InitPos;
-            m_MovePos = MovePos;
-        }
-
-        public Vector3 InitPos { get { return m_InitPos; } }
-        public Vector3 MovePos { get { return m_MovePos; } }
-
-    }
-
     //--- メンバ変数 ------------------------------------------------------------------------------------------------------------
     //--- メンバ定数
     private const float CHECK_SIZE = 0.6f;
-
-    #region カットインオブジェクトの位置情報
-    private CutinObjPosData[] m_CutinObjPosData = new CutinObjPosData[3]
-    {
-       new CutinObjPosData(new Vector3(-1020.0f,    34.0f, 0.0f),new Vector3(-503.0f,  34.0f, 0.0f)),
-       new CutinObjPosData(new Vector3( 1020.0f,    34.0f, 0.0f),new Vector3( 503.0f,  34.0f, 0.0f)),
-       new CutinObjPosData(new Vector3(    0.0f, -1320.0f, 0.0f),new Vector3(   0.0f, 100.0f, 0.0f)),
-    };
-    #endregion
 
     //--- メンバ変数
     [SerializeField] private TargetManager m_TargetManagerScript;
@@ -136,7 +110,6 @@ public class FinisherAtack : MonoBehaviour
                 m_UseFinisher = false;
                 m_TargetManagerScript.UpdateTime = true;
                 EnemyManager.AllMoveStart();
-                //GameMainCamera.Instance.ChangeRot();
                 ChangeState(FinisherState.START);
                 m_TriangleVertexPosObject.ToList().ForEach(x => x.GetComponent<Player>().EndFinisherAtack());
                 break;
@@ -152,25 +125,16 @@ public class FinisherAtack : MonoBehaviour
             m_FinisherState = m_NextChangeState;
     }
 
-    public void UseFinisher(GameObject ObjA, GameObject ObjB, GameObject ObjC)
+    //--- 必殺技使用
+    public void UseFinisher(GameObject[] Obj)
     {
         //--- 頂点位置のオブジェクト設定
-        m_TriangleVertexPosObject = new GameObject[]
-        {
-            ObjA,
-            ObjB,
-            ObjC,
-        };
+        m_TriangleVertexPosObject = Obj;
 
         m_TargetManagerScript.UpdateTime = false;
         m_UseFinisher = true;
 
         ChangeState(FinisherState.START);
-    }
-
-    public void UseFinisher(GameObject[] Obj)
-    {
-        UseFinisher(Obj[0], Obj[1], Obj[2]);
     }
 
     void StartUpdate()

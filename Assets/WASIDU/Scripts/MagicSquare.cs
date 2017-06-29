@@ -9,8 +9,6 @@ using UnityEngine;
 public class MagicSquare : MonoBehaviour
 {
     //--- メンバ変数 ------------------------------------------------------------------------------------------------------------
-    //--- メンバ定数
-
     //--- 静的メンバ変数
     private static GameObject   m_FireBoal = null;
 
@@ -99,16 +97,17 @@ public class MagicSquare : MonoBehaviour
     //戻り値：召喚した攻撃オブジェクト
     public GameObject Summon()
     {
-        Quaternion SetRot = Quaternion.LookRotation(m_SummonsVec);
-        GameObject SummonsBeastData = Instantiate(m_FireBoal, transform.position, SetRot);
+        Quaternion SetRot = Quaternion.LookRotation(m_SummonsVec);  // 角度
+        Vector3 SetPos = transform.position;                        // 出現位置
+        SetPos += m_SummonsVec;
 
-        SummonsBeastData.GetComponent<SummonsBeast>().SetMoveVec = m_SummonsVec;
+        GameObject FireBoalData = Instantiate(m_FireBoal, SetPos, SetRot, this.transform.parent);
 
-        SummonsBeastData.transform.parent = this.transform.parent;
+        FireBoalData.GetComponent<FireBoal>().SetMoveVec = m_SummonsVec;
 
         Destroy(this.gameObject);
 
-        return SummonsBeastData;
+        return FireBoalData;
     }
 
     public void UseFinisher() { m_UseFinisher = true; }

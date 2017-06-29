@@ -28,7 +28,7 @@ public class EnemyTriangleVertical : EnemyBase {
 
 	private void Move()
 	{
-        if (!m_bMove)
+        if (!m_Move)
             return;
 
 		Vector3 Rot = transform.localEulerAngles;

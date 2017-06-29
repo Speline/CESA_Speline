@@ -38,7 +38,7 @@ public class PlayerManager : MonoBehaviour
     {
         public string   ObjName;    // オブジェクト名
         public Vector3 SetPos;     // 位置
-        public Vector3 SetRot;     // 位置
+        public Vector3 SetRot;     // 角度
 
         public SetPlayerDAta(string Name, Vector3 Pos, Vector3 Rot)
         {
@@ -118,11 +118,11 @@ public class PlayerManager : MonoBehaviour
 
     void Awake()
     {
+        //--- プレイヤー設置
         GameObject AddObjData;
         m_SetPlayerDataArrey.ToList().ForEach(Data => {
-            AddObjData = Instantiate(m_PlayerObjPrefub,Data.SetPos,Quaternion.Euler(Data.SetRot));
+            AddObjData = Instantiate(m_PlayerObjPrefub, Data.SetPos, Quaternion.Euler(Data.SetRot), transform);
             AddObjData.name = Data.ObjName;
-            AddObjData.transform.SetParent(transform);
             AddObjData.GetComponent<Player>().FireBoalParent = m_FireBoalParent;
         });
     }
@@ -168,8 +168,8 @@ public class PlayerManager : MonoBehaviour
             if (x.AtackObjA != null &&
                 x.AtackObjB != null)
             {
-                SummonsBeast AtackScriptA = x.AtackObjA.GetComponent<SummonsBeast>();
-                SummonsBeast AtackScriptB = x.AtackObjB.GetComponent<SummonsBeast>();
+                FireBoal AtackScriptA = x.AtackObjA.GetComponent<FireBoal>();
+                FireBoal AtackScriptB = x.AtackObjB.GetComponent<FireBoal>();
 
                 //--- どちらかでも敵に当たっているか
                 x.AddComboFlg = AtackScriptA.EnemyHit | AtackScriptB.EnemyHit;

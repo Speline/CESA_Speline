@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿//========================================================
+// BGM管理
+//========================================================
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

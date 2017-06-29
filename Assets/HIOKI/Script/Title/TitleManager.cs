@@ -104,7 +104,7 @@ public class TitleManager : MonoBehaviour {
 		if (_CameraObj.ChangeCheck ()) {
 			if(nMaCnt == 0){
 				//ここに飛ぶ処理
-				Scenemanager.Instance.LoadLevel("StageSelect", 0.5f, 0.5f, 0.5f);
+				Scenemanager.Instance.LoadLevel("GameMain", 0.5f, 0.5f, 0.5f);
 				nMaCnt++;
 			}
 		}

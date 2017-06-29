@@ -42,7 +42,7 @@ public class EnemySquareRotation : EnemyBase {
 
 	private void Move ()
     {
-        if (!m_bMove)
+        if (!m_Move)
             return;
 
 		Vector3 EnemyPos = transform.localPosition;

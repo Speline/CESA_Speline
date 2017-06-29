@@ -9,9 +9,6 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     //--- メンバ変数 -----------------------------------------------------------------------------------
-    //--- メンバ定数
-    private const float SET_ROT_X = -35.0f;
-
     //--- 静的メンバ変数
     private static GameObject m_MahoujinPrefub = null;
 
@@ -123,9 +120,7 @@ public class Player : MonoBehaviour
     {
         Vector3 Pos = transform.position;
         Pos.y += 0.1f;
-        m_MagicSquareObject = Instantiate(m_MahoujinPrefub, Pos, Quaternion.identity) as GameObject;
-
-        m_MagicSquareObject.transform.parent = m_FireBoalParent.transform;
+        m_MagicSquareObject = Instantiate(m_MahoujinPrefub, Pos, Quaternion.identity, m_FireBoalParent.transform) as GameObject;
 
     }
 
@@ -136,6 +131,7 @@ public class Player : MonoBehaviour
         GameObject SummonObj = m_MagicSquareObject.GetComponent<MagicSquare>().Summon();
 
         //--- 攻撃アニメーション
+        m_ChildObj.GetComponent<Animator>().Play("chara_moveMKougeki2",0,0.0f);
 
 
         return SummonObj;

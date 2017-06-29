@@ -35,7 +35,7 @@ public class EnemyVerticalAdvance : EnemyBase {
 
 	private void Move()
     {
-        if (!m_bMove)
+        if (!m_Move)
             return;
 
 		Vector3 EnemyPos = transform.position;					//値代入

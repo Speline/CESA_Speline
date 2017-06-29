@@ -89,9 +89,11 @@
      <Compile Include="Assets\HIOKI\Script\Title\TitleStart.cs" />
      <Compile Include="Assets\HIOKI\Script\Title\magic.cs" />
      <Compile Include="Assets\HIOKI\Script\Title\whiteandblack.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\AspectCamera.cs" />
      <Compile Include="Assets\WASIDU\Scripts\EnemyBase.cs" />
      <Compile Include="Assets\WASIDU\Scripts\FinisherAtack.cs" />
      <Compile Include="Assets\WASIDU\Scripts\FinisherAtackObj.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\FireBoal.cs" />
      <Compile Include="Assets\WASIDU\Scripts\GameMainCamera.cs" />
      <Compile Include="Assets\WASIDU\Scripts\MagicSquare.cs" />
      <Compile Include="Assets\WASIDU\Scripts\Manager\BGMManager.cs" />
@@ -103,7 +105,6 @@
      <Compile Include="Assets\WASIDU\Scripts\NumberDraw.cs" />
      <Compile Include="Assets\WASIDU\Scripts\NumberImage.cs" />
      <Compile Include="Assets\WASIDU\Scripts\Player.cs" />
-     <Compile Include="Assets\WASIDU\Scripts\SummonsBeast.cs" />
      <Compile Include="Assets\YAMADA\Script\ParticleManager.cs" />
      <Compile Include="Assets\YAMADA\Script\TapEffect.cs" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonBasic.shader" />
