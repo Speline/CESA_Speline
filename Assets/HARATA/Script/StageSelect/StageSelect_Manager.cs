@@ -27,6 +27,9 @@ public class StageSelect_Manager : MonoBehaviour
 	bool bInitializ = true;										// 初期化フラグ(trueの時に初期化する)
 	List<bool> bFlgs = new List<bool>();						// 各処理が終わったかどうかのフラグ
 
+	static bool bSkip = false;									// GROUP_MOVE～STAGE_FADE_OUTまでをスキップして、いきなりSTAGE_SELECTにいくかどうか
+	bool bSkiped = false;										// 今回スキップしたかどうか
+
 	// 状態を管理するスクリプト
 	StageSelect_Char cs_Char;		// キャラクター
 	StageSelect_Camera cs_Camera;	// カメラ
@@ -43,11 +46,15 @@ public class StageSelect_Manager : MonoBehaviour
 		cs_Stage = GameObject.Find("StageManager").GetComponent<StageManager>();
 		cs_Button = GameObject.Find("Canvas").GetComponent<StageSelect_Button>();
 		cs_WhiteOut = GameObject.Find("WhiteOut").GetComponent<WhiteOut>();
+
+		BGMManager.Instance.Play("Stage_select");
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
+		Skip();
+
 		switch(State)
 		{
 			// 集団移動
@@ -180,15 +187,15 @@ public class StageSelect_Manager : MonoBehaviour
 	{
 		if (bInitializ)
 		{
-			InitializFlgs(2);	// このステートでは2個の関数を使う。
+			InitializFlgs(1);	// このステートでは2個の関数を使う。
 
 			bInitializ = false;	// 初期化終了
 		}
 
 		if (!bFlgs[0])
 			bFlgs[0] = cs_Camera.LinearMove();			// 手元を映すように、座標と注視点を変更する
-		if (!bFlgs[1])
-			bFlgs[1] = cs_Char.LeadCharFadeIn();		// 先頭キャラを透明にする
+		//if (!bFlgs[1])
+		//	bFlgs[1] = cs_Char.LeadCharFadeIn();		// 先頭キャラを透明にする
 
 		if(CheckFlgs())
 		{
@@ -244,7 +251,7 @@ public class StageSelect_Manager : MonoBehaviour
 	{
 		if (bInitializ)
 		{
-			InitializFlgs(2);	// このステートでは2個の関数を使う。
+			InitializFlgs(3);	// このステートでは3個の関数を使う。
 
 			bInitializ = false;	// 初期化終了
 		}
@@ -252,7 +259,9 @@ public class StageSelect_Manager : MonoBehaviour
 		if (!bFlgs[0])
 			bFlgs[0] = cs_Stage.StageSpriteSlideOut();		// 左右のステージ画像が画面外に消える
 		if (!bFlgs[1])
-			bFlgs[1] = cs_Button.ButtonImageFadeIn();		// ボタンを消す
+			bFlgs[1] = cs_Stage.StageSpriteMoveCenter();	// 選択された画像を画面中央に移動させる
+		if (!bFlgs[2])
+			bFlgs[2] = cs_Button.ButtonImageFadeIn();		// ボタンを消す
 
 		if (CheckFlgs())
 		{
@@ -292,7 +301,7 @@ public class StageSelect_Manager : MonoBehaviour
 
 			// 1回呼ぶだけでいいので、初期化処理で実行
 			GameObject.Find("Warp").GetComponent<StageSelect_Warp>().DrawWarp();		// ワープ表示
-			cs_Char.LeadCharDraw();														// 先頭キャラ表示
+			cs_Char.CharMoveMotion();
 
 			bInitializ = false;	// 初期化終了
 		}
@@ -347,11 +356,64 @@ public class StageSelect_Manager : MonoBehaviour
 
 		if (CheckFlgs())
 		{
+			bSkip = true;		// GROUP_MOVE～STAGE_FADE_OUTまでをスキップ
+
 			// シーン遷移
 			Scenemanager.Instance.LoadLevel("GameMain", 0.5f, 0.5f, 0.5f, Color.white);
 
 			bInitializ = true;						// 初期化可能状態にする
 			State = State_StageSelect.FIN;			// 終了
+		}
+	}
+
+	// スキップ処理
+	private void Skip()
+	{
+
+		if (bSkip && !bSkiped)
+		{
+			bSkiped = true;
+
+			bInitializ = true;							// 初期化可能状態にする
+			State = State_StageSelect.STAGE_SELECT;		// ステージセレクトへ
+
+			cs_Char.Skip();		// キャラクターのスキップ
+			cs_Camera.Skip();	// カメラのスキップ
+			cs_Stage.Skip();	// ステージのスキップ
+			cs_Button.Skip();	// ボタンのスキップ
+		}
+
+		if(InputManager.Instance.GetClick() == InputManager.CLICK_STATE.ONECLICK)
+		{
+			if(State == State_StageSelect.GROUP_MOVE         ||
+			   State == State_StageSelect.WAITING            ||
+			   State == State_StageSelect.LEADCHAR_MOVE      ||
+			   State == State_StageSelect.CAMERA_LINEAR_MOVE ||
+			   State == State_StageSelect.STAGE_FADE_OUT     ||
+			   !bSkiped)
+			{
+				bSkiped = true;
+
+				bInitializ = true;							// 初期化可能状態にする
+				State = State_StageSelect.STAGE_SELECT;		// ステージセレクトへ
+
+				cs_Char.Skip();		// キャラクターのスキップ
+				cs_Camera.Skip();	// カメラのスキップ
+				cs_Stage.Skip();	// ステージのスキップ
+				cs_Button.Skip();	// ボタンのスキップ
+			}
+			else if(State == State_StageSelect.STAGE_FADE_IN    ||
+					State == State_StageSelect.REQUEST_MOVE     ||
+					State == State_StageSelect.CAMERA_MOVE_UP   ||
+					State == State_StageSelect.REQUEST_MOVE     ||
+					State == State_StageSelect.CHAR_WARP_MOVE   ||
+					State == State_StageSelect.SCENE_TRANSITION   )
+			{
+				bSkip = true;
+
+				// シーン遷移
+				Scenemanager.Instance.LoadLevel("GameMain", 0.5f, 0.5f, 0.5f, Color.white);
+			}
 		}
 	}
 

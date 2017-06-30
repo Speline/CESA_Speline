@@ -63,6 +63,9 @@ public class TitleManager : MonoBehaviour {
 			GameObject.Find("Back").GetComponent<SpriteRenderer>().color = new Color(0, 0, 255);
 			break;
 		}
+
+		if(Input.GetKeyDown(KeyCode.D))
+			PlayerPrefs.DeleteAll();
 	}
 
 	private void StartTitle()

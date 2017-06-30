@@ -14,6 +14,7 @@ public class StageSelect_Char : MonoBehaviour
 	[SerializeField]	float fWarpMoveTime;	// ワープ上に移動するのにかける時間
 
 	Transform[] Char = new Transform[6];		// キャラ6人分のTransform
+	Animator[] animator = new Animator[6];		// キャラのAnimator
 	float fTime = 0.0f;
 
 	float fParameter = 0.0f;					// 移動に使うパラメーター
@@ -31,8 +32,11 @@ public class StageSelect_Char : MonoBehaviour
 	{
 		transform.position = new Vector3(transform.position.x, transform.position.y, fStartPos);	// 座標の初期化
 
-		for(int i = 0 ; i < transform.childCount ; i ++)			// 子のTransform取得
-			Char[i] = transform.GetChild(i);
+		for(int i = 0 ; i < transform.childCount ; i ++)
+		{
+			Char[i] = transform.GetChild(i);								// 子のTransform取得
+			animator[i] = Char[i].gameObject.GetComponent<Animator>();		// 子のAnimator取得
+		}
 
 		// ワープ魔法陣へ移動するときの座標取得
 		vWarpPos[0] = GameObject.Find("AdjustWarpPos1").GetComponent<Transform>().position;
@@ -60,6 +64,9 @@ public class StageSelect_Char : MonoBehaviour
 			fParameter = 0.0f;		// パラメーター初期化
 
 			transform.position = new Vector3(transform.position.x, transform.position.y, fGroupStopPos);
+
+			for (int i = 0; i < transform.childCount; i++)
+				animator[i].SetBool("bWalk", false);		// キャラクターを待機モーションにする
 
 			return true;
 		}
@@ -95,13 +102,24 @@ public class StageSelect_Char : MonoBehaviour
 	{
 		fParameter += Time.deltaTime / fLeadMoveTime;
 
-		// 狩猟判定
+		// 初期化処理
+		if(bInitializ)
+		{
+			animator[0].SetBool("bWalk", true);		// 先頭キャラだけ歩きモーションに
+
+			bInitializ = false;
+		}
+
+		// 終了判定
 		if (fParameter >= 1.0f)
 		{
 			fParameter = 0.0f;		// パラメーター初期化
 
 			Char[0].localPosition = new Vector3(transform.position.x, transform.position.y, fLeadStopPos);
-			// ここで、カメラを手元に
+
+			animator[0].SetBool("bWalk", false);		// 先頭キャラだけ待機モーションに
+			
+			bInitializ = true; 
 
 			return true;
 		}
@@ -113,55 +131,10 @@ public class StageSelect_Char : MonoBehaviour
 		return false;
 	}
 
-	// 先頭キャラを透明にする
-	public bool LeadCharFadeIn()
+	public void CharMoveMotion()
 	{
-		// 初期化処理
-		if(bInitializ)
-		{
-			fTime = 0.0f;
-
-			fParameter = 0.0f;												// パラメーター初期化
-			LeadCharMat = Char[0].GetComponent<MeshRenderer>().material;	// 先頭キャラのマテリアル取得
-			LeadCharMat.EnableKeyword("_Color");							// "_Color"を変更可能にしておく
-
-			bInitializ = false;		// 初期化終了
-		}
-
-		// 待ち時間(StageSelect_Camera.csのfLinearMoveWaitTimeと同じ)
-		fTime += Time.deltaTime;
-		if (fTime < 0.5f)
-			return false;
-
-		fParameter += Time.deltaTime / fFadeInTime;
-		if(fParameter >= 1.0f)
-		{
-			//LeadCharMat.color = new Color(LeadCharMat.color.r, LeadCharMat.color.b, LeadCharMat.color.b, 0.0f);
-			LeadCharMat.SetColor("_Color", new Color(LeadCharMat.color.r, LeadCharMat.color.b, LeadCharMat.color.b, 0.0f));
-			LeadCharMat.DisableKeyword("_Color");	// "_Color"を変更不可能にしておく
-
-			fParameter = 0.0f;
-			bInitializ = true;
-
-			return true;
-		}
-
-		float fAlpha;
-		fAlpha = Mathf.Lerp(1.0f, 0.0f, fParameter);
-
-		LeadCharMat.SetColor("_Color", new Color(LeadCharMat.color.r, LeadCharMat.color.b, LeadCharMat.color.b, fAlpha));
-
-		return false;
-	}
-
-	// 先頭キャラを表示する
-	public void LeadCharDraw()
-	{
-		LeadCharMat.EnableKeyword("_Color");	// "_Color"を変更可能にしておく
-
-		LeadCharMat.SetColor("_Color", new Color(LeadCharMat.color.r, LeadCharMat.color.b, LeadCharMat.color.b, 1.0f));
-
-		LeadCharMat.DisableKeyword("_Color");	// "_Color"を変更不可能にしておく
+		for (int i = 0; i < 6; i++)
+			animator[i].SetBool("bWalk", true);		// キャラクターを歩きモーションにする
 	}
 
 	// ワープ上に移動する
@@ -176,7 +149,9 @@ public class StageSelect_Char : MonoBehaviour
 
 			// 移動開始座標保存
 			for(int i = 0 ; i < 6 ; i ++)
+			{
 				vStartPos[i] = Char[i].position;
+			}
 
 			bInitializ = false;		// 初期化終了
 		}
@@ -187,7 +162,10 @@ public class StageSelect_Char : MonoBehaviour
 			fParameter = 0.0f;
 
 			for (int i = 0; i < 6; i++)
+			{
 				Char[i].position = vWarpPos[i];
+				animator[i].SetBool("bWalk", false);		// キャラクターを待機モーションにする
+			}
 
 			bInitializ = true;
 
@@ -204,5 +182,23 @@ public class StageSelect_Char : MonoBehaviour
 		}
 
 		return false;
+	}
+
+	// スキップ処理
+	public void Skip()
+	{
+		fParameter = 0.0f;
+		fTime = 0.0f;
+		bInitializ = true;
+
+		// 集団移動を完了させる
+		transform.position = new Vector3(transform.position.x, transform.position.y, fGroupStopPos);
+
+		// キャラクターを待機モーションにする
+		for(int i = 0 ; i < 6 ; i ++)
+			animator[i].SetBool("bWalk", false);
+
+		// 先頭キャラの移動を完了させる
+		Char[0].localPosition = new Vector3(transform.position.x, transform.position.y, fLeadStopPos);
 	}
 }

@@ -60,6 +60,13 @@ public class StageManager : MonoBehaviour
 	[SerializeField]	float fCounterScale;		// 最終的な拡大率
 	float fStartScale;								// 移動開始時の拡大率
 
+	int nCenterNo;									// 今真ん中にある画像の添え字
+
+	// 選択画像真ん中移動用
+	bool bInitializ2 = true;
+	float fParametor2 = 0.0f;
+	float fTime2 = 0.0f;
+	[SerializeField]	float fMoveCenterWaitTime;
 
 	// Use this for initialization
 	void Start()
@@ -93,8 +100,9 @@ public class StageManager : MonoBehaviour
 
 			StartPos[i] = fPos;
 			Trans[i].localPosition = new Vector3(fPos, Trans[i].localPosition.y, Trans[i].localPosition.z);
-        }
-        BGMManager.Instance.Play("Stage_select");
+		}
+
+		nCenterNo = 0;		// 開始時の真ん中の画像は0番目
 	}
 
 	// Update is called once per frame
@@ -273,7 +281,7 @@ public class StageManager : MonoBehaviour
 			// ステージ決定
 			for(int i = 0 ; i < StageObj.GetLength(0) ; i ++)
 			{
-				if(DecisionObj == StageObj[i])
+				if(DecisionObj == StageObj[i] && i == nCenterNo)
 				{
 					nStageNo = i;		// StageSpriteSlideOut()で使うので保存しておく
 
@@ -430,6 +438,26 @@ public class StageManager : MonoBehaviour
 		return fDistance;
 	}
 
+	// どの画像が真ん中にあるか調べる
+	private void CheckCenter()
+	{
+		int nCenter = 0;
+		float fDistance, fNearDistance = 100.0f;
+
+		for (int i = 0; i < StageObj.GetLength(0); i++)
+		{
+			fDistance = Mathf.Abs(StageObj[i].transform.localPosition.x);
+
+			if (fNearDistance > fDistance)
+			{
+				nCenter = i;
+				fNearDistance = fDistance;
+			}
+		}
+
+		nCenterNo = nCenter;
+	}
+
 
 
 	// ステージセレクトの画像を出現させる
@@ -438,6 +466,7 @@ public class StageManager : MonoBehaviour
 		if(bInitializ)
 		{
 			fParameter = 0.0f;
+			gameObject.GetComponent<StageSelect_Record>().FadeInRecord(SpriteFadeOutTime);
 
 			bInitializ = false;
 		}
@@ -476,6 +505,9 @@ public class StageManager : MonoBehaviour
 		// 移動
 		Move();
 
+		// 真ん中にある画像をチェック
+		CheckCenter();
+
 		// ステージ選択
 		return StaSele();
 	}
@@ -507,11 +539,11 @@ public class StageManager : MonoBehaviour
 		// 終了判定
 		if (fTime >= fSlideOutTime)
 		{
-			// 左右の2枚のスライドアウトが完了したのに合わせて、選択した画像以外を透明にする
+			// 左右の2枚のスライドアウトが完了したのに合わせて、選択した画像以外を消す
 			for (int i = 0; i < sr.GetLength(0); i++)
 			{
 				if(i != nStageNo)
-					sr[i].color = new Color(sr[i].color.r, sr[i].color.g, sr[i].color.b, 0.0f);
+					Destroy(StageObj[i]);
 			}
 
 			this.gameObject.GetComponent<CameraBillboard>().enabled = false;	// カメラに追従するのをやめる。
@@ -526,6 +558,41 @@ public class StageManager : MonoBehaviour
 		Trans[nMoveStageNo[0]].localPosition = pos;
 		pos = new Vector3(Trans[nMoveStageNo[1]].localPosition.x + fMove * Time.deltaTime, Trans[nMoveStageNo[1]].localPosition.y, Trans[nMoveStageNo[1]].localPosition.z);
 		Trans[nMoveStageNo[1]].localPosition = pos;
+
+		return false;
+	}
+
+	// 選択されたステージ画像を画面中央に移動させる
+	public bool StageSpriteMoveCenter()
+	{
+		if (bInitializ2)
+		{
+			fParametor2 = 0.0f;
+			vStartPos = StageObj[nStageNo].transform.localPosition;
+
+			bInitializ2 = false;
+		}
+
+		fParametor2 += Time.deltaTime / fSlideOutTime;
+
+		// 終了判定
+		if (fParametor2 >= 1.0f)
+		{
+			StageObj[nStageNo].transform.localPosition = new Vector3(0.0f, vStartPos.y, vStartPos.z);
+
+			fTime2 += Time.deltaTime;
+			if (fTime2 >= fMoveCenterWaitTime)
+			{
+				bInitializ2 = true;		// 初期化処理をできるようにしておく
+				return true;
+			}
+			
+			return false;
+		}
+
+		// 移動
+		Vector3 pos = new Vector3(Mathf.Lerp(vStartPos.x, 0.0f, fParametor2), vStartPos.y, vStartPos.z);
+		StageObj[nStageNo].transform.localPosition = pos;
 
 		return false;
 	}
@@ -576,8 +643,18 @@ public class StageManager : MonoBehaviour
 
 		return false;
 	}
+
+	// スキップ処理
+	public void Skip()
+	{
+		fParameter = 0.0f;
+		fTime = 0.0f;
+		bInitializ = true;
+
+		for (int i = 0; i < sr.GetLength(0); i++)
+			sr[i].color = new Color(sr[i].color.r, sr[i].color.g, sr[i].color.b, 1.0f);
+
+		// 記録も一緒にスキップ処理させる
+		gameObject.GetComponent<StageSelect_Record>().Skip();
+	}
 }
-
-
-// あと、中心に来ている画像の左右の画像を押されても反応しない処理を追加する。
-// もし押されたら、決定ではなく左右ボタンが押された時みたいに、１つ分スライドさせてやればいいと思う。

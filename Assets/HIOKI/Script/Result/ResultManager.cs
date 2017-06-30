@@ -72,15 +72,40 @@ public class ResultManager : MonoBehaviour {
 		_QuestObj = _Quest.GetComponent<Quest>();
 		_MagObj = _Mag.GetComponent<ResultMagic>();
 		#endregion
-		for (int i = 0; i < 10; i++) {
-			if (!(PlayerPrefs.HasKey ("Stage" + i))) {
-				PlayerPrefs.SetFloat ("TimeStage" + i, 0.0f);
-				PlayerPrefs.SetInt ("ScoreStage" + i, 0);
+
+		Debug.Log("GameManager.GetStage : " + (GameManager.GetStage+1));
+
+
+		if (PlayerPrefs.HasKey("TimeStage" + (GameManager.GetStage + 1)))
+		{
+			float fTime = PlayerPrefs.GetFloat("TimeStage" + (GameManager.GetStage + 1));
+			if (fTime > fSetTime)
+			{
+				PlayerPrefs.SetFloat("TimeStage" + (GameManager.GetStage + 1), fSetTime);
+				Debug.Log("タイム新記録のステージ番号 : " + (GameManager.GetStage + 1));
 			}
 		}
+		else
+		{
+			PlayerPrefs.SetFloat("TimeStage" + (GameManager.GetStage + 1), fSetTime);
+			Debug.Log("タイムを保存 : " + fSetTime);
+		}
 
-		PlayerPrefs.SetFloat ("TimeStage" + GameManager.GetStage, fSetTime);
-		PlayerPrefs.SetInt ("ScoreStage" + GameManager.GetStage, nSetScore);
+
+		if (PlayerPrefs.HasKey("ScoreStage" + (GameManager.GetStage + 1)))
+		{
+			int nScore = PlayerPrefs.GetInt("ScoreStage" + (GameManager.GetStage + 1));
+			if (nScore < nSetScore)
+			{
+				PlayerPrefs.SetInt("ScoreStage" + (GameManager.GetStage + 1), nSetScore);
+				Debug.Log("スコア新記録のステージ番号 : " + nSetScore);
+			}
+		}
+		else
+		{
+			PlayerPrefs.SetInt("ScoreStage" + (GameManager.GetStage + 1), nSetScore);
+			Debug.Log("スコアを保存 : " + nSetScore);
+		}
 
 		PlayerPrefs.Save ();
 

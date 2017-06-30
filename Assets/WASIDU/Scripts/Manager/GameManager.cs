@@ -38,6 +38,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private GameObject m_ComboDrawObj;     // コンボ表示オブジェクト
     [SerializeField]
     private GameObject m_ConfigCanvas;     // コンフィグ表示オブジェクト
+    [SerializeField]
+    private ParticleSystem m_CrearEfect;     // コンフィグ表示オブジェクト
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
 	void Awake ()
@@ -88,10 +90,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
             case GameManager.GameState.GAME_CLEAR:
 
-                if (ParticleManager.Instance.Star.isPlaying == false)
+                if (m_CrearEfect.isPlaying == false)
                 {
-                    ParticleManager.Instance.Star.Play();
-                    ParticleManager.Instance.StarObj.transform.position = new Vector3(0.0f, 10.0f, 0.0f);
+                    m_CrearEfect.Play();
                 }
 
                 if (m_NowStateElapsedTime > 5.0f && !m_EndFlg)
@@ -102,7 +103,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                 break;
 
             case GameManager.GameState.GAME_OVER:
-                m_GameOverCanvas.SetActive(true);
+                if (m_NowStateElapsedTime > 5.0f && !m_EndFlg)
+                {
+                    m_EndFlg = true;
+                    m_GameOverCanvas.SetActive(true);
+                }
                 break;
         }
     }

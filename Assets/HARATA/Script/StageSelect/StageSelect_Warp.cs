@@ -11,11 +11,20 @@ public class StageSelect_Warp : MonoBehaviour
 	float fAngle = 0.0f;
 	SpriteRenderer sr;
 
+	ParticleSystem ps;
+	ParticleSystem ps1;
+
 	// Use this for initialization
 	void Start ()
 	{
 		sr = GetComponent<SpriteRenderer>();
 		sr.enabled = false;		// 最初は見えないようにしておく
+
+		//ps = transform.GetChild(0).GetComponent<ParticleSystem>();
+		ps = GameObject.Find("Aura").GetComponent<ParticleSystem>();
+		ps.Stop();
+		ps1 = GameObject.Find("Aura").GetComponent<Transform>().GetChild(0).GetComponent<ParticleSystem>();
+		ps1.Stop();
 	}
 	
 	// Update is called once per frame
@@ -33,11 +42,14 @@ public class StageSelect_Warp : MonoBehaviour
 	public void DrawWarp()
 	{
 		sr.enabled = true;
+		ps.Play();
+		ps1.Stop();
 	}
 
 	// 回転を開始する
 	public void StartRotate()
 	{
 		bRotate = true;
+		ps1.Play();
 	}
 }

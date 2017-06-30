@@ -46,6 +46,11 @@ public class Scenemanager : MonoBehaviour
 	// 描画遷移
 	public void LoadLevel(string scene, float fadeinTime, float waitTime, float fadeoutTime)
 	{
+		if(isFading)
+			return;
+
+		isFading = true;
+
 		StartCoroutine( aaa(scene, fadeinTime, waitTime, fadeoutTime) );
 	}
 
@@ -83,6 +88,7 @@ public class Scenemanager : MonoBehaviour
 		Fade.Instance.FadeOut(fadeoutTime, () =>
 		{
 			//FadeColor = Color.black;
+			isFading = false;
 		});
 	}
 	

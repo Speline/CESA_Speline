@@ -57,6 +57,7 @@
      <Compile Include="Assets\HARATA\Script\StageSelect\StageSelect_Camera.cs" />
      <Compile Include="Assets\HARATA\Script\StageSelect\StageSelect_Char.cs" />
      <Compile Include="Assets\HARATA\Script\StageSelect\StageSelect_Manager.cs" />
+     <Compile Include="Assets\HARATA\Script\StageSelect\StageSelect_Record.cs" />
      <Compile Include="Assets\HARATA\Script\StageSelect\StageSelect_Warp.cs" />
      <Compile Include="Assets\HARATA\Script\StageSelect\WhiteOut.cs" />
      <Compile Include="Assets\HARATA\Script\System\InputManager.cs" />
@@ -116,6 +117,7 @@
      <None Include="Assets\WASIDU\Resources\StageData\StageData.txt" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
      <None Include="Assets\Standard Assets\Effects\ToonShading\Shaders\ToonLit.shader" />
+     <None Include="Assets\HARATA\AssetStore\Flower Set\Shaders\Transparent-BumpSpecNoCull.shader" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

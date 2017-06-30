@@ -56,6 +56,7 @@ public class EnemyBase : MonoBehaviour
                 break;
 
             case GameManager.GameState.GAME_OVER:
+                Move();
                 if (transform.parent != null &&
                     transform.parent.tag == "FireBoal")
                 {

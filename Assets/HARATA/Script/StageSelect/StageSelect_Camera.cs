@@ -177,46 +177,6 @@ public class StageSelect_Camera : MonoBehaviour
 		return false;
 	}
 
-	// Y上方向にカメラを退く
-	//public bool MoveUp()
-	//{
-	//	Vector3 vPos = Vector3.zero;
-	//
-	//	// 初期化処理
-	//	if (bInitializ)
-	//	{
-	//		fTime = 0.0f;						// タイマー初期化
-	//		fParameter = 0.0f;					// パラメーター変数初期化
-	//		vStartPos = transform.position;		// 移動開始座標を保存
-	//
-	//		bInitializ = false;
-	//	}
-	//
-	//	// 移動開始待ち
-	//	fTime += Time.deltaTime;
-	//	if (fTime <= fMoveUpWaitTime)
-	//		return false;
-	//
-	//	fParameter += Time.deltaTime / fMoveUpTime;
-	//
-	//	// 終了判定
-	//	if (fParameter >= 1.0f)
-	//	{
-	//		transform.position = vMoveUpPos;
-	//
-	//		bInitializ = true;
-	//
-	//		return true;
-	//	}
-	//
-	//	vPos.x = Mathf.Lerp(vStartPos.x, vMoveUpPos.x, fParameter);
-	//	vPos.y = Mathf.Lerp(vStartPos.y, vMoveUpPos.y, fParameter);
-	//	vPos.z = Mathf.Lerp(vStartPos.z, vMoveUpPos.z, fParameter);
-	//	transform.position = vPos;
-	//
-	//	return false;
-	//}
-
 	// 真下を見ているところから、ワープのほうを向くのにかける時間
 	public bool LookAtWarp()
 	{
@@ -269,41 +229,25 @@ public class StageSelect_Camera : MonoBehaviour
 
 		return false;
 	}
-	// 真下を見ているところから、ワープのほうを向くのにかける時間
-	//public bool LookAtWarp()
-	//{
-	//	Vector3 vForward = Vector3.zero;
-	//
-	//	// 初期化処理
-	//	if (bInitializ)
-	//	{
-	//		fParameter = 0.0f;
-	//
-	//		vLookAtPos = transform.eulerAngles;
-	//
-	//		bInitializ = false;		// 初期化終了
-	//	}
-	//
-	//	fParameter += Time.deltaTime / fLookAtWarpTime;
-	//
-	//	// 終了判定
-	//	if (fParameter >= 1.0f)
-	//	{
-	//		fParameter = 0.0f;
-	//
-	//		transform.eulerAngles = new Vector3(65.0f, 65.0f, 0.0f);
-	//
-	//		bInitializ = true;
-	//
-	//		return true;
-	//	}
-	//
-	//	// 注視点(前方ベクトル)
-	//	vForward.x = Mathf.Lerp(vLookAtPos.x, 65.0f, fParameter);
-	//	vForward.y = Mathf.Lerp(vLookAtPos.y, 65.0f, fParameter);
-	//	vForward.z = 0.0f;
-	//	transform.eulerAngles = vForward;
-	//
-	//	return false;
-	//}
+
+	// スキップ処理
+	public void Skip()
+	{
+		Vector3 vPos;
+		Vector3 vForward;
+
+		fParameter = 0.0f;
+		fTime = 0.0f;
+		bInitializ = true;
+
+		vPos.x = 0.0f;
+		vPos.y = LeadChar.position.y + vLookAtStaseleOffsetPos.y + fStaseleDistance;
+		vPos.z = LeadChar.position.z + vLookAtStaseleOffsetPos.z;
+		transform.position = vPos;
+
+		vForward.x = 0.0f;
+		vForward.y = (LeadChar.position.y + vLookAtStaseleOffsetPos.y) - transform.position.y;
+		vForward.z = (LeadChar.position.z + vLookAtStaseleOffsetPos.z) - transform.position.z;
+		transform.forward = vForward;
+	}
 }

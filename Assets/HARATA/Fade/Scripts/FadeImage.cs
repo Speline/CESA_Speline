@@ -26,7 +26,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
-
 public class FadeImage : UnityEngine.UI.Graphic , IFade
 {
 	// フェード画像の組み合わせ

@@ -116,4 +116,15 @@ public class StageSelect_Button : MonoBehaviour {
 
 		return false;
 	}
+
+	// スキップ処理
+	public void Skip()
+	{
+		bCanPush = true;
+		bInitializ =true;
+		fAlpha = 1.0f;
+
+		for (int i = 0; i < img.GetLength(0); i++)
+			img[i].color = new Color(img[i].color.r, img[i].color.g, img[i].color.b, 1.0f);
+	}
 }

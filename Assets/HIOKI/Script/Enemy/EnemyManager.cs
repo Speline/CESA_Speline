@@ -53,6 +53,8 @@ public class EnemyManager : MonoBehaviour
 
 	private static int nStStageEnemy;
 
+    private float m_GameOverTime;
+
 	enum EnemyMove
 	{
 		VerticalAdvance = 0,
@@ -101,6 +103,12 @@ public class EnemyManager : MonoBehaviour
                 break;
 
             case GameManager.GameState.GAME_OVER:
+                m_GameOverTime += Time.deltaTime;
+                if (m_GameOverTime < 3.0f)
+                {
+                    AddEnemy();
+                    Create();
+                }
                 break;
         }
 
