@@ -56,7 +56,7 @@ public class EnemyBase : MonoBehaviour
                 break;
 
             case GameManager.GameState.GAME_OVER:
-                Move();
+                GameOverMove();
                 if (transform.parent != null &&
                     transform.parent.tag == "FireBoal")
                 {
@@ -88,7 +88,8 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    protected virtual void Move(){}
+    protected virtual void Move() { }
+    protected virtual void GameOverMove() { }
 
     //--- 当たり判定
     protected void OnTriggerEnter(Collider col)

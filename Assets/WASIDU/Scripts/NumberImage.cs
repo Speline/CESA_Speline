@@ -26,7 +26,7 @@ public class NumberImage : MonoBehaviour
     {
         if (m_NumberSprites == null)
         {
-            m_NumberSprites = Resources.LoadAll<Sprite>("NumberW_256×512");
+            m_NumberSprites = Resources.LoadAll<Sprite>("NumberW");
         }
 
         SetUV();

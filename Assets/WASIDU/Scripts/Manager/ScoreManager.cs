@@ -15,6 +15,8 @@ public class ScoreManager : MonoBehaviour
     private NumberDraw m_ScoreNumberDrawScript;
     [SerializeField]
     private NumberDraw m_ComboNumberDrawScript;
+    [SerializeField]
+    private GameObject m_ComboDraw;
 
     private int m_Score;    // スコア
     private int m_ComboCnt;   // コンボ数
@@ -34,6 +36,33 @@ public class ScoreManager : MonoBehaviour
 
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        //--- ステートによる変更処理
+        switch (GameManager.Instance.NowState)
+        {
+            case GameManager.GameState.SETTING:
+                m_ComboDraw.SetActive(false);
+                break;
+
+            case GameManager.GameState.MAGIC_SQUARE_SETTING:
+            case GameManager.GameState.PLAYER_SETTING:
+            case GameManager.GameState.GAME_START:
+            case GameManager.GameState.GAME_MAIN:
+                break;
+
+            case GameManager.GameState.GAME_CLEAR:
+                m_ComboDraw.SetActive(false);
+                break;
+
+            case GameManager.GameState.GAME_OVER:
+                m_ComboDraw.SetActive(false);
+                break;
+        }
+
+    }
+
     //--- コンボ設定
     public void SetCombo(bool bHit)
     {
@@ -43,6 +72,12 @@ public class ScoreManager : MonoBehaviour
             //--- コンボ初期値に
             m_ComboCnt = 0;
             m_ComboNumberDrawScript.SetNumber(m_ComboCnt);
+
+            m_ComboDraw.SetActive(false);
+        }
+        else
+        {
+            m_ComboDraw.SetActive(true);
         }
     }
 

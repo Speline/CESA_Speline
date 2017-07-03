@@ -46,7 +46,6 @@ public class EnemyManager : MonoBehaviour
 	private int nMax = 3;
 
 	private static int nNowEnemy = 0;
-    private int nEyMax = 0;
 
 	private int nCnt = 0;
 
@@ -55,7 +54,6 @@ public class EnemyManager : MonoBehaviour
 	private static int nStStageEnemy;
 
     private float m_GameOverTime;
-    private int nSSS = 0;
 
 	enum EnemyMove
 	{
@@ -82,10 +80,8 @@ public class EnemyManager : MonoBehaviour
 
 		nSt = nStStageEnemy;							//ステージセット
 		nNowEnemy = 0;									//初期化
-        nEyMax = 0;
-        nSSS = 0;
 
-    myList.Clear();
+        myList.Clear();
 	}
 	
 	// Update is called once per frame
@@ -126,19 +122,15 @@ public class EnemyManager : MonoBehaviour
 
 		if (nCnt >= 30) {
 
-			if (nEyMax >= EnemyMax[GameManager.GetStage] || nNowEnemy >= nMax) {
+			if (nNowEnemy >= EnemyMax[nSt] || nNowEnemy >= nMax) {
 				nCnt = 0;
 				return;
 			}
+            
+			//int nSpawPoint = Random.Range (0, SpawPos.Length);
+			//int nSpawPointSq = Random.Range (0, SpawPos_Sq.Length);
 
-            //Debug.Log(nNowEnemy);
-            ///nSSS++;
-            //Debug.Log(nSSS+"回目");
-
-            //int nSpawPoint = Random.Range (0, SpawPos.Length);
-            //int nSpawPointSq = Random.Range (0, SpawPos_Sq.Length);
-
-            int nMoveEnemies = _StageEObj.SetEnemyStage (GameManager.GetStage);
+			int nMoveEnemies = _StageEObj.SetEnemyStage (GameManager.GetStage);
 
 			int nNowNomber = 0;
             int nSpawPoint = 0;
@@ -188,7 +180,6 @@ public class EnemyManager : MonoBehaviour
 			}
 
 			nNowEnemy++;
-            nEyMax++;
 			nCnt = 0;
 		}
 	}
@@ -222,12 +213,10 @@ public class EnemyManager : MonoBehaviour
     public static void DestroyEnemy(GameObject DestryObj)
     {
         myList.Remove(DestryObj);
-        //Debug.Log("chihaya");
         nNowEnemy--;
-        
+
         if (nNowEnemy <= 0)
             nNowEnemy = 0;
-        Debug.Log(nNowEnemy);
     }
 
 	//static public void StageEnemy(int i)

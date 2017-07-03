@@ -31,13 +31,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private float       m_NowStateElapsedTime;  // 現在のステートの経過時間
     private bool        m_EndFlg;				// シーン遷移の関数を1回しか呼ばないためのフラグ
 
+    private bool m_TimeMoveEnd;
+
     // SerializeField
     [SerializeField] private GameObject m_EnemyParent;      // 敵の親オブジェクト
     [SerializeField] private GameObject m_GameOverCanvas;   // ゲームオーバーキャンバス
-    [SerializeField]
-    private GameObject m_ComboDrawObj;     // コンボ表示オブジェクト
-    [SerializeField]
-    private GameObject m_ConfigCanvas;     // コンフィグ表示オブジェクト
+    [SerializeField] private GameObject m_ConfigCanvas;     // コンフィグ表示オブジェクト
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
 	void Awake ()
@@ -53,9 +52,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
         m_GameOverCanvas.SetActive(false);
         m_ConfigCanvas.SetActive(false);
-        m_ComboDrawObj.SetActive(false);
 
         m_NowStateElapsedTime = 0.0f;
+
+        m_TimeMoveEnd = false;
 	}
 
     //--- 更新
@@ -71,8 +71,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                 break;
 
             case GameManager.GameState.GAME_START:
-                m_ComboDrawObj.SetActive(true);
-                ChangeState(GameState.GAME_MAIN);
+                if (m_TimeMoveEnd)
+                    ChangeState(GameState.GAME_MAIN);
                 break;
 
             case GameManager.GameState.GAME_MAIN:
@@ -123,6 +123,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     //--- 情報設定
     public static int SetStage { set { m_StageNum = value; } }
+    public bool SetTimeMoveEnd { set { m_TimeMoveEnd = value; } }
 
     public void ConfigCamvas(bool Active)
     {

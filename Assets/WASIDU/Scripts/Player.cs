@@ -80,6 +80,7 @@ public class Player : MonoBehaviour
                 break;
 
             case GameManager.GameState.GAME_OVER:
+                AtackCancel();
                 m_ChildObj.GetComponent<Animator>().SetBool("GameOver", true);
                 break;
         }
