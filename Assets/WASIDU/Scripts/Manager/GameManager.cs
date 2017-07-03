@@ -38,8 +38,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private GameObject m_ComboDrawObj;     // コンボ表示オブジェクト
     [SerializeField]
     private GameObject m_ConfigCanvas;     // コンフィグ表示オブジェクト
-    [SerializeField]
-    private ParticleSystem m_CrearEfect;     // コンフィグ表示オブジェクト
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
 	void Awake ()
@@ -65,11 +63,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         m_NowStateElapsedTime += Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-
 
         switch (m_NowState)
         {
@@ -89,12 +82,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                 break;
 
             case GameManager.GameState.GAME_CLEAR:
-
-                if (m_CrearEfect.isPlaying == false)
-                {
-                    m_CrearEfect.Play();
-                }
-
                 if (m_NowStateElapsedTime > 5.0f && !m_EndFlg)
                 {
 					m_EndFlg = true;
@@ -131,7 +118,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     //--- 情報取得
     public GameState    NowState { get { return m_NowState; } }
-    public static int   GetStage { get { return m_StageNum; } }
+    public static int GetStage { get { return m_StageNum; } }
+    public float GetNowStateElapsedTime { get { return m_NowStateElapsedTime; } }
 
     //--- 情報設定
     public static int SetStage { set { m_StageNum = value; } }

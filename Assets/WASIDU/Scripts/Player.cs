@@ -76,6 +76,7 @@ public class Player : MonoBehaviour
                 break;
 
             case GameManager.GameState.GAME_CLEAR:
+                AtackCancel();
                 break;
 
             case GameManager.GameState.GAME_OVER:

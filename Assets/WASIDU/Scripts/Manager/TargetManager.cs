@@ -141,7 +141,6 @@ public class TargetManager : MonoBehaviour
         //--- 制限時間表示
         m_TimeImage.fillAmount = m_TimeLimitCounter / 10.0f;
 
-        //--- 一定時間ごとに判定（変更できるようにしておくか）
         //--- 目標数達成しているか
         if (m_ScoreManagerScript.Score >= m_TargetDataList[m_NowTargetNumber].TargetScore)
         {// 達成している場合

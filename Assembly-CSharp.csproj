@@ -97,6 +97,7 @@
      <Compile Include="Assets\WASIDU\Scripts\FireBoal.cs" />
      <Compile Include="Assets\WASIDU\Scripts\GameMainCamera.cs" />
      <Compile Include="Assets\WASIDU\Scripts\GameMainObjectBase.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\HexagramObj.cs" />
      <Compile Include="Assets\WASIDU\Scripts\MagicSquare.cs" />
      <Compile Include="Assets\WASIDU\Scripts\Manager\BGMManager.cs" />
      <Compile Include="Assets\WASIDU\Scripts\Manager\GameManager.cs" />
