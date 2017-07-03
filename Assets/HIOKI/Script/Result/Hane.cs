@@ -110,7 +110,7 @@ public class Hane : MonoBehaviour {
 	{
 		Vector3 pos = transform.localPosition;
 		pos.x -= 0.1f;
-		pos.y -= 0.03f;
+		pos.y -= 0.06f;
 
 		if (pos.y <= fStartStop[1]) {
 			Debug.Log ("ストップ");
