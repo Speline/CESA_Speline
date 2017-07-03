@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HexagramObj : MonoBehaviour
+public class HexagramObj : GameMainObjectBase
 {
     //--- メンバ変数 -----------------------------------------------------------------------------------
     //--- 静的メンバ変数
@@ -15,8 +15,7 @@ public class HexagramObj : MonoBehaviour
 
     private bool m_GameOverStart;   // ゲームオーバー開始判定
 
-    [SerializeField]
-    private ParticleSystem m_CrearEfect;     // クリア時のエフェクト
+    [SerializeField] private ParticleSystem m_CrearEfect;     // クリア時のエフェクト
 
     //--- メンバ関数 -----------------------------------------------------------------------------------
 	// Use this for initialization
@@ -30,39 +29,22 @@ public class HexagramObj : MonoBehaviour
         m_FieldHexagramBaraObject.SetActive(false);
 	}
 	
-	// Update is called once per frame
-	void Update ()
+    protected override void GameClear()
     {
-        switch (GameManager.Instance.NowState)
+        float HexagramScale = 1f - GameManager.Instance.GetNowStateElapsedTime;
+        if (HexagramScale > 0.0f)
         {
-            case GameManager.GameState.SETTING:
-            case GameManager.GameState.MAGIC_SQUARE_SETTING:
-            case GameManager.GameState.PLAYER_SETTING:
-            case GameManager.GameState.GAME_START:
-            case GameManager.GameState.GAME_MAIN:
-                break;
-
-            case GameManager.GameState.GAME_CLEAR:
-                float HexagramScale = 1f - GameManager.Instance.GetNowStateElapsedTime;
-                if (HexagramScale > 0.0f)
-                {
-                    transform.localScale = new Vector3(HexagramScale, HexagramScale, HexagramScale);
-                }
-                else if (m_CrearEfect.isPlaying == false)
-                {
-                    m_CrearEfect.Play();
-                    ParticleManager.Instance.MainExplosion.Play();
-                    ParticleManager.Instance.MainExplosionObj.transform.position = transform.position;
-                }
-                break;
-
-            case GameManager.GameState.GAME_OVER:
-                GameOver();
-                break;
+            transform.localScale = new Vector3(HexagramScale, HexagramScale, HexagramScale);
         }
-	}
+        else if (m_CrearEfect.isPlaying == false)
+        {
+            m_CrearEfect.Play();
+            ParticleManager.Instance.MainExplosion.Play();
+            ParticleManager.Instance.MainExplosionObj.transform.position = transform.position;
+        }
+    }
 
-    private void GameOver()
+    protected override void GameOver()
     {
         if (!m_GameOverStart)
         {

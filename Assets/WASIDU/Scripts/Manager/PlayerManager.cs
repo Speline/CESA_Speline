@@ -142,16 +142,17 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case GameManager.GameState.GAME_CLEAR:
-                //--- 攻撃ガイド線消滅
-                m_PairObjDataList.ForEach(x =>
-                {
-                        Destroy(x.AtackLine);                           // ガイド線削除
-                });
                 break;
 
             case GameManager.GameState.GAME_OVER:
                 break;
         }
+    }
+
+    void LateUpdate()
+    {
+        //--- 攻撃ガイド線消滅判定
+        AtackLineDelete();
     }
 
     private void GameMainUpdate()
@@ -161,27 +162,6 @@ public class PlayerManager : MonoBehaviour
 
         AtackSetting();
 
-        //--- 攻撃ガイド線消滅判定
-        m_PairObjDataList.ForEach(x =>
-        {
-            // 攻撃ガイド線に対応しているオブジェクトが存在するか判定
-            if (x.AtackObjA != null &&
-                x.AtackObjB != null)
-            {
-                FireBoal AtackScriptA = x.AtackObjA.GetComponent<FireBoal>();
-                FireBoal AtackScriptB = x.AtackObjB.GetComponent<FireBoal>();
-
-                //--- どちらかでも敵に当たっているか
-                x.AddComboFlg = AtackScriptA.EnemyHit | AtackScriptB.EnemyHit;
-            }
-            else
-            {
-                Destroy(x.AtackLine);                           // ガイド線削除
-                m_ScoreManagerScript.SetCombo(x.AddComboFlg);   // コンボ情報設定
-                m_PairObjDataList.Remove(x);                    // Listから削除
-                SEManager.Instance.Play("SE_Explosion");
-            }
-        });
     }
 
     //--- 攻撃設定
@@ -217,6 +197,12 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case InputManager.CLICK_STATE.DOUBLECLICK:
+
+                if (!m_UseFinisher && m_NormalAtackFlg)
+                {
+                    SetNormalAtackObject();
+                    return;
+                }
 
                 // ストックがあるか
                 if (m_FinisherAtackScript.GetFinisherStock < 1)
@@ -258,6 +244,12 @@ public class PlayerManager : MonoBehaviour
         }
 
         m_AttackSettingHitObj = hit.transform.gameObject;
+
+
+        if (m_AttackSettingHitObj.tag == "Target")
+        {
+            //--- シールドのようなエフェクト出したい
+        }
 
         // タップ（クリック）したオブジェクトがPlayerか判定
         if (m_AttackSettingHitObj.tag != "Player")
@@ -347,6 +339,7 @@ public class PlayerManager : MonoBehaviour
         m_AttackSettingHitObj = null;
     }
 
+    //--- 攻撃終了時
     void AtackEnd()
     {
 
@@ -356,6 +349,30 @@ public class PlayerManager : MonoBehaviour
         m_AttackSettingObjList.Clear();
     }
 
+    //--- 攻撃ガイド線消滅判定
+    void AtackLineDelete()
+    {
+        //--- 攻撃ガイド線消滅判定
+        m_PairObjDataList.ForEach(x =>
+        {
+            // 攻撃ガイド線に対応しているオブジェクトが存在するか判定
+            if (x.AtackObjA != null &&
+                x.AtackObjB != null)
+            {
+                FireBoal AtackScriptA = x.AtackObjA.GetComponent<FireBoal>();
+                FireBoal AtackScriptB = x.AtackObjB.GetComponent<FireBoal>();
+
+                //--- どちらかでも敵に当たっているか
+                x.AddComboFlg = AtackScriptA.EnemyHit | AtackScriptB.EnemyHit;
+            }
+            else
+            {
+                Destroy(x.AtackLine);                           // ガイド線削除
+                m_ScoreManagerScript.SetCombo(x.AddComboFlg);   // コンボ情報設定
+                m_PairObjDataList.Remove(x);                    // Listから削除
+            }
+        });
+    }
 
     //--- 攻撃キャンセル
     void AtackCansel()

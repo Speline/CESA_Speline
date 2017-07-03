@@ -214,6 +214,9 @@ public class EnemyManager : MonoBehaviour
     {
         myList.Remove(DestryObj);
         nNowEnemy--;
+
+        if (nNowEnemy <= 0)
+            nNowEnemy = 0;
     }
 
 	//static public void StageEnemy(int i)
