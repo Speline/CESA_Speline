@@ -53,7 +53,33 @@ public class EnemyVerticalAdvance : EnemyBase {
 		transform.localEulerAngles = Rot;							//値セット
 	}
 
-	public GameObject CreateEnemyVertical()
+    protected override void GameOverMove()
+    {
+        Vector3 EnemyPos = transform.position;                  //値代入
+        Vector3 Rot = transform.localEulerAngles;
+
+        EnemyPos.z += fEnemyMoveSpeed * Time.deltaTime * 1.0f;      //移動
+
+        #region 範囲補正
+        if (EnemyPos.z <= fMinRange * 2.5f)
+        {
+            EnemyPos.z = fMinRange * 2.5f;                                 //補正
+            fEnemyMoveSpeed *= -1;                                  //反転
+            Rot.y = SetRot[0].y;                                            //回転
+        }
+        else if (fMaxRange * 2.5f <= EnemyPos.z)
+        {
+            EnemyPos.z = fMaxRange * 2.5f;                                 //補正
+            fEnemyMoveSpeed *= -1;                                  //反転
+            Rot.y = SetRot[1].y;                                    //回転
+        }
+        #endregion
+
+        transform.position = EnemyPos;                          //値セット
+        transform.localEulerAngles = Rot;							//値セット
+    }
+
+    public GameObject CreateEnemyVertical()
 	{
 		return this.gameObject;									//生成
 	}

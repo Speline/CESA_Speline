@@ -67,10 +67,10 @@ MonoBehaviour:
     y: 30
     width: 1350
     height: 659
-  m_MinSize: {x: 887, y: 492}
-  m_MaxSize: {x: 16012, y: 14042}
+  m_MinSize: {x: 885, y: 492}
+  m_MaxSize: {x: 16010, y: 14042}
   vertical: 0
-  controlID: 46
+  controlID: 23
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -114,8 +114,8 @@ MonoBehaviour:
     y: 0
     width: 205
     height: 387
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -168,7 +168,7 @@ MonoBehaviour:
     y: 0
     width: 1350
     height: 709
-  m_MinSize: {x: 950, y: 542}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &8
 MonoBehaviour:
@@ -231,10 +231,10 @@ MonoBehaviour:
     y: 0
     width: 1073
     height: 659
-  m_MinSize: {x: 610, y: 492}
-  m_MaxSize: {x: 12010, y: 14042}
+  m_MinSize: {x: 608, y: 492}
+  m_MaxSize: {x: 12008, y: 14042}
   vertical: 1
-  controlID: 47
+  controlID: 24
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -256,10 +256,10 @@ MonoBehaviour:
     y: 0
     width: 1073
     height: 387
-  m_MinSize: {x: 610, y: 221}
-  m_MaxSize: {x: 12010, y: 4021}
+  m_MinSize: {x: 608, y: 221}
+  m_MaxSize: {x: 12008, y: 4021}
   vertical: 0
-  controlID: 48
+  controlID: 25
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -344,17 +344,11 @@ MonoBehaviour:
   m_ViewPositions:
     m_KeySerializationHelper:
     - {fileID: 1107879164032804708, guid: 3977a5017d452434985dd6df7657c825, type: 2}
-    - {fileID: 1107043871269730142, guid: 0cbf7216e5520d2448f1fd5970cd90cb, type: 2}
     - {fileID: 1107043871269730142, guid: 43a7dea865b499045b210453d2f9a446, type: 2}
-    - {fileID: 1107043871269730142, guid: 6a1dc936bb2b663448f0bc639080ae89, type: 2}
-    - {fileID: 1107043871269730142, guid: 6bc5ab8fe937e4443b01d4e15a20d787, type: 2}
     - {fileID: 1107474152319660466, guid: 6e67dbc0e08594540b4dc6f3d6880927, type: 2}
     m_ValueSerializationHelper:
     - {x: 437, y: 446.8}
     - {x: 255.99997, y: 330}
-    - {x: 255.99997, y: 330}
-    - {x: 255.99997, y: 330}
-    - {x: 233.80002, y: 260.8}
     - {x: 332, y: 208.8}
   m_PreviewAnimator: {fileID: 0}
   m_AnimatorController: {fileID: 9100000, guid: 3977a5017d452434985dd6df7657c825,
@@ -411,19 +405,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/HIOKI/Script/Title
+    - Assets/Scences
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/HIOKI/Script/Title
+  - Assets/Scences
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\nanoh_000\Documents\Speline
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 18}
-    m_SelectedIDs: 542c0000
-    m_LastClickedID: 11348
-    m_ExpandedIDs: 000000004c250000ca250000ce27000030280000c6290000302b0000722b0000ba2b0000362c00001a30000000ca9a3bffffff7f
+    m_SelectedIDs: 3a270000
+    m_LastClickedID: 10042
+    m_ExpandedIDs: 0000000056250000d2250000d02700004e280000e62900008a2b0000d22b00004c2c0000a42d000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -451,7 +445,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000004c250000ce27000030280000c6290000302b0000722b0000ba2b0000362c00001a300000
+    m_ExpandedIDs: 0000000056250000d2250000d02700004e280000e62900004c2b00008a2b0000d22b00004c2c0000a42d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -532,7 +526,7 @@ MonoBehaviour:
     y: 100
     width: 275
     height: 638
-  m_ScrollPosition: {x: 0, y: 1740}
+  m_ScrollPosition: {x: 0, y: 0}
   m_InspectorMode: 0
   m_PreviewResizer:
     m_CachedPref: 160
@@ -567,9 +561,9 @@ MonoBehaviour:
     height: 366
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 8e060000
+    m_SelectedIDs: 3e2c0000
     m_LastClickedID: 0
-    m_ExpandedIDs: 98dafdffd890ffffa094ffffe2fbffff00000000
+    m_ExpandedIDs: 125ffdff386cfdff0eb0fdffb0b0fdffe2fbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -588,7 +582,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 5}
     m_SearchString: 
   m_ExpandedScenes:
-  - Title
+  - StageSelect
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -653,9 +647,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0.3438366, y: 0.36093697, z: -0.14521144, w: 0.854643}
   m_Size:
-    m_Target: 21.01
+    m_Target: 349.73764
     speed: 2
-    m_Value: 21.01
+    m_Value: 349.73764
   m_Ortho:
     m_Target: 0
     speed: 2

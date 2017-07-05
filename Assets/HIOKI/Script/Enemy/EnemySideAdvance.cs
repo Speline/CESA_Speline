@@ -48,7 +48,33 @@ public class EnemySideAdvance : EnemyBase {
 		transform.localEulerAngles = Rot;							//値セット
 	}
 
-	public GameObject CreateEnemySide()
+    protected override void GameOverMove()
+    {
+        Vector3 EnemyPos = transform.localPosition;                 //値代入
+        Vector3 Rot = transform.localEulerAngles;                   //値代入
+
+        EnemyPos.x += fEnemyMoveSpeed * Time.deltaTime * 1.0f;      //移動
+
+        #region 範囲補正
+        if (EnemyPos.x <= fMinRange * 2.0f)
+        {
+            EnemyPos.x = fMinRange * 2.0f;                                 //補正
+            fEnemyMoveSpeed *= -1;                                  //反転
+            Rot.y = SetRot[0].y;                                            //回転
+        }
+        else if (fMaxRange * 2.0f <= EnemyPos.x)
+        {
+            EnemyPos.x = fMaxRange * 2.0f;                                 //補正
+            fEnemyMoveSpeed *= -1;                                  //反転
+            Rot.y = SetRot[1].y;                                            //回転
+        }
+        #endregion
+
+        transform.localPosition = EnemyPos;                         //値セット
+        transform.localEulerAngles = Rot;							//値セット
+    }
+
+    public GameObject CreateEnemySide()
 	{
 		return this.gameObject;									//生成
 	}

@@ -16,6 +16,8 @@ public class EnemyRot : EnemyBase {
 	private static float fRotF;
 	private float SetRotF;
 
+    private float fRo = 0.2f;
+
 
 	// Use this for initialization
 	void Start () {
@@ -34,12 +36,29 @@ public class EnemyRot : EnemyBase {
 
     protected override void Move()
 	{
-		transform.position -= transform.forward * fSpeedMove;
+        transform.position -= transform.forward * fSpeedMove;
 
         Rot();
 	}
 
-	public GameObject CreateEnemyRot()
+    protected override void GameOverMove()
+    {
+        transform.position -= transform.forward * fSpeedMove;
+
+        OverRot();
+    }
+
+    private void OverRot()
+    {
+        Vector3 Rot = transform.localEulerAngles;
+
+        Rot.y -= fSpeedRot * SetRotF * fRo;
+
+
+        transform.localEulerAngles = Rot;
+    }
+
+    public GameObject CreateEnemyRot()
 	{
 		return this.gameObject;
 	}
