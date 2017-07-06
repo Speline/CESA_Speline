@@ -81,4 +81,9 @@ public class BGMManager : MonoBehaviour
     {
         m_AudioSource.Pause();
     }
+
+    public void SetVolume(float SetVolume)
+    {
+        m_AudioSource.volume = SetVolume;
+    }
 }

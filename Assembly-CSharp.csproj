@@ -108,6 +108,7 @@
      <Compile Include="Assets\WASIDU\Scripts\NumberDraw.cs" />
      <Compile Include="Assets\WASIDU\Scripts\NumberImage.cs" />
      <Compile Include="Assets\WASIDU\Scripts\Player.cs" />
+     <Compile Include="Assets\WASIDU\Scripts\SlideSwitchButton.cs" />
      <Compile Include="Assets\WASIDU\Scripts\TimeDraw.cs" />
      <Compile Include="Assets\YAMADA\Script\ParticleManager.cs" />
      <Compile Include="Assets\YAMADA\Script\TapEffect.cs" />

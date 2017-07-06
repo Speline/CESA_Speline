@@ -44,6 +44,7 @@ public class FinisherAtackObj : MonoBehaviour
     void Start()
     {
         ParticleManager.Instance.Deathblow.Play();
+        SEManager.Instance.Play("se_maoudamashii_magical21");
 
         float PosX = (m_TriangleVertex[0].x + m_TriangleVertex[1].x + m_TriangleVertex[2].x) / 3.0f;
         float PosZ = (m_TriangleVertex[0].z + m_TriangleVertex[1].z + m_TriangleVertex[2].z) / 3.0f;
@@ -78,6 +79,7 @@ public class FinisherAtackObj : MonoBehaviour
 
         ParticleManager.Instance.MainExplosion.Play();
         ParticleManager.Instance.MainExplosionObj.transform.position = new Vector3(PosX, 0.0f, PosZ);
+        SEManager.Instance.Play("魔法系エフェクト");
     }
 
     public void CheckHit()

@@ -6,9 +6,8 @@ public class NumberDraw : MonoBehaviour
 {
     //--- メンバ変数 ------------------------------------------------------------------------------------------------------------
     //--- メンバ定数
-    private const float NUMBER_DISPLAY_SPACING = 70.0f;
-    //private const float NUMBER_DISPLAY_SPACING = 15.0f;
-    //private const float NUMBER_DISPLAY_SPACING = 45.0f;
+    //private const float NUMBER_DISPLAY_SPACING = 70.0f;
+    private const float NUMBER_DISPLAY_SPACING = 15.0f;
 
     //--- メンバ変数
     [SerializeField] private GameObject m_NumberObjectPrefub;   // 番号表示オブジェクトプレハブ

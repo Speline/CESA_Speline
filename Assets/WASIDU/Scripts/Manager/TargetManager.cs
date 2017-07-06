@@ -44,11 +44,6 @@ public class TargetManager : MonoBehaviour
     // 小目標表示用
     [SerializeField] private NumberDraw m_TargetNumberDrawScript;
 
-    // ゲーム開始時用
-    private bool m_MoveSetPos;
-    private bool m_SetEnd;
-    private float m_MoveTime;
-
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
     TargetManager()
     {
@@ -60,9 +55,6 @@ public class TargetManager : MonoBehaviour
 
         m_UpdateTime = true;
 
-        m_MoveSetPos = false;
-        m_SetEnd = false;
-        m_MoveTime = 0.0f;
     }
 
     void Start()
@@ -104,7 +96,6 @@ public class TargetManager : MonoBehaviour
             case GameManager.GameState.MAGIC_SQUARE_SETTING:
             case GameManager.GameState.PLAYER_SETTING:
             case GameManager.GameState.GAME_START:
-                Setting();
                 break;
 
             case GameManager.GameState.GAME_MAIN:
@@ -120,34 +111,6 @@ public class TargetManager : MonoBehaviour
 
 	}
 
-    void Setting()
-    {
-
-        ////--- 新しいスクリプトに作り直す予定
-        //if (!m_MoveSetPos)
-        //{
-        //    m_TimeImage.fillAmount += 0.5f * Time.deltaTime;
-
-        //    if (m_TimeImage.fillAmount >= 1.0f)
-        //    {
-        //        m_MoveSetPos = true;
-        //    }
-        //}
-        //else if (!m_SetEnd)
-        //{
-        //    Debug.Log("m_MoveTime:" + m_MoveTime);
-
-        //    m_MoveTime += Time.deltaTime;
-        //    m_ClockImage.transform.position = Vector3.Lerp(new Vector3(0.0f,0.0f,0.0f), new Vector3(-316, 648, 0.0f), m_MoveTime);
-
-        //    if (m_MoveTime > 1.0f)
-        //    {
-        //        m_SetEnd = true;
-        //        GameManager.Instance.SetTimeMoveEnd = true;
-        //    }
-        //}
-    }
-
     void Game()
     {
         if (m_UpdateTime)
@@ -157,13 +120,11 @@ public class TargetManager : MonoBehaviour
         }
 
         //--- 制限時間表示更新
-        m_TimeDrawScript.SetTimeData = m_TimeLimitCounter / m_TargetDataList[m_NowTargetNumber].TimeLimit;
+        m_TimeDrawScript.TimeData = m_TimeLimitCounter / m_TargetDataList[m_NowTargetNumber].TimeLimit;
 
         //--- 目標数達成しているか
         if (m_ScoreManagerScript.Score >= m_TargetDataList[m_NowTargetNumber].TargetScore)
         {// 達成している場合
-            Debug.Log("目標" + (m_NowTargetNumber + 1) + "達成");
-
             //m_GameTime += m_TargetDataList[m_NowTargetNumber].TimeLimit * 0.4f;
 
             //--- ステージで時間変更
@@ -171,8 +132,6 @@ public class TargetManager : MonoBehaviour
                 m_TimeLimitCounter = 15f;
             else
                 m_TimeLimitCounter = 10f;
-
-
 
             m_NowTargetNumber++;    // 次の目標に
 
@@ -201,6 +160,4 @@ public class TargetManager : MonoBehaviour
     }
 
     public bool UpdateTime { set { m_UpdateTime = value; } }
-
-    public bool SetEnd { get { return m_SetEnd; } }
 }

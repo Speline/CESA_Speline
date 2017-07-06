@@ -13,11 +13,11 @@ public class TimeDraw : MonoBehaviour
     private GameObject  m_ClockHandObject;  // 時計の針オブジェクト
 
     // ゲーム開始時用
-    private bool m_MoveSetPos;
-    private bool m_SetEnd;
-    private float m_MoveTime;   // 移動時間
-    private Vector3 m_StartPos; // 初期位置
-    private Vector3 m_MovePos;  // 移動先位置
+    private bool    m_MoveSetPos;
+    private bool    m_SetEnd;
+    private float   m_MoveTime;     // 移動時間
+    private Vector3 m_StartPos;     // 初期位置
+    private Vector3 m_MovePos;      // 移動先位置
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
 	// Use this for initialization
@@ -29,7 +29,7 @@ public class TimeDraw : MonoBehaviour
         m_ClockHandObject = transform.FindChild("ClockHand").gameObject;
 
         transform.localPosition = m_StartPos = Vector3.zero;
-        m_MovePos = new Vector3(-308f, 647f, 0.0f);
+        m_MovePos = new Vector3(0f, 647f, 0.0f);
 
         m_MoveSetPos    = false;
         m_SetEnd        = false;
@@ -78,7 +78,7 @@ public class TimeDraw : MonoBehaviour
     {
         if (!m_MoveSetPos)
         {
-            m_TimeImage.fillAmount += 0.5f * Time.deltaTime;
+            TimeData += 0.5f * Time.deltaTime;
             if (m_TimeImage.fillAmount >= 1.0f)
             {
                 m_MoveSetPos = true;
@@ -98,7 +98,7 @@ public class TimeDraw : MonoBehaviour
         }
     }
 
-    public float SetTimeData
+    public float TimeData
     {
         get
         {
@@ -108,7 +108,7 @@ public class TimeDraw : MonoBehaviour
         {
             m_TimeImage.fillAmount = value;
             float RotZ = m_TimeImage.fillAmount * 360;
-            m_ClockHandObject.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, -RotZ);
+            m_ClockHandObject.transform.rotation = Quaternion.Euler(0.0f, 0.0f, -RotZ);
         }
     }
 }

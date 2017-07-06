@@ -83,7 +83,7 @@ public class TitleManager : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Return)) {
 
 			//ここにタッチした時の効果音をいれる
-
+            SEManager.Instance.Play("sei_ge_door_big_op01");
 			_TStartObj.StopFade ();			//Startのフェードを止める
 			_MagicObj.StopMove();			//魔法陣を止める
 			_LogObj.ChangeFlg();			//タイトルを消す
@@ -93,7 +93,9 @@ public class TitleManager : MonoBehaviour {
 		}
 
 		// Mouseって書いてあるけど、タッチもこれで反応する。
-		if (Input.GetMouseButtonDown (0)) {
+        if (Input.GetMouseButtonDown(0))
+        {
+            SEManager.Instance.Play("sei_ge_door_big_op01");
 			_TStartObj.StopFade ();			//Startのフェードを止める
 			_MagicObj.StopMove();			//魔法陣を止める
 			_LogObj.ChangeFlg();			//タイトルを消す

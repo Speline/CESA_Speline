@@ -55,6 +55,7 @@ public class PlayerManager : MonoBehaviour
 
     //--- 静的メンバ変数
     private static ScoreManager m_ScoreManagerScript;  // スコア管理スクリプト
+    private static bool m_UseAtackLine = true;
 
     //--- メンバ変数
     [SerializeField] private GameObject m_AtackLinePrefub;  // 攻撃ガイド線プレハブ
@@ -114,6 +115,7 @@ public class PlayerManager : MonoBehaviour
         m_NormalAtackFlg = false;
 
         m_UseFinisher   = false;
+
     }
 
     void Awake()
@@ -184,7 +186,6 @@ public class PlayerManager : MonoBehaviour
                 //--- オブジェクトチェック
                 if (m_AttackSettingHitObj == null)
                 {
-                    SEManager.Instance.Play("beep_fast");
                     AtackCansel();
                     return;
                 }
@@ -211,7 +212,6 @@ public class PlayerManager : MonoBehaviour
                 //--- オブジェクトチェック
                 if (m_AttackSettingHitObj == null)
                 {
-                    SEManager.Instance.Play("beep_fast");
                     AtackCansel();
                     return;
                 }
@@ -292,8 +292,11 @@ public class PlayerManager : MonoBehaviour
             GameObject ObjA = PlayerScriptA.Summon();
             GameObject ObjB = PlayerScriptB.Summon();
 
-            AtackLineObjData SetData = new AtackLineObjData(Instantiate(m_AtackLinePrefub), ObjA, ObjB);
-            m_PairObjDataList.Add(SetData);
+            if (m_UseAtackLine)
+            {
+                AtackLineObjData SetData = new AtackLineObjData(Instantiate(m_AtackLinePrefub), ObjA, ObjB);
+                m_PairObjDataList.Add(SetData);
+            }
 
             AtackEnd();
         }
@@ -310,7 +313,6 @@ public class PlayerManager : MonoBehaviour
         if (m_AttackSettingObjList.Count >= 3)
         {
             //--- 必殺技発動
-
             m_FinisherAtackScript.UseFinisher(m_AttackSettingObjList.ToArray());
 
             AtackEnd();
@@ -389,4 +391,9 @@ public class PlayerManager : MonoBehaviour
     }
 
     public static ScoreManager ScoreManagerScript { set { m_ScoreManagerScript = value; } }
+
+    public void ChangeUseAtackLine()
+    {
+        m_UseAtackLine = !m_UseAtackLine;
+    }
 }

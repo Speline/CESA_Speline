@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class Player : GameMainObjectBase
 {
     //--- メンバ変数 -----------------------------------------------------------------------------------
     //--- 静的メンバ変数
@@ -52,42 +52,7 @@ public class Player : MonoBehaviour
         SetMagicSquare();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //--- ステートによる変更処理
-        switch (GameManager.Instance.NowState)
-        {
-            case GameManager.GameState.SETTING:
-                break;
-
-            case GameManager.GameState.MAGIC_SQUARE_SETTING:
-                break;
-
-            case GameManager.GameState.PLAYER_SETTING:
-                PlayerSetting();
-                break;
-
-            case GameManager.GameState.GAME_START:
-                GameStart();
-                break;
-
-            case GameManager.GameState.GAME_MAIN:
-                break;
-
-            case GameManager.GameState.GAME_CLEAR:
-                AtackCancel();
-                break;
-
-            case GameManager.GameState.GAME_OVER:
-                AtackCancel();
-                m_ChildObj.GetComponent<Animator>().SetBool("GameOver", true);
-                break;
-        }
-
-    }
-
-    void PlayerSetting()
+    protected override void PlayerSetting()
     {
         m_SettingScale += 20.0f * Time.deltaTime;
 
@@ -102,9 +67,40 @@ public class Player : MonoBehaviour
         }
     }
 
-    void GameStart()
+    protected override void GameStart()
     {
         AtackCancel();
+    }
+
+    protected override void GameMain()
+    {
+        if (GameManager.Instance.GetChangedState)
+        {
+            Animator Animator = m_ChildObj.GetComponent<Animator>();
+
+            Animator.speed = 1.0f;
+        }
+    }
+
+    protected override void Pause()
+    {
+        if (GameManager.Instance.GetChangedState)
+        {
+            Animator Animator = m_ChildObj.GetComponent<Animator>();
+
+            Animator.speed = 0.0f;
+        }
+    }
+
+    protected override void GameClear()
+    {
+        AtackCancel();
+    }
+
+    protected override void GameOver()
+    {
+        AtackCancel();
+        m_ChildObj.GetComponent<Animator>().SetBool("GameOver", true);
     }
 
     //--- 必殺技使用設定

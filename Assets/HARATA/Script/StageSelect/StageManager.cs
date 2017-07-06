@@ -285,7 +285,8 @@ public class StageManager : MonoBehaviour
 				{
 					nStageNo = i;		// StageSpriteSlideOut()で使うので保存しておく
 
-					GameManager.SetStage = nStageNo;		// ゲームメインにステージ番号を渡す
+                    GameManager.SetStage = nStageNo;		// ゲームメインにステージ番号を渡す
+                    SEManager.Instance.Play("アイテム発見");
 
 					return true;
 				}
@@ -405,6 +406,8 @@ public class StageManager : MonoBehaviour
 
 			Trans[i].localPosition = new Vector3(StartPos[nNear], Trans[i].localPosition.y, Trans[i].localPosition.z);
 		}
+
+        SEManager.Instance.Play("本をめくる音_閉じる音");
 	}
 
 	// 一番近い座標までの距離を計算する

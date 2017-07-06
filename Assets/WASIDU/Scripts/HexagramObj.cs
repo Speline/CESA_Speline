@@ -51,12 +51,10 @@ public class HexagramObj : GameMainObjectBase
             m_FieldHexagramBaraObject.SetActive(true);
             m_FieldHexagramObject.SetActive(false);
 
-            Transform BaraObjChildlen = m_FieldHexagramBaraObject.transform;
-
             Vector3 AddForceData = Vector3.zero;
-
             AddForceData.y = BREAK_ADD_FORCE_Y;
 
+            Transform BaraObjChildlen = m_FieldHexagramBaraObject.transform;
             foreach(Transform OneObj in BaraObjChildlen)
             {
                 AddForceData.x = Random.Range(-BREAK_ADD_FORCE_XZ, BREAK_ADD_FORCE_XZ);
@@ -65,7 +63,19 @@ public class HexagramObj : GameMainObjectBase
             }
 
             m_GameOverStart = true;
+
+            SEManager.Instance.Play("sei_ge_garasu_kudake02");
+
+            BGMManager.Instance.Pause();
         }
 
+        if (GameManager.Instance.GetNowStateElapsedTime > 4.0f)
+        {
+            Transform BaraObjChildlen = m_FieldHexagramBaraObject.transform;
+            foreach (Transform OneObj in BaraObjChildlen)
+            {
+                Destroy(OneObj.gameObject);
+            }
+        }
     }
 }
