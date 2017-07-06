@@ -79,7 +79,6 @@ public class TimeDraw : MonoBehaviour
         if (!m_MoveSetPos)
         {
             m_TimeImage.fillAmount += 0.5f * Time.deltaTime;
-
             if (m_TimeImage.fillAmount >= 1.0f)
             {
                 m_MoveSetPos = true;
@@ -99,5 +98,17 @@ public class TimeDraw : MonoBehaviour
         }
     }
 
-    public float SetTimeData { set { m_TimeImage.fillAmount = value; } }
+    public float SetTimeData
+    {
+        get
+        {
+            return m_TimeImage.fillAmount;
+        }
+        set
+        {
+            m_TimeImage.fillAmount = value;
+            float RotZ = m_TimeImage.fillAmount * 360;
+            m_ClockHandObject.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, -RotZ);
+        }
+    }
 }
