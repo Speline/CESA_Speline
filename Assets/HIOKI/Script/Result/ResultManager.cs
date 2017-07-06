@@ -119,10 +119,11 @@ public class ResultManager : MonoBehaviour {
 		#endregion
 
 		#region タイムの設定
-		fSetTime = 72.34f;
-		nTime_0 = (int)fSetTime / 60;
-		nTime_1 = ((int)fSetTime % 60) / 10;
-		nTime_2 = ((int)fSetTime % 60) - nTime_1 * 10;
+		//fSetTime = 72.34f;
+        //100->1秒
+		nTime_0 = (int)fSetTime / 100;
+		nTime_1 = ((int)fSetTime % 100) / 10;
+		nTime_2 = ((int)fSetTime % 100) - nTime_1 * 10;
 
         #endregion
 
