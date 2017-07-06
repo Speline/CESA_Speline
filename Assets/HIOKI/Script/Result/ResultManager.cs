@@ -58,7 +58,6 @@ public class ResultManager : MonoBehaviour {
 	private int nTime_0 = 0;
 	private int nTime_1 = 0;
 	private int nTime_2 = 0;
-	private int nTime_3 = 0;
 	// Use this for initialization
 	void Start () {
 		#region 呼ぶよう設定
@@ -120,13 +119,12 @@ public class ResultManager : MonoBehaviour {
 		#endregion
 
 		#region タイムの設定
-		//fSetTime = 12.34f;
-		nTime_0 = (int)fSetTime / 10;
-		nTime_1 = (int)fSetTime - nTime_0 * 10;
-		nTime_2 = (int)(fSetTime * 10) - nTime_0 * 100 - nTime_1 * 10;
-		nTime_3 = (int)(fSetTime * 100) - nTime_0 * 1000 - nTime_1 * 100 - nTime_2 * 10;
+		fSetTime = 72.34f;
+		nTime_0 = (int)fSetTime / 60;
+		nTime_1 = ((int)fSetTime % 60) / 10;
+		nTime_2 = ((int)fSetTime % 60) - nTime_1 * 10;
 
-		#endregion
+        #endregion
 
         BGMManager.Instance.Play("Game_Result");
 	}
@@ -176,7 +174,7 @@ public class ResultManager : MonoBehaviour {
 		if (_RequestObj.RequestFlg ()) {
 			nSelect++;
 			_HaneObj.HaneMove ();
-			_ElTimeObj.SetElapsedTime (nTime_0, nTime_1, nTime_2, nTime_3);
+			_ElTimeObj.SetElapsedTime (nTime_0, nTime_1, nTime_2);
 			_FinScObj.SetFinalScore (nScore_0, nScore_1, nScore_2, nScore_3, nScore_4);
 		}
 	}
@@ -266,7 +264,7 @@ public class ResultManager : MonoBehaviour {
 		switch (nTo) {
 		case 0:
 			_RequestObj.SetStopPos();							//依頼書
-			_ElTimeObj.SetElapsedTime(nTime_0, nTime_1, nTime_2, nTime_3);					//タイムの数字
+			_ElTimeObj.SetElapsedTime(nTime_0, nTime_1, nTime_2);					//タイムの数字
 			_FinScObj.SetFinalScore (nScore_0, nScore_1, nScore_2, nScore_3, nScore_4);			//スコアの数字
 			break;
 		case 1:

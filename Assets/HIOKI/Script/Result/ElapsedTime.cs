@@ -20,8 +20,6 @@ public class ElapsedTime : MonoBehaviour {
 	[SerializeField]
 	private SpriteRenderer _TimeNomber_2;
 	[SerializeField]
-	private SpriteRenderer _TimeNomber_3;
-	[SerializeField]
 	private SpriteRenderer _TimeColon;
 
 	private int nTime = 0;
@@ -34,8 +32,7 @@ public class ElapsedTime : MonoBehaviour {
 		_TimeNomber_0 = Time[0].GetComponent<SpriteRenderer> ();
 		_TimeNomber_1 = Time[1].GetComponent<SpriteRenderer> ();
 		_TimeNomber_2 = Time[2].GetComponent<SpriteRenderer> ();
-		_TimeNomber_3 = Time[3].GetComponent<SpriteRenderer> ();
-		_TimeColon = Time[4].GetComponent<SpriteRenderer> ();
+		_TimeColon = Time[3].GetComponent<SpriteRenderer> ();
 		#endregion
 	}
 
@@ -47,18 +44,15 @@ public class ElapsedTime : MonoBehaviour {
 			TimeDisplay_0 ();
 			break;
 		case 1:
-			TimeDisplay_1 ();
+            TimeDisplay_Colon();   
 			break;
 		case 2:
-			TimeDisplay_Colon ();
-			break;
+            TimeDisplay_1();
+            break;
 		case 3:
 			TimeDisplay_2 ();
 			break;
 		case 4:
-			TimeDisplay_3 ();
-			break;
-		case 5:
 			break;
 		}
 	}
@@ -111,22 +105,6 @@ public class ElapsedTime : MonoBehaviour {
 	}
 	#endregion
 
-	#region タイムのAlpha3
-	private void TimeDisplay_3()
-	{
-		Color myColor = _TimeNomber_3.color;
-
-		myColor.a += fAlphaSpeed;
-
-		if (myColor.a >= 1.0f) {
-			myColor.a = 1.0f;
-			nSelect++;
-		}
-
-		_TimeNomber_3.color = myColor;
-	}
-	#endregion
-
 	#region タイムのAlpha Colon
 	private void TimeDisplay_Colon()
 	{
@@ -145,12 +123,11 @@ public class ElapsedTime : MonoBehaviour {
 	#endregion
 
 	#region タイムの数字設定
-	public void SetElapsedTime(int nTime_0, int nTime_1, int nTime_2, int nTime_3)
+	public void SetElapsedTime(int nTime_0, int nTime_1, int nTime_2)
 	{
 		Time [0].GetComponent<SpriteRenderer> ().sprite = SpriteNomber [nTime_0];
 		Time [1].GetComponent<SpriteRenderer> ().sprite = SpriteNomber [nTime_1];
-		Time [2].GetComponent<SpriteRenderer> ().sprite = SpriteNomber [nTime_2];
-		Time [3].GetComponent<SpriteRenderer> ().sprite = SpriteNomber [nTime_3];		
+		Time [2].GetComponent<SpriteRenderer> ().sprite = SpriteNomber [nTime_2];		
 	}
 	#endregion
 
@@ -169,8 +146,7 @@ public class ElapsedTime : MonoBehaviour {
 		_TimeNomber_1.color = new Color(255.0f,255.0f,255.0f,1.0f);
 		_TimeColon.color = new Color(255.0f,255.0f,255.0f,1.0f);
 		_TimeNomber_2.color = new Color(255.0f,255.0f,255.0f,1.0f);
-		_TimeNomber_3.color = new Color(255.0f,255.0f,255.0f,1.0f);
-		nSelect = 5;
+		nSelect = 4;
 	}
 
 	#endregion
