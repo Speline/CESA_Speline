@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.SceneManagement;  // 現在のシーン取得用
 
 public class PlayerManager : MonoBehaviour
 {
@@ -79,6 +78,7 @@ public class PlayerManager : MonoBehaviour
     #endregion
     [SerializeField] private GameObject m_PlayerObjPrefub;  // プレイヤーオブジェクトのプレハブ
     [SerializeField] private GameObject m_FireBoalParent;   // 攻撃の親オブジェクト
+    [SerializeField] private GameObject m_WarpObject;
 
     // 必殺技用
     [SerializeField] private FinisherAtack m_FinisherAtackScript;
@@ -118,7 +118,12 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    void Awake()
+	// チュートリアル用変数
+	TutorialManager_1 Tutorial_1;
+	TutorialManager_2 Tutorial_2;
+    
+	
+	void Awake()
     {
         //--- プレイヤー設置
         GameObject AddObjData;
@@ -126,7 +131,14 @@ public class PlayerManager : MonoBehaviour
             AddObjData = Instantiate(m_PlayerObjPrefub, Data.SetPos, Quaternion.Euler(Data.SetRot), transform);
             AddObjData.name = Data.ObjName;
             AddObjData.GetComponent<Player>().FireBoalParent = m_FireBoalParent;
-        });
+            AddObjData.GetComponent<Player>().FinisherAtackScript = m_FinisherAtackScript;
+            AddObjData.GetComponent<Player>().WarpObject = Instantiate(m_WarpObject, Data.SetPos, Quaternion.Euler(Data.SetRot), transform);
+		});
+		
+
+		// チュートリアル用
+		Tutorial_1 = GameObject.Find("Tutorial").GetComponent<TutorialManager_1>();
+		Tutorial_2 = GameObject.Find("Tutorial").GetComponent<TutorialManager_2>();
     }
 
 	void Update ()
@@ -222,6 +234,13 @@ public class PlayerManager : MonoBehaviour
                 m_UseFinisher = true;
 
                 SetFinisherAtackObject();
+
+
+				// チュートリアル用
+				if (Tutorial_2 != null && Tutorial_2.GetbCanDoubleTap)
+				{
+					Tutorial_2.SetbDoubleTap = true;
+				}
                 break;
 
         }
@@ -298,8 +317,20 @@ public class PlayerManager : MonoBehaviour
                 m_PairObjDataList.Add(SetData);
             }
 
-            AtackEnd();
-        }
+			AtackEnd();
+
+			// チュートリアル用(対面キャラタップ)
+			if (Tutorial_1 != null && Tutorial_1.GetbCanOppositeTap)
+			{
+				Tutorial_1.SetbOppositeTap = true;
+			}
+		}
+
+		// チュートリアル用(キャラタップ)
+		if (Tutorial_1 != null && Tutorial_1.GetbCanCharTap)
+		{
+			Tutorial_1.SetbCharTap = true;
+		}
 
     }
 
@@ -311,7 +342,19 @@ public class PlayerManager : MonoBehaviour
 
         //--- 攻撃オブジェクトが三つ設定されているか
         if (m_AttackSettingObjList.Count >= 3)
-        {
+		{
+			// チュートリアル用
+			if (Tutorial_2 != null && !Tutorial_2.CanHissatu)		// ステージ2なんだけど、まだ必殺技撃っちゃダメな時は、撃たせない
+			{
+				AtackEnd();
+				return;
+			}
+			else if (Tutorial_2 != null && Tutorial_2.CanHissatu)	// 必殺技を発動してもいい状態なら必殺技を撃つ
+			{
+				Tutorial_2.HissatuInvocation = true;
+			}
+
+
             //--- 必殺技発動
             m_FinisherAtackScript.UseFinisher(m_AttackSettingObjList.ToArray());
 
@@ -390,8 +433,10 @@ public class PlayerManager : MonoBehaviour
         m_AttackSettingObjList.RemoveAt(0);
     }
 
+    //--- 情報設定
     public static ScoreManager ScoreManagerScript { set { m_ScoreManagerScript = value; } }
 
+    //--- 攻撃ガイド線表示有無変更
     public void ChangeUseAtackLine()
     {
         m_UseAtackLine = !m_UseAtackLine;

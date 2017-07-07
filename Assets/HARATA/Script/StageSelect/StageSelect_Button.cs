@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class StageSelect_Button : MonoBehaviour {
 
 	StageManager SM;
-	Image[] img = new Image[2];	// ボタンのImage(コンフィグが追加されたら、3個に直す)
+	Image[] img = new Image[3];	// ボタンのImage(コンフィグが追加されたら、4個に直す)
 
 	bool bCanPush = false;		// ボタンを押せる時はtrue
 	[SerializeField]	float fFadeOutTime;		// 画像出現時間
@@ -22,7 +22,8 @@ public class StageSelect_Button : MonoBehaviour {
 		// 子のimage取得
 		img[0] = transform.GetChild(0).GetComponent<Image>();
 		img[1] = transform.GetChild(1).GetComponent<Image>();
-		for (int i = 0; i < 2; i++)
+		img[2] = transform.GetChild(2).GetComponent<Image>();
+		for (int i = 0; i < img.GetLength(0) ; i++)
 		{
 			img[i].color = new Color(img[i].color.r, img[i].color.g, img[i].color.b, 0.0f);
 		}
@@ -48,6 +49,14 @@ public class StageSelect_Button : MonoBehaviour {
 			return;
 
 		SM.ButtonMoveSet(true);
+	}
+
+	public void OnTapDecisionButton()
+	{
+		if (!bCanPush)
+			return;
+
+		SM.DecisionButton();
 	}
 
 

@@ -71,7 +71,17 @@ public class TargetManager : MonoBehaviour
 
 
         //--- ステージで時間変更
-        if (GameManager.GetStage < 6)
+		if (GameManager.GetStage == 0)
+		{
+			StageOneData.ToList().ForEach(x => m_TargetDataList.Add(new TargetData(int.Parse(x), 60f)));
+			m_TimeLimitCounter = 60f;
+		}
+		else if(GameManager.GetStage == 1)
+		{
+			StageOneData.ToList().ForEach(x => m_TargetDataList.Add(new TargetData(int.Parse(x), 30f)));
+			m_TimeLimitCounter = 30f;
+		}
+        else if (GameManager.GetStage < 6)
         {
             StageOneData.ToList().ForEach(x => m_TargetDataList.Add(new TargetData(int.Parse(x), 15f)));
             m_TimeLimitCounter = 15f;
@@ -128,7 +138,15 @@ public class TargetManager : MonoBehaviour
             //m_GameTime += m_TargetDataList[m_NowTargetNumber].TimeLimit * 0.4f;
 
             //--- ステージで時間変更
-            if (GameManager.GetStage < 6)
+            if (GameManager.GetStage == 0)
+            {
+                m_TimeLimitCounter = 60f;
+            }
+            else if (GameManager.GetStage == 1)
+            {
+                m_TimeLimitCounter = 30f;
+            }
+            else if (GameManager.GetStage < 6)
                 m_TimeLimitCounter = 15f;
             else
                 m_TimeLimitCounter = 10f;

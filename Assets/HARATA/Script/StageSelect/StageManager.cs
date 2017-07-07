@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
+	#region  変数
+
 	[SerializeField]	GameObject[] StageObj;
 	Transform[] Trans;
 	[SerializeField]	float fSpace;		// スプライトの間隔
@@ -45,6 +47,7 @@ public class StageManager : MonoBehaviour
 	[SerializeField]	float SpriteFadeOutTime;// 画像出現時間
 	bool bInitializ = true;						// 初期化フラグ
 	GameObject DecisionObj = null;				// ステージ決定したオブジェクト
+	bool bBack = true;
 
 	// 選択したステージの左右の画像が左右にスライドアウトする
 	[SerializeField]	float fSlideOutTime;	// スライドアウトにかかる時間
@@ -62,11 +65,15 @@ public class StageManager : MonoBehaviour
 
 	int nCenterNo;									// 今真ん中にある画像の添え字
 
+
 	// 選択画像真ん中移動用
 	bool bInitializ2 = true;
 	float fParametor2 = 0.0f;
 	float fTime2 = 0.0f;
 	[SerializeField]	float fMoveCenterWaitTime;
+
+	#endregion
+
 
 	// Use this for initialization
 	void Start()
@@ -109,6 +116,16 @@ public class StageManager : MonoBehaviour
 	void Update()
 	{
 
+	}
+
+	void LateUpdate()
+	{
+		// 仮選択されているオブジェクトがあれば、少し奥にずらす。
+		if (DecisionObj != null && bBack)
+		{
+			bBack = false;
+			DecisionObj.transform.localPosition = new Vector3(DecisionObj.transform.localPosition.x, DecisionObj.transform.localPosition.y, DecisionObj.transform.localPosition.z + 0.1f);
+		}
 	}
 
 
@@ -266,12 +283,16 @@ public class StageManager : MonoBehaviour
 			if (col.GetLength(0) >= 1 && col[0].tag == "StageSelect_Stage")
 			{
 				DecisionObj = col[0].gameObject;	// オブジェクトを取得
+				DecisionObj.GetComponent<SpriteRenderer>().color = new Color(0.8f, 0.8f, 0.8f, 1.0f);	// 色を少し暗くする
+				bBack = true;		// 少し奥にずらす
 			}
 		}
 
 		// 移動させたら選択解除
 		if (InputManager.Instance.GetMove() && DecisionObj != null)
 		{
+			DecisionObj.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);		// 色を元に戻す
+			DecisionObj.transform.localPosition = new Vector3(DecisionObj.transform.localPosition.x, DecisionObj.transform.localPosition.y, 0.0f);	// 奥にずらしていたのを元に戻す
 			DecisionObj = null;
 		}
 
@@ -284,9 +305,10 @@ public class StageManager : MonoBehaviour
 				if(DecisionObj == StageObj[i] && i == nCenterNo)
 				{
 					nStageNo = i;		// StageSpriteSlideOut()で使うので保存しておく
+					DecisionObj.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);		// 色を元に戻す
 
-                    GameManager.SetStage = nStageNo;		// ゲームメインにステージ番号を渡す
-                    SEManager.Instance.Play("アイテム発見");
+					GameManager.SetStage = nStageNo;		// ゲームメインにステージ番号を渡す
+					SEManager.Instance.Play("アイテム発見");
 
 					return true;
 				}
@@ -294,6 +316,26 @@ public class StageManager : MonoBehaviour
 		}
 
 		return false;
+	}
+
+	// 決定ボタンを押された時
+	public void DecisionButton()
+	{
+		Debug.Log("bMoveTouch : " + bMoveTouch);
+		Debug.Log("bInertia : " + bInertia);
+		Debug.Log("bMovesCloser : " + bMovesCloser);
+		Debug.Log("bButtonMove : " + bButtonMove);
+
+		// なにかが行われている状態でなければ、ステージ決定
+		if (!bMoveTouch && !bInertia && !bMovesCloser && !bButtonMove)
+		{
+			nStageNo = nCenterNo;		// StageSpriteSlideOut()で使うので保存しておく
+
+			DecisionObj = StageObj[nCenterNo];
+			DecisionObj.GetComponent<SpriteRenderer>().color = new Color(1.0f, 1.0f, 1.0f, 1.0f);		// 色を元に戻す
+
+			GameManager.SetStage = nCenterNo;		// ゲームメインにステージ番号を渡す
+		}
 	}
 
 	// ボタンで隣に移動
@@ -407,7 +449,7 @@ public class StageManager : MonoBehaviour
 			Trans[i].localPosition = new Vector3(StartPos[nNear], Trans[i].localPosition.y, Trans[i].localPosition.z);
 		}
 
-        SEManager.Instance.Play("本をめくる音_閉じる音");
+		SEManager.Instance.Play("本をめくる音_閉じる音");
 	}
 
 	// 一番近い座標までの距離を計算する

@@ -10,21 +10,24 @@ public class Player : GameMainObjectBase
 {
     //--- メンバ変数 -----------------------------------------------------------------------------------
     //--- 静的メンバ変数
-    private static GameObject m_MahoujinPrefub = null;
+    private static GameObject m_MahoujinPrefub = null; // 魔方陣オブジェクトプレハブ
 
     //--- メンバ変数
     private GameObject m_MagicSquareObject; // 魔方陣オブジェクト
-    private GameObject m_FireBoalParent;
+    private GameObject m_FireBoalParent;    // 攻撃親オブジェクト
+    private GameObject m_ChildPlayerModel;  // 子オブジェクトのプレイヤーモデル
 
-    private GameObject m_ChildObj;
+    private FinisherAtack m_FinisherAtackScript;    // 必殺技管理スクリプト
 
     // スタート前の処理用
-    private float m_SettingScale = 0.0f;
-    private Vector3 m_SettingRot;
+    private float       m_SettingScale = 0.0f;
+    private Vector3     m_SettingRot;
+    private GameObject  m_WarpObject;
 
     // 必殺技用
-    private ParticleSystem m_UseFinissherParticle;  // 必殺技使用設定時のパーティクル
-    private GameObject m_FinisherCameraObj;
+    private ParticleSystem  m_CanUseFinissherParticle;  // 必殺技使用可能時のパーティクル
+    private ParticleSystem  m_UseFinissherParticle;     // 必殺技使用設定時のパーティクル
+    private GameObject      m_FinisherCameraObj;        // 必殺技カットイン用カメラ
 
     //--- メンバ関数 -----------------------------------------------------------------------------------
 	// Use this for initialization
@@ -36,20 +39,21 @@ public class Player : GameMainObjectBase
         }
 
         // スタート前の処理用
-        m_ChildObj = transform.FindChild("chara_model").gameObject;
-        m_ChildObj.transform.localScale = new Vector3(m_SettingScale, m_SettingScale, m_SettingScale);
+        m_ChildPlayerModel = transform.FindChild("chara_model").gameObject;
+        m_ChildPlayerModel.transform.localScale = new Vector3(m_SettingScale, m_SettingScale, m_SettingScale);
         m_SettingRot = transform.rotation.eulerAngles;
 
 
         // 必殺技用
-        m_UseFinissherParticle = GetComponent<ParticleSystem>();
+        m_UseFinissherParticle = transform.FindChild("UseFinisher").GetComponent<ParticleSystem>();
         m_UseFinissherParticle.Pause();
 
         m_FinisherCameraObj = transform.FindChild("FinissherCamera").gameObject;
         m_FinisherCameraObj.SetActive(false);
 
-        //--- スタート時の演出用
-        SetMagicSquare();
+        m_CanUseFinissherParticle = transform.FindChild("Shock").GetComponent<ParticleSystem>();
+        m_CanUseFinissherParticle.Pause();
+
     }
 
     protected override void PlayerSetting()
@@ -58,10 +62,10 @@ public class Player : GameMainObjectBase
 
         m_SettingRot.y += 360f * Time.deltaTime;
 
-        m_ChildObj.transform.localScale = new Vector3(m_SettingScale, m_SettingScale, m_SettingScale);
-        m_ChildObj.transform.rotation = Quaternion.Euler(m_SettingRot);
+        m_ChildPlayerModel.transform.localScale = new Vector3(m_SettingScale, m_SettingScale, m_SettingScale);
+        m_ChildPlayerModel.transform.rotation = Quaternion.Euler(m_SettingRot);
 
-        if (m_ChildObj.transform.localScale.x >= 20.0f)
+        if (m_ChildPlayerModel.transform.localScale.x >= 20.0f)
         {
             GameManager.Instance.ChangeState(GameManager.GameState.GAME_START);
         }
@@ -69,14 +73,24 @@ public class Player : GameMainObjectBase
 
     protected override void GameStart()
     {
-        AtackCancel();
+        Destroy(m_WarpObject);
     }
 
     protected override void GameMain()
     {
+        if (m_FinisherAtackScript.GetFinisherStock > 0 && !m_CanUseFinissherParticle.isPlaying)
+        {
+            m_CanUseFinissherParticle.Play();
+        }
+
+        if (m_FinisherAtackScript.GetFinisherStock == 0 && m_CanUseFinissherParticle.isPlaying)
+        {
+            m_CanUseFinissherParticle.Stop();
+        }
+
         if (GameManager.Instance.GetChangedState)
         {
-            Animator Animator = m_ChildObj.GetComponent<Animator>();
+            Animator Animator = m_ChildPlayerModel.GetComponent<Animator>();
 
             Animator.speed = 1.0f;
         }
@@ -86,7 +100,7 @@ public class Player : GameMainObjectBase
     {
         if (GameManager.Instance.GetChangedState)
         {
-            Animator Animator = m_ChildObj.GetComponent<Animator>();
+            Animator Animator = m_ChildPlayerModel.GetComponent<Animator>();
 
             Animator.speed = 0.0f;
         }
@@ -100,7 +114,7 @@ public class Player : GameMainObjectBase
     protected override void GameOver()
     {
         AtackCancel();
-        m_ChildObj.GetComponent<Animator>().SetBool("GameOver", true);
+        m_ChildPlayerModel.GetComponent<Animator>().SetBool("GameOver", true);
     }
 
     //--- 必殺技使用設定
@@ -135,7 +149,7 @@ public class Player : GameMainObjectBase
         GameObject SummonObj = m_MagicSquareObject.GetComponent<MagicSquare>().Summon();
 
         //--- 攻撃アニメーション
-        m_ChildObj.GetComponent<Animator>().Play("chara_moveMKougeki2",0,0.0f);
+        m_ChildPlayerModel.GetComponent<Animator>().Play("chara_moveMKougeki2",0,0.0f);
 
 
         return SummonObj;
@@ -161,17 +175,19 @@ public class Player : GameMainObjectBase
     //--- 必殺技アニメーション再生
     public void FinisherAtackAnim()
     {
-        m_ChildObj.GetComponent<Animator>().SetBool("FinisherAtack", true);
+        m_ChildPlayerModel.GetComponent<Animator>().SetBool("FinisherAtack", true);
     }
 
     //--- 必殺技終了時処理
     public void EndFinisherAtack()
     {
-        m_ChildObj.GetComponent<Animator>().SetBool("FinisherAtack", false);
-        m_ChildObj.GetComponent<Animator>().Play("chara_moveMTaiki2");
-        m_ChildObj.transform.rotation = Quaternion.Euler(m_SettingRot);
+        m_ChildPlayerModel.GetComponent<Animator>().SetBool("FinisherAtack", false);
+        m_ChildPlayerModel.GetComponent<Animator>().Play("chara_moveMTaiki2");
+        m_ChildPlayerModel.transform.rotation = Quaternion.Euler(m_SettingRot);
     }
 
     //--- 情報設定
-    public GameObject FireBoalParent { set { m_FireBoalParent = value; } }
+    public GameObject FireBoalParent            { set { m_FireBoalParent        = value; } }
+    public GameObject WarpObject                { set { m_WarpObject            = value; } }
+    public FinisherAtack FinisherAtackScript    { set { m_FinisherAtackScript   = value; } }
 }
