@@ -26,7 +26,6 @@ public class EnemyTriangleVertical : EnemyBase {
             return;
 
 		Vector3 Rot = transform.localEulerAngles;
-		//Debug.Log (Rot);
 		transform.position += transform.forward * fForwardSpeed;
 
 
@@ -35,24 +34,16 @@ public class EnemyTriangleVertical : EnemyBase {
 			if (transform.localPosition.x >= POSX) {
 				if (transform.localPosition.z > 0.0f) {
 					transform.LookAt (LookPos[2]);
-					Debug.Log ("utano");
-					Debug.Log (transform.localPosition);
 				} else {
 					transform.LookAt (LookPos[0]);
-					Debug.Log ("chihaya");
-					Debug.Log (transform.localPosition);
 				}
 			}
 		} else {
 			if (transform.localPosition.x <= -POSX) {
 				if (transform.localPosition.z < 0.0f) {
 					transform.LookAt (LookPos[1]);
-					Debug.Log ("yuki");
-					Debug.Log (transform.localPosition);
 				} else {
 					transform.LookAt (LookPos[3]);
-					Debug.Log ("keiri");
-					Debug.Log (transform.localPosition);
 				}
 			}
 		}
