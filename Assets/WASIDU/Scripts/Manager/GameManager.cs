@@ -29,7 +29,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private GameState   m_NowState;             // 現在のステート
     private GameState   m_NextChangeState;      // 変更するステート
     private float       m_NowStateElapsedTime;  // 現在のステートの経過時間
-    private bool        m_ChangedGameState;
+    private bool        m_ChangedGameState;     // シーンが変更された次のループかどうか
     private bool        m_ScenceLoadFlg;		// シーン遷移の関数を1回しか呼ばないためのフラグ
 
     private bool m_TimeMoveEnd; // 時間表示が移動し終わったか
@@ -73,6 +73,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         switch (m_NowState)
         {
             case GameManager.GameState.MAGIC_SQUARE_SETTING:
+                if (m_NowStateElapsedTime > 1.0f)
+                    GameManager.Instance.ChangeState(GameManager.GameState.PLAYER_SETTING);
+                break;
+
             case GameManager.GameState.PLAYER_SETTING:
                 break;
 
@@ -127,14 +131,14 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     }
 
     //--- 情報取得
-    public GameState    NowState                { get { return m_NowState; } }
-    public float        GetNowStateElapsedTime  { get { return m_NowStateElapsedTime; } }
-    public bool         GetChangedState         { get { return m_ChangedGameState; } }
-    public static int   GetStage                { get { return m_StageNum; } }
+    public GameState    NowState                { get { return m_NowState;              } }
+    public float        GetNowStateElapsedTime  { get { return m_NowStateElapsedTime;   } }
+    public bool         GetChangedState         { get { return m_ChangedGameState;      } }
+    public static int   GetStage                { get { return m_StageNum;              } }
 
     //--- 情報設定
-    public static int SetStage { set { m_StageNum = value; } }
-    public bool SetTimeMoveEnd { set { m_TimeMoveEnd = value; } }
+    public static int SetStage { set { m_StageNum = value;      } }
+    public bool SetTimeMoveEnd { set { m_TimeMoveEnd = value;   } }
 
     public void ConfigCamvas(bool Active)
     {

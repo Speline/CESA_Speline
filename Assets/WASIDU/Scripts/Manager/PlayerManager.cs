@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.SceneManagement;  // 現在のシーン取得用
 
 public class PlayerManager : MonoBehaviour
 {
@@ -79,6 +78,7 @@ public class PlayerManager : MonoBehaviour
     #endregion
     [SerializeField] private GameObject m_PlayerObjPrefub;  // プレイヤーオブジェクトのプレハブ
     [SerializeField] private GameObject m_FireBoalParent;   // 攻撃の親オブジェクト
+    [SerializeField] private GameObject m_WarpObject;
 
     // 必殺技用
     [SerializeField] private FinisherAtack m_FinisherAtackScript;
@@ -126,6 +126,8 @@ public class PlayerManager : MonoBehaviour
             AddObjData = Instantiate(m_PlayerObjPrefub, Data.SetPos, Quaternion.Euler(Data.SetRot), transform);
             AddObjData.name = Data.ObjName;
             AddObjData.GetComponent<Player>().FireBoalParent = m_FireBoalParent;
+            AddObjData.GetComponent<Player>().FinisherAtackScript = m_FinisherAtackScript;
+            AddObjData.GetComponent<Player>().WarpObject = Instantiate(m_WarpObject, Data.SetPos, Quaternion.Euler(Data.SetRot), transform);
         });
     }
 
@@ -390,8 +392,10 @@ public class PlayerManager : MonoBehaviour
         m_AttackSettingObjList.RemoveAt(0);
     }
 
+    //--- 情報設定
     public static ScoreManager ScoreManagerScript { set { m_ScoreManagerScript = value; } }
 
+    //--- 攻撃ガイド線表示有無変更
     public void ChangeUseAtackLine()
     {
         m_UseAtackLine = !m_UseAtackLine;

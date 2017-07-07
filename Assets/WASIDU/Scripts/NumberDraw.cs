@@ -6,8 +6,8 @@ public class NumberDraw : MonoBehaviour
 {
     //--- メンバ変数 ------------------------------------------------------------------------------------------------------------
     //--- メンバ定数
-    //private const float NUMBER_DISPLAY_SPACING = 70.0f;
-    private const float NUMBER_DISPLAY_SPACING = 15.0f;
+    private const float NUMBER_DISPLAY_SPACING = 70.0f;
+    private const float NUMBER_DISPLAY_SPACING_EDITOR = 15.0f;
 
     //--- メンバ変数
     [SerializeField] private GameObject m_NumberObjectPrefub;   // 番号表示オブジェクトプレハブ
@@ -77,7 +77,17 @@ public class NumberDraw : MonoBehaviour
         if (Count > 1)
         {
             Vector3 pos = m_NumberImageList[Count - 2].transform.position;
-            pos.x -= NUMBER_DISPLAY_SPACING;
+
+            if (Application.platform == RuntimePlatform.Android ||
+                Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                pos.x -= NUMBER_DISPLAY_SPACING;
+            }
+            else
+            {
+                pos.x -= NUMBER_DISPLAY_SPACING_EDITOR;
+            }
+
             m_NumberImageList[Count - 1].transform.position = pos;
         }
     }
