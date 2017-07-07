@@ -127,7 +127,7 @@ public class StageSelect_Manager : MonoBehaviour
 
 			bInitializ = false;	// 初期化終了
 
-            SEManager.Instance.Play("hito_ge_aru_tsuti");
+			SEManager.Instance.Play("hito_ge_aru_tsuti");
 		}
 
 		if (!bFlgs[0])
@@ -135,8 +135,8 @@ public class StageSelect_Manager : MonoBehaviour
 
 		// 終了判定
 		if (CheckFlgs())
-        {
-            SEManager.Instance.Pause();
+		{
+			SEManager.Instance.Pause();
 			bInitializ = true;						// 初期化可能状態にする
 			State = State_StageSelect.WAITING;		// 先頭キャラ移動待ち状態へ
 		}
@@ -157,8 +157,8 @@ public class StageSelect_Manager : MonoBehaviour
 
 		if (CheckFlgs())
 		{
-            SEManager.Instance.Play("hito_ge_aru_tsuti");
-            bInitializ = true;						// 初期化可能状態にする
+			SEManager.Instance.Play("hito_ge_aru_tsuti");
+			bInitializ = true;						// 初期化可能状態にする
 			State = State_StageSelect.LEADCHAR_MOVE;	// 先頭キャラ移動状態へ
 		}
 	}
@@ -179,8 +179,8 @@ public class StageSelect_Manager : MonoBehaviour
 			bFlgs[1] = cs_Camera.Top2Quarter();			// カメラをトップビューから、クォータービューに
 
 		if (CheckFlgs())
-        {
-            SEManager.Instance.Pause();
+		{
+			SEManager.Instance.Pause();
 			InitializFlgs(1);							// 次のステートでは1個の関数を使う。
 			bInitializ = true;							// 初期化可能状態にする
 			State = State_StageSelect.CAMERA_LINEAR_MOVE;	// カメラ弧移動へ
@@ -329,6 +329,8 @@ public class StageSelect_Manager : MonoBehaviour
 		{
 			InitializFlgs(1);	// このステートでは2個の関数を使う。
 
+			SEManager.Instance.Play("hito_ge_aru_tsuti");
+
 			bInitializ = false;	// 初期化終了
 		}
 
@@ -339,6 +341,7 @@ public class StageSelect_Manager : MonoBehaviour
 
 		if (CheckFlgs())
 		{
+			SEManager.Instance.Pause();
 			bInitializ = true;							// 初期化可能状態にする
 			State = State_StageSelect.SCENE_TRANSITION;	// シーン遷移へ
 		}
@@ -351,7 +354,7 @@ public class StageSelect_Manager : MonoBehaviour
 		{
 			GameObject.Find("Warp").GetComponent<StageSelect_Warp>().StartRotate();		// ワープ回転かいし
 
-            SEManager.Instance.Play("se_maoudamashii_effect11");
+			SEManager.Instance.Play("se_maoudamashii_effect11");
 
 			InitializFlgs(1);	// このステートでは1個の関数を使う。
 
@@ -407,9 +410,9 @@ public class StageSelect_Manager : MonoBehaviour
 				cs_Char.Skip();		// キャラクターのスキップ
 				cs_Camera.Skip();	// カメラのスキップ
 				cs_Stage.Skip();	// ステージのスキップ
-                cs_Button.Skip();	// ボタンのスキップ
+				cs_Button.Skip();	// ボタンのスキップ
 
-                SEManager.Instance.Pause();
+				SEManager.Instance.Pause();
 			}
 			else if(State == State_StageSelect.STAGE_FADE_IN    ||
 					State == State_StageSelect.REQUEST_MOVE     ||

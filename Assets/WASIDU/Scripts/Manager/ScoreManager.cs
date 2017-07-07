@@ -28,6 +28,10 @@ public class ScoreManager : MonoBehaviour
         m_ComboCnt = 0;
     }
 
+	// チュートリアル用
+	TutorialManager_1 Tutorial_1;
+	TutorialManager_2 Tutorial_2;
+
     void Start()
     {
         //--- スコアマネージャー設定
@@ -61,6 +65,8 @@ public class ScoreManager : MonoBehaviour
                 break;
         }
 
+		Tutorial_1 = GameObject.Find("Tutorial").GetComponent<TutorialManager_1>();
+		Tutorial_2 = GameObject.Find("Tutorial").GetComponent<TutorialManager_2>();
     }
 
     //--- コンボ設定
@@ -95,6 +101,20 @@ public class ScoreManager : MonoBehaviour
 
         //--- コンボが1以上の場合コンボボーナス付き加算
         m_Score += m_ComboCnt >= 1 ? AddScore + (m_ComboCnt / 10 + 1) * 10 : AddScore;
+
+		// チュートリアル用
+		if (Tutorial_1 != null && !Tutorial_1.GetbCanClear)			// ステージ1で、まだクリアしちゃダメな時は500のスコア制限
+		{
+			if (m_Score >= 500)
+				m_Score = 500;
+		}
+		else if (Tutorial_2 != null && !Tutorial_2.CanHissatu)		// ステージ2で、必殺技を撃つまでは800のスコア制限
+		{
+			if (m_Score > 800)
+				m_Score = 800;
+		}
+
+		Debug.Log(m_Score);
 
         m_ScoreNumberDrawScript.SetNumber(m_Score);
     }

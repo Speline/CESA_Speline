@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 // 各ステージの記録を管理する
 // ついでにステージ画像にステージ番号をつける
 public class StageSelect_Record : MonoBehaviour
 {
-	[SerializeField]	Sprite TimeTexture;
-	[SerializeField]	Sprite ScoreTexture;
-	[SerializeField]	Sprite[] NumberTexture = new Sprite[10];
+	//[SerializeField]	Sprite TimeTexture;
+	//[SerializeField]	Sprite ScoreTexture;
+	[SerializeField]	Sprite[] NumberTexture = new Sprite[11];
 
 	[SerializeField]	Vector3 vTimePos;		// ローカルポジション
 	[SerializeField]	Vector3 vScorePos;		// スコアポジション
@@ -19,11 +20,11 @@ public class StageSelect_Record : MonoBehaviour
 
 	Transform[] Stage = new Transform[10];
 	//SpriteRenderer[] sr = new SpriteRenderer[100];
-	SpriteRenderer[] sr = new SpriteRenderer[101];
+	SpriteRenderer[] sr = new SpriteRenderer[91];		// タイム3桁*10　＋　スコア5桁*10　＋　ステージ番号(10だけ2個使う)
 	int nsr = 0;
 	
 	float[] fTime = new float[10];
-	int[] nDrawTime = new int[4];
+	int[] nDrawTime = new int[3];
 	int[] nScore = new int[10];
 	int[] nDrawScore = new int[5];
 
@@ -35,55 +36,88 @@ public class StageSelect_Record : MonoBehaviour
 	void Start ()
 	{
 		Vector3 pos;
+		Vector3 vtimepos;
+
+		
+		//--- ステージの情報読み込み
+		TextAsset StageData = Resources.Load("StageData/StageData") as TextAsset;   // テキストデータ取得
+		string StageTextData = StageData.text;                                      // テキストデータをstringに
+		string[] StageDataArray = StageTextData.Split('\n');                        // 行ごとに分ける(一種類ずつに分ける)
+		string[] StageOneData;
+
+		for (int j = 0; j < StageDataArray.GetLength(0); j++)
+		{
+			StageOneData = StageDataArray[j].Split(',');
+			StageOneData.ToList().ForEach(x => x = x.Trim());
+			Debug.Log(StageOneData[StageOneData.GetLength(0) - 1]);
+			nScore[j] = int.Parse(StageOneData[StageOneData.GetLength(0) - 1]);
+		}
 
 		// データの読み込み
 		for(int i = 0 ; i < 10 ; i ++)
 		{
 			Stage[i] = transform.GetChild(i);
 
-			if (PlayerPrefs.HasKey("ScoreStage" + (i + 1)))
-				nScore[i] = PlayerPrefs.GetInt("ScoreStage" + (i + 1));
-			else
-				nScore[i] = 0;
+			//if (PlayerPrefs.HasKey("ScoreStage" + (i + 1)))
+			//	nScore[i] = PlayerPrefs.GetInt("ScoreStage" + (i + 1));
+			//else
+			//	nScore[i] = 0;
 
 			if (PlayerPrefs.HasKey("TimeStage" + (i + 1)))
 				fTime[i] = PlayerPrefs.GetFloat("TimeStage" + (i + 1));
 			else
-				fTime[i] = 0.0f;
+				fTime[i] = -1.0f;
 
 			#region タイム生成
-			nDrawTime[0] = (int)fTime[i] / 10;
-			nDrawTime[1] = (int)fTime[i] - nDrawTime[0] * 10;
-			nDrawTime[2] = (int)(fTime[i] * 10) - nDrawTime[0] * 100 - nDrawTime[1] * 10;
-			nDrawTime[3] = (int)(fTime[i] * 100) - nDrawTime[0] * 1000 - nDrawTime[1] * 100 - nDrawTime[2] * 10;
+			if (fTime[i] >= 0.0f)
+			{// 1度クリアされてて、タイムがあるとき
+
+				nDrawTime[0] = (int)(fTime[i] / 60.0f);
+				nDrawTime[1] = ((int)fTime[i] % 60) / 10;
+				nDrawTime[2] = ((int)fTime[i] % 60) - nDrawTime[1] * 10;
+
+				Debug.Log("分 : " + nDrawTime[0]);
+				Debug.Log("十秒 : " + nDrawTime[1]);
+				Debug.Log("一秒 : " + nDrawTime[2]);
+
+				vtimepos = vTimePos;
+			}
+			else
+			{// まだ一回もクリアしていないとき
+				for (int j = 0; j < nDrawTime.GetLength(0); j++)
+					nDrawTime[j] = 10;		// ハイフン
+
+				vtimepos = new Vector3(vTimePos.x, vTimePos.y, vTimePos.z);
+			}
+
+			//GameObject obj = new GameObject("time");
+			//sr[nsr] = obj.AddComponent<SpriteRenderer>();
+			//obj.AddComponent<SortingLayer>().OrderInLayer = 1;
+			//sr[nsr].sprite = NumberTexture[nDrawTime[0]];
+			//sr[nsr].color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+			//nsr ++;
+			//obj.transform.parent = Stage[i];
+			//obj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+			//pos = vtimepos;
+			//obj.transform.localPosition = pos;
 
 			GameObject obj = new GameObject("time");
 			sr[nsr] = obj.AddComponent<SpriteRenderer>();
 			obj.AddComponent<SortingLayer>().OrderInLayer = 1;
 			sr[nsr].sprite = NumberTexture[nDrawTime[0]];
-			sr[nsr].color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
-			nsr ++;
+			sr[nsr].color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
+			nsr++;
 			obj.transform.parent = Stage[i];
 			obj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-			pos = vTimePos;
+			//pos = new Vector3(pos.x + fCharSpace, pos.y, pos.z);
+			pos = vtimepos;
 			obj.transform.localPosition = pos;
 
 			obj = new GameObject("time");
 			sr[nsr] = obj.AddComponent<SpriteRenderer>();
 			obj.AddComponent<SortingLayer>().OrderInLayer = 1;
 			sr[nsr].sprite = NumberTexture[nDrawTime[1]];
-			sr[nsr].color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
-			nsr++;
-			obj.transform.parent = Stage[i];
-			obj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-			pos = new Vector3(pos.x + fCharSpace, pos.y, pos.z);
-			obj.transform.localPosition = pos;
-
-			obj = new GameObject("time");
-			sr[nsr] = obj.AddComponent<SpriteRenderer>();
-			obj.AddComponent<SortingLayer>().OrderInLayer = 1;
-			sr[nsr].sprite = NumberTexture[nDrawTime[2]];
-			sr[nsr].color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+			sr[nsr].color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 			nsr++;
 			obj.transform.parent = Stage[i];
 			obj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
@@ -93,8 +127,8 @@ public class StageSelect_Record : MonoBehaviour
 			obj = new GameObject("time");
 			sr[nsr] = obj.AddComponent<SpriteRenderer>();
 			obj.AddComponent<SortingLayer>().OrderInLayer = 1;
-			sr[nsr].sprite = NumberTexture[nDrawTime[3]];
-			sr[nsr].color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+			sr[nsr].sprite = NumberTexture[nDrawTime[2]];
+			sr[nsr].color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 			nsr++;
 			obj.transform.parent = Stage[i];
 			obj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
@@ -113,7 +147,7 @@ public class StageSelect_Record : MonoBehaviour
 			sr[nsr] = obj.AddComponent<SpriteRenderer>();
 			obj.AddComponent<SortingLayer>().OrderInLayer = 1;
 			sr[nsr].sprite = NumberTexture[nDrawScore[0]];
-			sr[nsr].color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+			sr[nsr].color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 			nsr++;
 			obj.transform.parent = Stage[i];
 			obj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
@@ -124,7 +158,7 @@ public class StageSelect_Record : MonoBehaviour
 			sr[nsr] = obj.AddComponent<SpriteRenderer>();
 			obj.AddComponent<SortingLayer>().OrderInLayer = 1;
 			sr[nsr].sprite = NumberTexture[nDrawScore[1]];
-			sr[nsr].color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+			sr[nsr].color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 			nsr++;
 			obj.transform.parent = Stage[i];
 			obj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
@@ -135,7 +169,7 @@ public class StageSelect_Record : MonoBehaviour
 			sr[nsr] = obj.AddComponent<SpriteRenderer>();
 			obj.AddComponent<SortingLayer>().OrderInLayer = 1;
 			sr[nsr].sprite = NumberTexture[nDrawScore[2]];
-			sr[nsr].color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+			sr[nsr].color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 			nsr++;
 			obj.transform.parent = Stage[i];
 			obj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
@@ -146,7 +180,7 @@ public class StageSelect_Record : MonoBehaviour
 			sr[nsr] = obj.AddComponent<SpriteRenderer>();
 			obj.AddComponent<SortingLayer>().OrderInLayer = 1;
 			sr[nsr].sprite = NumberTexture[nDrawScore[3]];
-			sr[nsr].color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+			sr[nsr].color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 			nsr++;
 			obj.transform.parent = Stage[i];
 			obj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
@@ -157,7 +191,7 @@ public class StageSelect_Record : MonoBehaviour
 			sr[nsr] = obj.AddComponent<SpriteRenderer>();
 			obj.AddComponent<SortingLayer>().OrderInLayer = 1;
 			sr[nsr].sprite = NumberTexture[nDrawScore[4]];
-			sr[nsr].color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+			sr[nsr].color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 			nsr++;
 			obj.transform.parent = Stage[i];
 			obj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
@@ -172,10 +206,10 @@ public class StageSelect_Record : MonoBehaviour
 				sr[nsr] = obj.AddComponent<SpriteRenderer>();
 				obj.AddComponent<SortingLayer>().OrderInLayer = 1;
 				sr[nsr].sprite = NumberTexture[i + 1];
-				sr[nsr].color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+				sr[nsr].color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 				nsr++;
 				obj.transform.parent = Stage[i];
-				obj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
+				obj.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
 				pos = vStageNoPos;
 				obj.transform.localPosition = pos;
 			}
@@ -185,22 +219,22 @@ public class StageSelect_Record : MonoBehaviour
 				sr[nsr] = obj.AddComponent<SpriteRenderer>();
 				obj.AddComponent<SortingLayer>().OrderInLayer = 1;
 				sr[nsr].sprite = NumberTexture[1];
-				sr[nsr].color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+				sr[nsr].color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 				nsr++;
 				obj.transform.parent = Stage[i];
-				obj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-				pos = new Vector3(vStageNoPos.x - (fCharSpace / 2.0f), vStageNoPos.y, vStageNoPos.z);
+				obj.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+				pos = new Vector3(vStageNoPos.x - 0.3f, vStageNoPos.y, vStageNoPos.z);
 				obj.transform.localPosition = pos;
 
 				obj = new GameObject("StageNo");
 				sr[nsr] = obj.AddComponent<SpriteRenderer>();
 				obj.AddComponent<SortingLayer>().OrderInLayer = 1;
 				sr[nsr].sprite = NumberTexture[0];
-				sr[nsr].color = new Color(1.0f, 1.0f, 1.0f, 0.0f);
+				sr[nsr].color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 				nsr++;
 				obj.transform.parent = Stage[i];
-				obj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
-				pos = new Vector3(pos.x + fCharSpace / 2.0f, pos.y, pos.z);
+				obj.transform.localScale = new Vector3(0.35f, 0.35f, 0.35f);
+				pos = new Vector3(pos.x + 0.6f, pos.y, pos.z);
 				obj.transform.localPosition = pos;
 			}
 			#endregion

@@ -41,5 +41,6 @@ public class NumberImage : MonoBehaviour
     private void SetUV()
     {
         gameObject.GetComponent<Image>().sprite = m_NumberSprites[m_DrawNumber];
+
     }
 }

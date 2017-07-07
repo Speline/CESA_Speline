@@ -14,6 +14,11 @@ public class EnemyBase : MonoBehaviour
     protected int m_Number;
     protected int m_AddScoreNum = 100;
 
+	// チュートリアル用
+	TutorialManager_1 Tutorial_1;
+
+
+
     //--- メンバ関数
     // コンストラクタ
     protected EnemyBase()
@@ -136,6 +141,17 @@ public class EnemyBase : MonoBehaviour
             m_HitFlgDictionary["+X,+Z"] && m_HitFlgDictionary["-X,-Z"] ||
             m_HitFlgDictionary["+X,-Z"] && m_HitFlgDictionary["-X,+Z"])
         {
+			// チュートリアル用(敵撃破)
+			if(Tutorial_1 == null)
+			{
+				Tutorial_1 = GameObject.Find("Tutorial").GetComponent<TutorialManager_1>();		// スクリプト取得
+			}
+			if (Tutorial_1 != null && Tutorial_1.GetbCanEnemyDefeat)
+			{
+				Tutorial_1.SetbEnemyDefeat = true;												// 敵を倒した
+			}
+
+
             // 挟まれた時のエフェクト
             DestryEnemy();
         }

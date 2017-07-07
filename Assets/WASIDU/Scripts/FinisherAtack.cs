@@ -134,7 +134,13 @@ public class FinisherAtack : GameMainObjectBase
                 EnemyManager.AllMoveStart();
                 ChangeState(FinisherState.START);
                 m_TriangleVertexPosObject.ToList().ForEach(x => x.GetComponent<Player>().EndFinisherAtack());
-                break;
+
+				// チュートリアル用(必殺技終了)
+				if (GameManager.GetStage == 1)
+				{
+					GameObject.Find("Tutorial").GetComponent<TutorialManager_2>().FinHissatu = true;
+				}
+				break;
 
         }
     }

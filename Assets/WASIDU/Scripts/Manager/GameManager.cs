@@ -23,7 +23,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     //--- メンバ変数 ------------------------------------------------------------------------------------------------------------
     //--- 静的メンバ変数
-    private static int m_StageNum = 0;
+    private static int m_StageNum = 1;
 
     //--- メンバ変数
     private GameState   m_NowState;             // 現在のステート

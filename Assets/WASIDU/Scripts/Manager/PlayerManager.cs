@@ -118,7 +118,12 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    void Awake()
+	// チュートリアル用変数
+	TutorialManager_1 Tutorial_1;
+	TutorialManager_2 Tutorial_2;
+    
+	
+	void Awake()
     {
         //--- プレイヤー設置
         GameObject AddObjData;
@@ -128,7 +133,12 @@ public class PlayerManager : MonoBehaviour
             AddObjData.GetComponent<Player>().FireBoalParent = m_FireBoalParent;
             AddObjData.GetComponent<Player>().FinisherAtackScript = m_FinisherAtackScript;
             AddObjData.GetComponent<Player>().WarpObject = Instantiate(m_WarpObject, Data.SetPos, Quaternion.Euler(Data.SetRot), transform);
-        });
+		});
+		
+
+		// チュートリアル用
+		Tutorial_1 = GameObject.Find("Tutorial").GetComponent<TutorialManager_1>();
+		Tutorial_2 = GameObject.Find("Tutorial").GetComponent<TutorialManager_2>();
     }
 
 	void Update ()
@@ -224,6 +234,13 @@ public class PlayerManager : MonoBehaviour
                 m_UseFinisher = true;
 
                 SetFinisherAtackObject();
+
+
+				// チュートリアル用
+				if (Tutorial_2 != null && Tutorial_2.GetbCanDoubleTap)
+				{
+					Tutorial_2.SetbDoubleTap = true;
+				}
                 break;
 
         }
@@ -300,8 +317,20 @@ public class PlayerManager : MonoBehaviour
                 m_PairObjDataList.Add(SetData);
             }
 
-            AtackEnd();
-        }
+			AtackEnd();
+
+			// チュートリアル用(対面キャラタップ)
+			if (Tutorial_1 != null && Tutorial_1.GetbCanOppositeTap)
+			{
+				Tutorial_1.SetbOppositeTap = true;
+			}
+		}
+
+		// チュートリアル用(キャラタップ)
+		if (Tutorial_1 != null && Tutorial_1.GetbCanCharTap)
+		{
+			Tutorial_1.SetbCharTap = true;
+		}
 
     }
 
@@ -313,7 +342,19 @@ public class PlayerManager : MonoBehaviour
 
         //--- 攻撃オブジェクトが三つ設定されているか
         if (m_AttackSettingObjList.Count >= 3)
-        {
+		{
+			// チュートリアル用
+			if (Tutorial_2 != null && !Tutorial_2.CanHissatu)		// ステージ2なんだけど、まだ必殺技撃っちゃダメな時は、撃たせない
+			{
+				AtackEnd();
+				return;
+			}
+			else if (Tutorial_2 != null && Tutorial_2.CanHissatu)	// 必殺技を発動してもいい状態なら必殺技を撃つ
+			{
+				Tutorial_2.HissatuInvocation = true;
+			}
+
+
             //--- 必殺技発動
             m_FinisherAtackScript.UseFinisher(m_AttackSettingObjList.ToArray());
 
