@@ -30,10 +30,6 @@ public class ResultManager : MonoBehaviour {
 	private RequestButton _ReqBObj;
 
 	[SerializeField]
-	private GameObject _Logo;
-	private ResultLogo _LogoObj;
-
-	[SerializeField]
 	private GameObject _Quest;
 	private Quest _QuestObj;
 
@@ -65,7 +61,6 @@ public class ResultManager : MonoBehaviour {
 		_HaneObj = _Hane.GetComponent<Hane>();
 		_ElTimeObj = _ElTime.GetComponent<ElapsedTime>();
 		_FinScObj = _FinSc.GetComponent<FinalScore>();
-		_LogoObj = _Logo.GetComponent<ResultLogo>();
 		_NestBObj = _NestB.GetComponent<NestQuestButton>();
 		_ReqBObj = _ReqB.GetComponent<RequestButton>();
 		_QuestObj = _Quest.GetComponent<Quest>();
@@ -212,7 +207,6 @@ public class ResultManager : MonoBehaviour {
 	private void HankoMove()
 	{
 		if (!_QuestObj.CheckFlg ()) {
-			_LogoObj.ChangeFlgLogo();
 			_NestBObj.DisplayActive (GameManager.GetStage);
 			_ReqBObj.DisplayActive();
 			_MagObj.FlgChenge();
@@ -289,7 +283,6 @@ public class ResultManager : MonoBehaviour {
 
 		_ElTimeObj.LastDisplay();							//タイムの最終画面
 		_FinScObj.LastDisplayScore();						//スコアの最終画面
-		_LogoObj.ChangeFlgLogo();							//リザルトのロゴが動く
 		_NestBObj.DisplayActive(GameManager.GetStage);							//ボタン表示
 		_ReqBObj.DisplayActive();							//ボタン表示
 		_QuestObj.LastQuest();								//ハンコ
