@@ -27,8 +27,6 @@ public class TargetManager : MonoBehaviour
     };
 
     //--- メンバ変数 ------------------------------------------------------------------------------------------------------------
-    //--- メンバ定数
-
     //--- メンバ変数
     private float   m_GameElapsedTime;  // 経過時間
     private float   m_TimeLimitCounter; // 制限時間
@@ -66,9 +64,6 @@ public class TargetManager : MonoBehaviour
         string[] StageDataArray = StageTextData.Split('\n');                        // 行ごとに分ける(一種類ずつに分ける)
         string[] StageOneData = StageDataArray[GameManager.GetStage].Split(',');    // 情報ごとに分ける
         StageOneData.ToList().ForEach(x => x = x.Trim());                           // 空白部分削除
-
-        //StageOneData.ToList().ForEach(x =>m_TargetDataList.Add(new TargetData(int.Parse(x), 10f)));
-
 
         //--- ステージで時間変更
 		if (GameManager.GetStage == 0)

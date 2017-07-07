@@ -20,7 +20,7 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 7}
-  m_MinSize: {x: 950, y: 300}
+  m_MinSize: {x: 950, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -40,8 +40,8 @@ MonoBehaviour:
     y: 0
     width: 237
     height: 404
-  m_MinSize: {x: 204, y: 221}
-  m_MaxSize: {x: 4004, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_MinSize: {x: 887, y: 492}
   m_MaxSize: {x: 16012, y: 14042}
   vertical: 0
-  controlID: 84
+  controlID: 96
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -89,8 +89,8 @@ MonoBehaviour:
     y: 0
     width: 277
     height: 675
-  m_MinSize: {x: 277, y: 71}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_MinSize: {x: 610, y: 492}
   m_MaxSize: {x: 12010, y: 14042}
   vertical: 1
-  controlID: 85
+  controlID: 97
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -260,7 +260,7 @@ MonoBehaviour:
   m_MinSize: {x: 610, y: 221}
   m_MaxSize: {x: 12010, y: 4021}
   vertical: 0
-  controlID: 86
+  controlID: 25
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -279,8 +279,8 @@ MonoBehaviour:
     y: 0
     width: 650
     height: 404
-  m_MinSize: {x: 204, y: 221}
-  m_MaxSize: {x: 4004, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 19}
   m_Panes:
   - {fileID: 19}
@@ -432,19 +432,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scences
+    - Assets/Tex/Letter
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scences
+  - Assets/Tex/Letter
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\nhs40050\Desktop\HAL\Unity\Cesa_Speline
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 103}
-    m_SelectedIDs: 76270000
-    m_LastClickedID: 10102
-    m_ExpandedIDs: 0000000076250000dc250000102800001a2800009c28000086290000462a00008e2a0000142c00006c2c0000c02c0000c62c0000542d0000803d0000ffffff7f
+    scrollPos: {x: 0, y: 327}
+    m_SelectedIDs: 98280000
+    m_LastClickedID: 10392
+    m_ExpandedIDs: 0000000076250000dc2500000e260000102800001a2800009c28000086290000462a00008e2a0000142c00006c2c0000c02c0000c62c0000542d0000ba2e0000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -472,7 +472,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000076250000dc250000102800001a2800009c28000086290000462a00008e2a0000142c00006c2c0000c02c0000c62c0000542d0000803d0000
+    m_ExpandedIDs: 0000000076250000dc250000102800001a2800009c28000086290000462a00008e2a0000142c00006c2c0000c02c0000c62c0000542d0000ba2e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -588,9 +588,9 @@ MonoBehaviour:
     height: 383
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 002a0000
+    m_SelectedIDs: 98280000
     m_LastClickedID: 0
-    m_ExpandedIDs: 72f7ffffe2fbffff00000000
+    m_ExpandedIDs: b2f8ffffe2fbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -609,7 +609,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 5}
     m_SearchString: 
   m_ExpandedScenes:
-  - Title
+  - GameMain
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -640,14 +640,14 @@ MonoBehaviour:
     width: 646
     height: 383
   m_SceneLighting: 1
-  lastFramingTime: 4596.44209616632
+  lastFramingTime: 496.20983750585026
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 6.2664986, y: -1.997632, z: 7.2066}
+    m_Target: {x: 96.34964, y: 151.37842, z: -19.599838}
     speed: 2
-    m_Value: {x: 6.2664986, y: -1.997632, z: 7.2066}
+    m_Value: {x: 96.34964, y: 151.37842, z: -19.599838}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -670,13 +670,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: 0.29729605, y: 0.3847856, z: -0.13244517, w: 0.8637208}
+    m_Target: {x: 0.17460252, y: -0.00088291586, z: 0.00015613253, w: 0.98463863}
     speed: 2
-    m_Value: {x: 0.29729608, y: 0.3847856, z: -0.13244517, w: 0.8637208}
+    m_Value: {x: 0.17460252, y: -0.00088291586, z: 0.00015613253, w: 0.98463863}
   m_Size:
-    m_Target: 24.195244
+    m_Target: 227.7255
     speed: 2
-    m_Value: 24.195244
+    m_Value: 227.7255
   m_Ortho:
     m_Target: 0
     speed: 2

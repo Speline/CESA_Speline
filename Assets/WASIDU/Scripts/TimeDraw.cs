@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class TimeDraw : MonoBehaviour
 {
     //--- メンバ変数 ------------------------------------------------------------------------------------------------------------
-    //--- メンバ定数
-
     //--- メンバ変数
     private Image       m_TimeImage;        // 残り時間情報画像
     private GameObject  m_ClockHandObject;  // 時計の針オブジェクト
@@ -64,11 +62,7 @@ public class TimeDraw : MonoBehaviour
                 break;
 
             case GameManager.GameState.GAME_MAIN:
-                break;
-
             case GameManager.GameState.GAME_CLEAR:
-                break;
-
             case GameManager.GameState.GAME_OVER:
                 break;
         }
