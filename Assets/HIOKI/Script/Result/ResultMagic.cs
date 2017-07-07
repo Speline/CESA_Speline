@@ -40,5 +40,6 @@ public class ResultMagic : MonoBehaviour {
 	public void FlgChenge()
 	{
 		bFlg = true;
-	}
+        _MagR.color = new Color(0.0f, 255.0f, 255.0f, 255.0f);
+    }
 }

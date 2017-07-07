@@ -81,13 +81,11 @@ public class ResultManager : MonoBehaviour {
 			if (fTime > fSetTime)
 			{
 				PlayerPrefs.SetFloat("TimeStage" + (GameManager.GetStage + 1), fSetTime);
-				Debug.Log("タイム新記録のステージ番号 : " + (GameManager.GetStage + 1));
 			}
 		}
 		else
 		{
 			PlayerPrefs.SetFloat("TimeStage" + (GameManager.GetStage + 1), fSetTime);
-			Debug.Log("タイムを保存 : " + fSetTime);
 		}
 
 
@@ -97,13 +95,11 @@ public class ResultManager : MonoBehaviour {
 			if (nScore < nSetScore)
 			{
 				PlayerPrefs.SetInt("ScoreStage" + (GameManager.GetStage + 1), nSetScore);
-				Debug.Log("スコア新記録のステージ番号 : " + nSetScore);
 			}
 		}
 		else
 		{
 			PlayerPrefs.SetInt("ScoreStage" + (GameManager.GetStage + 1), nSetScore);
-			Debug.Log("スコアを保存 : " + nSetScore);
 		}
 
 		PlayerPrefs.Save ();
