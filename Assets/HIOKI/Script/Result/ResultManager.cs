@@ -188,7 +188,9 @@ public class ResultManager : MonoBehaviour {
 				_ElTimeObj.MoveTime ();
 			else
 				_FinScObj.ChageFlg ();
-			nSelect++;
+            nSelect++;
+
+            SEManager.Instance.Play("sei_ge_bpen_kaku01");
 		}
 	}
 
@@ -219,6 +221,8 @@ public class ResultManager : MonoBehaviour {
 			_ReqBObj.DisplayActive();
 			_MagObj.FlgChenge();
 			nSelect++;
+
+            SEManager.Instance.Play("机を叩く音");
 		}
 	}
 
@@ -248,13 +252,15 @@ public class ResultManager : MonoBehaviour {
 	private void DisplayTouchCheck()
 	{
 		if (Input.GetKeyDown (KeyCode.Return)) {
-			//ここにタッチした時の効果音をいれる
+            //ここにタッチした時の効果音をいれる
+            SEManager.Instance.Play("アイテム発見");
 			TouchDisplay(nSelect);
 		}
 
 		if (Input.touchCount > 0) {
 			if (touch.phase == TouchPhase.Began) {
-				//ここにタッチした時の効果音をいれる
+                //ここにタッチした時の効果音をいれる
+                SEManager.Instance.Play("アイテム発見");
 				TouchDisplay(nSelect);
 			}
 		}

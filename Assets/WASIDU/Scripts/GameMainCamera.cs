@@ -61,4 +61,20 @@ public class GameMainCamera : SingletonMonoBehaviour<GameMainCamera>
 
     //--- 情報取得
     public bool MoveCamera { get { return m_CameraRotChange; } }
+
+    public void ChangeViewCamera()
+    {
+        if (m_UseTopViewCamera)
+        {
+            m_Rotate = new Vector3(CAMERA_ROT_X, 0.0f, 0.0f);
+            transform.rotation = Quaternion.Euler(m_Rotate);
+            m_UseTopViewCamera = false;
+        }
+        else
+        {
+            m_Rotate = new Vector3(0.0f, 0.0f, 0.0f);
+            transform.rotation = Quaternion.Euler(m_Rotate);
+            m_UseTopViewCamera = true;
+        }
+    }
 }

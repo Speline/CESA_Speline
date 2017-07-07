@@ -7,7 +7,7 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.UI;
 
-public class FinisherAtack : MonoBehaviour
+public class FinisherAtack : GameMainObjectBase
 {
     //--- 必殺技ステート
     public enum FinisherState
@@ -70,9 +70,27 @@ public class FinisherAtack : MonoBehaviour
         CutinObjAllSetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    //--- 更新(ループ中最後)
+    void LateUpdate()
     {
+        //--- ステート変更
+        if (m_FinisherState != m_NextChangeState)
+            m_FinisherState = m_NextChangeState;
+    }
+
+    protected override void GameMain()
+    {
+        if (GameManager.Instance.GetChangedState)
+        {
+            Animator AnimatorA = m_CutInObjA.GetComponent<Animator>();
+            Animator AnimatorB = m_CutInObjB.GetComponent<Animator>();
+            Animator AnimatorC = m_CutInObjC.GetComponent<Animator>();
+
+            AnimatorA.speed = 1.0f;
+            AnimatorB.speed = 1.0f;
+            AnimatorC.speed = 1.0f;
+        }
+
         if (!m_UseFinisher)
             return;
 
@@ -117,12 +135,18 @@ public class FinisherAtack : MonoBehaviour
         }
     }
 
-    //--- 更新(ループ中最後)
-    void LateUpdate()
+    protected override void Pause()
     {
-        //--- ステート変更
-        if (m_FinisherState != m_NextChangeState)
-            m_FinisherState = m_NextChangeState;
+        if(GameManager.Instance.GetChangedState)
+        {
+            Animator AnimatorA = m_CutInObjA.GetComponent<Animator>();
+            Animator AnimatorB = m_CutInObjB.GetComponent<Animator>();
+            Animator AnimatorC = m_CutInObjC.GetComponent<Animator>();
+
+            AnimatorA.speed = 0.0f;
+            AnimatorB.speed = 0.0f;
+            AnimatorC.speed = 0.0f;
+        }
     }
 
     //--- 必殺技使用
@@ -163,6 +187,8 @@ public class FinisherAtack : MonoBehaviour
         Animator AnimatorA = m_CutInObjA.GetComponent<Animator>();
         Animator AnimatorB = m_CutInObjB.GetComponent<Animator>();
         Animator AnimatorC = m_CutInObjC.GetComponent<Animator>();
+
+        SEManager.Instance.Play("sen_ka_katana_utiai16");
 
         if (!GameMainCamera.Instance.MoveCamera &&
             AnimatorA.GetCurrentAnimatorStateInfo(0).IsName("CutinObjA") &&

@@ -74,8 +74,22 @@ public class SEManager : MonoBehaviour
             return;
         }
 
+        if (m_AudioSource.isPlaying && m_AudioSource.name == seName)
+            return;
+
         m_AudioSource.clip = m_AudioClipData[seName];
         m_AudioSource.Play();
+    }
+
+    //--- 停止
+    public void Pause()
+    {
+        m_AudioSource.Pause();
+    }
+
+    public void SetVolume(float SetVolume)
+    {
+        m_AudioSource.volume = SetVolume;
     }
 }
 

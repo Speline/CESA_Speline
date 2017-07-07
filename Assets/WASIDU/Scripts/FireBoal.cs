@@ -16,10 +16,11 @@ public class FireBoal : MonoBehaviour
     //--- メンバ変数
     private Vector3     m_MoveVec;      // 移動方向
     private bool        m_EnemyHit;    // 敵に当たっているか
+    private bool m_HitFireBoal;
 
     // 出現時の処理用
     private bool        m_MoveStart;
-    private float m_StartTime;
+    private float       m_StartTime;
     private GameObject  m_BulletCore;
     private GameObject  m_BulletParticle;
 
@@ -28,6 +29,7 @@ public class FireBoal : MonoBehaviour
     {
         m_MoveVec   = Vector3.zero;
         m_EnemyHit  = false;
+        m_HitFireBoal = false;
 
         m_StartTime = 0.0f;
         m_MoveStart = false;
@@ -68,6 +70,45 @@ public class FireBoal : MonoBehaviour
                 break;
         }
 
+    }
+
+    void LateUpdate()
+    {
+        //--- ステートによる変更処理
+        switch (GameManager.Instance.NowState)
+        {
+            case GameManager.GameState.SETTING:
+            case GameManager.GameState.MAGIC_SQUARE_SETTING:
+            case GameManager.GameState.PLAYER_SETTING:
+            case GameManager.GameState.GAME_START:
+                break;
+
+            case GameManager.GameState.GAME_MAIN:
+                if (m_HitFireBoal)
+                {
+                    //--- 子オブジェクト
+                    Transform children = gameObject.transform;
+
+                    //--- 子オブジェクトすべてチェック
+                    foreach (Transform ob in children)
+                    {
+                        // 敵が残っていた場合消す
+                        if (ob.gameObject.tag == "Target")
+                        {
+                            ob.gameObject.GetComponent<EnemyBase>().DestryEnemy();
+                        }
+                    }
+
+                    SEManager.Instance.Play("ポップな爆発");
+                    Destroy(this.gameObject);
+
+                }
+                break;
+
+            case GameManager.GameState.GAME_CLEAR:
+            case GameManager.GameState.GAME_OVER:
+                break;
+        }
     }
 
     void GameMain()
@@ -123,20 +164,7 @@ public class FireBoal : MonoBehaviour
                 CheckVector.y >= -0.1f && CheckVector.y <= 0.1f &&
                 CheckVector.z >= -0.1f && CheckVector.z <= 0.1f)
             {
-                //--- 子オブジェクト
-                Transform children = gameObject.transform;
-
-                //--- 子オブジェクトすべてチェック
-                foreach (Transform ob in children)
-                {
-                    // 敵が残っていた場合消す
-                    if (ob.gameObject.tag == "Target")
-                    {
-                        ob.gameObject.GetComponent<EnemyBase>().DestryEnemy();
-                    }
-                }
-
-                Destroy(this.gameObject);
+                m_HitFireBoal = true;
             }
         }
     }
