@@ -113,7 +113,6 @@ public class Hane : MonoBehaviour {
 		pos.y -= 0.06f;
 
 		if (pos.y <= fStartStop[1]) {
-			Debug.Log ("ストップ");
 			pos.y = fStartStop[1];
 			nMove++;
 			bMoveFlg = true;

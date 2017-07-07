@@ -98,7 +98,6 @@ public class EnemySquareRotation : EnemyBase {
         Vector3 EnemyPos = transform.localPosition;
         Vector3 EnemyRot = transform.localEulerAngles;
 
-        //Debug.Log (ChangeDir);
 
         switch (ChangeDir)
         {

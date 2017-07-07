@@ -72,7 +72,7 @@ public class ResultManager : MonoBehaviour {
 		_MagObj = _Mag.GetComponent<ResultMagic>();
 		#endregion
 
-		Debug.Log("GameManager.GetStage : " + (GameManager.GetStage+1));
+		//Debug.Log("GameManager.GetStage : " + (GameManager.GetStage+1));
 
 
 		if (PlayerPrefs.HasKey("TimeStage" + (GameManager.GetStage + 1)))
