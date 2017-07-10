@@ -71,7 +71,6 @@ public class FadeUI : MonoBehaviour, IFade
 			color = value;
 			mat.SetColor("_Color", color);
 
-			Debug.Log("FadeUI.cs" + color);
 		}
 	}
 }

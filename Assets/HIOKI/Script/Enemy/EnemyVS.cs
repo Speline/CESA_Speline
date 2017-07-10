@@ -48,7 +48,6 @@ public class EnemyVS : EnemyBase {
 		Vector3 EnemyPos = transform.localPosition;
 		Vector3 EnemyRot = transform.localEulerAngles;
 
-		Debug.Log (ChangeDir);
 		switch (ChangeDir) {
 		case (int)CHANGEDIR.Phase_0:
 			EnemyPos.x += fEnemyMoveSpeed * Time.deltaTime * 1.0f;

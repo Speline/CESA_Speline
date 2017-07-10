@@ -22,7 +22,7 @@ public class NumberDraw : MonoBehaviour
         m_DrawNumber = 0;
     }
 
-    void Start ()
+    void Awake ()
     {
         AddNumberObject();
 	}

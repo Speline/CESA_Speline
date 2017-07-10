@@ -60,6 +60,7 @@ public class BGMManager : MonoBehaviour
             m_AudioClipData[bgm.name] = bgm;
         }
 
+        m_AudioSource.loop = true;
     }
 
     //--- 再生

@@ -74,7 +74,7 @@ public class FinalScore : MonoBehaviour {
 	public void LastDisplayScore()
 	{
 		for (int i = 0; i < ScoreRender.Length; i++) {
-			ScoreRender [i].color = new Color (255.0f, 255.0f, 255.0f, 1.0f);
+            ScoreRender[i].color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
 		}
 	}
 }

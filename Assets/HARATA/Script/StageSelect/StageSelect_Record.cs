@@ -49,7 +49,6 @@ public class StageSelect_Record : MonoBehaviour
 		{
 			StageOneData = StageDataArray[j].Split(',');
 			StageOneData.ToList().ForEach(x => x = x.Trim());
-			Debug.Log(StageOneData[StageOneData.GetLength(0) - 1]);
 			nScore[j] = int.Parse(StageOneData[StageOneData.GetLength(0) - 1]);
 		}
 
@@ -75,10 +74,6 @@ public class StageSelect_Record : MonoBehaviour
 				nDrawTime[0] = (int)(fTime[i] / 60.0f);
 				nDrawTime[1] = ((int)fTime[i] % 60) / 10;
 				nDrawTime[2] = ((int)fTime[i] % 60) - nDrawTime[1] * 10;
-
-				Debug.Log("分 : " + nDrawTime[0]);
-				Debug.Log("十秒 : " + nDrawTime[1]);
-				Debug.Log("一秒 : " + nDrawTime[2]);
 
 				vtimepos = vTimePos;
 			}

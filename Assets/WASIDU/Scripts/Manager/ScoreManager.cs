@@ -11,15 +11,16 @@ public class ScoreManager : MonoBehaviour
     //--- メンバ定数
 
     //--- メンバ変数
-    [SerializeField]
-    private NumberDraw m_ScoreNumberDrawScript;
-    [SerializeField]
-    private NumberDraw m_ComboNumberDrawScript;
-    [SerializeField]
-    private GameObject m_ComboDraw;
+    [SerializeField] private NumberDraw m_ScoreNumberDrawScript; // スコア数字表示用スクリプト
+    [SerializeField] private NumberDraw m_ComboNumberDrawScript; // コンボ数字表示用スクリプト
+    [SerializeField] private GameObject m_ComboDraw;
 
     private int m_Score;    // スコア
     private int m_ComboCnt;   // コンボ数
+
+    // チュートリアル用
+    TutorialManager_1 Tutorial_1;
+    TutorialManager_2 Tutorial_2;
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
     ScoreManager()
@@ -28,16 +29,15 @@ public class ScoreManager : MonoBehaviour
         m_ComboCnt = 0;
     }
 
-	// チュートリアル用
-	TutorialManager_1 Tutorial_1;
-	TutorialManager_2 Tutorial_2;
-
     void Start()
     {
         //--- スコアマネージャー設定
         EnemyBase.ScoreManager = this;
         PlayerManager.ScoreManagerScript = this;
 
+
+        Tutorial_1 = GameObject.Find("Tutorial").GetComponent<TutorialManager_1>();
+        Tutorial_2 = GameObject.Find("Tutorial").GetComponent<TutorialManager_2>();
     }
 
     // Update is called once per frame
@@ -64,9 +64,6 @@ public class ScoreManager : MonoBehaviour
                 m_ComboDraw.SetActive(false);
                 break;
         }
-
-		Tutorial_1 = GameObject.Find("Tutorial").GetComponent<TutorialManager_1>();
-		Tutorial_2 = GameObject.Find("Tutorial").GetComponent<TutorialManager_2>();
     }
 
     //--- コンボ設定
@@ -108,13 +105,11 @@ public class ScoreManager : MonoBehaviour
 			if (m_Score >= 500)
 				m_Score = 500;
 		}
-		else if (Tutorial_2 != null && !Tutorial_2.CanHissatu)		// ステージ2で、必殺技を撃つまでは800のスコア制限
+		else if (Tutorial_2 != null && !Tutorial_2.HissatuInvocation)		// ステージ2で、必殺技を撃つまでは800のスコア制限
 		{
 			if (m_Score > 800)
 				m_Score = 800;
 		}
-
-		Debug.Log(m_Score);
 
         m_ScoreNumberDrawScript.SetNumber(m_Score);
     }

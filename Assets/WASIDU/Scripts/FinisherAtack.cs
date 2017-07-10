@@ -237,7 +237,7 @@ public class FinisherAtack : GameMainObjectBase
 
     void EfectUpdate()
     {
-        if (m_FinisherAtackTime > 2.0f)
+        if (m_FinisherAtackTime > 4.0f)
         {
             ChangeState(FinisherState.END);
         }

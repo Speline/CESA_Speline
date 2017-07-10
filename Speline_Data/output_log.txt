@@ -15,60 +15,9 @@ Platform assembly: C:\Users\nhs40050\Desktop\HAL\Unity\Cesa_Speline\Speline_Data
 Loading C:\Users\nhs40050\Desktop\HAL\Unity\Cesa_Speline\Speline_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\nhs40050\Desktop\HAL\Unity\Cesa_Speline\Speline_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\nhs40050\Desktop\HAL\Unity\Cesa_Speline\Speline_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.051 seconds
+- Completed reload, in  0.036 seconds
 Platform assembly: C:\Users\nhs40050\Desktop\HAL\Unity\Cesa_Speline\Speline_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\nhs40050\Desktop\HAL\Unity\Cesa_Speline\Speline_Data\Managed\System.dll (this message is harmless)
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
-<RI> Initialized touch support.
-UnloadTime: 2.693593 ms
-Setting up 2 worker threads for Enlighten.
-  Thread -> id: 960 -> priority: 1 
-  Thread -> id: 23ac -> priority: 1 
-Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.276297 ms
-
-Unloading 25 unused Assets to reduce memory usage. Loaded Objects now: 1185.
-Total: 0.413419 ms (FindLiveObjects: 0.059529 ms CreateObjectMapping: 0.029559 ms MarkObjects: 0.284097 ms  DeleteObjects: 0.039822 ms)
-
-Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 5.080097 ms
-
-Unloading 70 unused Assets to reduce memory usage. Loaded Objects now: 2480.
-Total: 3.278210 ms (FindLiveObjects: 0.222515 ms CreateObjectMapping: 0.125216 ms MarkObjects: 1.619193 ms  DeleteObjects: 1.310052 ms)
-
-目標1達成
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-目標2達成
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-目標3達成
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-目標4達成
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 8.438364 ms
-
-Unloading 590 unused Assets to reduce memory usage. Loaded Objects now: 511.
-Total: 1.970210 ms (FindLiveObjects: 0.141227 ms CreateObjectMapping: 0.130964 ms MarkObjects: 0.496350 ms  DeleteObjects: 1.200436 ms)
-
-GameManager.GetStage : 2
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-スコア新記録のステージ番号 : 1060
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-ストップ
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-

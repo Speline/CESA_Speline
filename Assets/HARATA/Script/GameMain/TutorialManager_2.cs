@@ -50,9 +50,9 @@ public class TutorialManager_2 : MonoBehaviour
 
 	float fTime = 0.0f;
 
-	Vector3 pos_waku;
-	Vector3 pos_char;
-	Vector3 pos_messa;
+	GameObject WakuObj;
+	GameObject CharObj;
+	GameObject MessaObj;
 
 
 	void Awake()
@@ -314,14 +314,13 @@ public class TutorialManager_2 : MonoBehaviour
 	{
 		if (bInitializ)
 		{
-			// 必殺技発動中はカメラから見えないとこにいる。
-			pos_waku = cs_Waku.gameObject.transform.localPosition;		// 座標保存
-			pos_char = cs_Char.gameObject.transform.localPosition;
-			pos_messa = cs_Message.gameObject.transform.localPosition;
-
-			cs_Waku.gameObject.transform.position = new Vector3(100.0f, 100.0f, 100.0f);		// 適当にぶっとばす
-			cs_Char.gameObject.transform.position = new Vector3(100.0f, 100.0f, 100.0f);		// 適当にぶっとばす
-			cs_Message.gameObject.transform.position = new Vector3(100.0f, 100.0f, 100.0f);		// 適当にぶっとばす
+			// 必殺技発動中はカメラから見えないようにする。
+            WakuObj = cs_Waku.gameObject;
+            CharObj = cs_Char.gameObject;
+            MessaObj = cs_Message.gameObject;
+            WakuObj.SetActive(false);
+            CharObj.SetActive(false);
+            MessaObj.SetActive(false);
 
 			InitializFlgs(1);	//	このステートで使うフラグの数に初期化しておく
 
@@ -337,9 +336,10 @@ public class TutorialManager_2 : MonoBehaviour
 		{
 			GameObject.Find("Tutorial").GetComponent<Transform>().eulerAngles = new Vector3(0.0f, 180.0f, 0.0f);
 
-			cs_Waku.gameObject.transform.localPosition = pos_waku;		// 座標を元に戻す
-			cs_Char.gameObject.transform.localPosition = pos_char;
-			cs_Message.gameObject.transform.localPosition = pos_messa;
+			// アクティブに戻す
+            WakuObj.SetActive(true);
+            CharObj.SetActive(true);
+            MessaObj.SetActive(true);
 
 
 			bInitializ = true;						// 初期化可能状態にする

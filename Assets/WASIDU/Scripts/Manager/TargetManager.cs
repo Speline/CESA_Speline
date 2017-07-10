@@ -42,6 +42,9 @@ public class TargetManager : MonoBehaviour
     // 小目標表示用
     [SerializeField] private NumberDraw m_TargetNumberDrawScript;
 
+    // チュートリアル用
+    bool bTimeOver = false;
+
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
     TargetManager()
     {
@@ -120,57 +123,96 @@ public class TargetManager : MonoBehaviour
     {
         if (m_UpdateTime)
         {
-            m_TimeLimitCounter  -= Time.deltaTime;
+            m_TimeLimitCounter -= Time.deltaTime;
             m_GameElapsedTime   += Time.deltaTime;
-        }
-
-        //--- 制限時間表示更新
-        m_TimeDrawScript.TimeData = m_TimeLimitCounter / m_TargetDataList[m_NowTargetNumber].TimeLimit;
-
-        //--- 目標数達成しているか
-        if (m_ScoreManagerScript.Score >= m_TargetDataList[m_NowTargetNumber].TargetScore)
-        {// 達成している場合
-            //m_GameTime += m_TargetDataList[m_NowTargetNumber].TimeLimit * 0.4f;
-
-            //--- ステージで時間変更
-            if (GameManager.GetStage == 0)
-            {
-                m_TimeLimitCounter = 60f;
-            }
-            else if (GameManager.GetStage == 1)
-            {
-                m_TimeLimitCounter = 30f;
-            }
-            else if (GameManager.GetStage < 6)
-                m_TimeLimitCounter = 15f;
-            else
-                m_TimeLimitCounter = 10f;
-
-            m_NowTargetNumber++;    // 次の目標に
-
-            if (m_NowTargetNumber < m_TargetDataList.Count)
-                m_TargetDataList[m_NowTargetNumber].SetTimeLimit = m_TimeLimitCounter;
-
-            if (m_NowTargetNumber % 2 == 0)
-                m_FinisherAtackScript.AddFinisherStock();
-
-            if (m_NowTargetNumber < m_TargetDataList.Count)
-                m_TargetNumberDrawScript.SetNumber(m_TargetDataList[m_NowTargetNumber].TargetScore);
-        }
-
-        if (m_TimeLimitCounter <= 0.0f)
-        {
-            GameManager.Instance.ChangeState(GameManager.GameState.GAME_OVER);
         }
 
         //--- 全ての目標を達成しているか
         if (m_NowTargetNumber >= m_TargetDataList.Count)
         {
+            if (m_FinisherAtackScript.GetUseFinisher)
+                return;
+
             GameManager.Instance.ChangeState(GameManager.GameState.GAME_CLEAR);
 
-            ResultManager.TimeandScore(m_GameElapsedTime,m_ScoreManagerScript.Score);
+            BGMManager.Instance.Play("ファンファーレは誰のために？");
+
+            if (!bTimeOver)
+                ResultManager.TimeandScore(m_GameElapsedTime, m_ScoreManagerScript.Score);      // 普通のクリア
+            else
+            {
+                if (m_GameElapsedTime >= 599.0f)
+                    m_GameElapsedTime = 599.0f;
+
+                ResultManager.TimeandScore(m_GameElapsedTime, m_ScoreManagerScript.Score);      // 1回でもタイムオーバーになっていたら、記録は残さない
+            }
         }
+        else
+        {
+
+            //--- 制限時間表示更新
+            m_TimeDrawScript.TimeData = m_TimeLimitCounter / m_TargetDataList[m_NowTargetNumber].TimeLimit;
+
+            //--- 目標数達成しているか
+            if (m_ScoreManagerScript.Score >= m_TargetDataList[m_NowTargetNumber].TargetScore)
+            {// 達成している場合
+                //m_GameTime += m_TargetDataList[m_NowTargetNumber].TimeLimit * 0.4f;
+
+                //--- ステージで時間変更
+                if (GameManager.GetStage == 0)
+                {
+                    m_TimeLimitCounter = 60f;
+                }
+                else if (GameManager.GetStage == 1)
+                {
+                    m_TimeLimitCounter = 30f;
+                }
+                else if (GameManager.GetStage < 6)
+                    m_TimeLimitCounter = 15f;
+                else
+                    m_TimeLimitCounter = 10f;
+
+                m_NowTargetNumber++;    // 次の目標に
+
+                if (m_NowTargetNumber < m_TargetDataList.Count)
+                    m_TargetDataList[m_NowTargetNumber].SetTimeLimit = m_TimeLimitCounter;
+
+                if (m_NowTargetNumber % 2 == 0)
+                    m_FinisherAtackScript.AddFinisherStock();
+
+                if (m_NowTargetNumber < m_TargetDataList.Count)
+                    m_TargetNumberDrawScript.SetNumber(m_TargetDataList[m_NowTargetNumber].TargetScore);
+            }
+
+            if (m_TimeLimitCounter <= 0.0f)
+            {
+                if (GameManager.GetStage != 0 && GameManager.GetStage != 1)
+                    GameManager.Instance.ChangeState(GameManager.GameState.GAME_OVER);
+                else
+                {
+                    m_TimeLimitCounter = 0.0f;      // ステージが0か1なら、タイムを0にしたままゲーム継続
+                    GameObject.Find("hdbcjbdsvisCanvas").GetComponent<Tutorial_Gameover>().GAMEOVER();
+                }
+
+            }
+
+        }
+
     }
 
     public bool UpdateTime { set { m_UpdateTime = value; } }
+
+    public void TimeReborn()
+    {
+        if (GameManager.GetStage == 0)
+        {
+            m_TimeLimitCounter = 60f;
+        }
+        else if (GameManager.GetStage == 1)
+        {
+            m_TimeLimitCounter = 30f;
+        }
+
+    }
+
 }

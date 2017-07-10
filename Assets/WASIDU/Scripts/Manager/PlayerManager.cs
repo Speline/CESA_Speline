@@ -221,6 +221,12 @@ public class PlayerManager : MonoBehaviour
                 if (m_FinisherAtackScript.GetFinisherStock < 1)
                     return;
 
+                // チュートリアル用
+                if (Tutorial_2 != null && !Tutorial_2.GetbCanDoubleTap)		// ステージ2なんだけど、まだ必殺技撃っちゃダメな時は、撃たせない
+                {
+                    return;
+                }
+
                 //--- オブジェクトチェック
                 if (m_AttackSettingHitObj == null)
                 {
@@ -343,13 +349,7 @@ public class PlayerManager : MonoBehaviour
         //--- 攻撃オブジェクトが三つ設定されているか
         if (m_AttackSettingObjList.Count >= 3)
 		{
-			// チュートリアル用
-			if (Tutorial_2 != null && !Tutorial_2.CanHissatu)		// ステージ2なんだけど、まだ必殺技撃っちゃダメな時は、撃たせない
-			{
-				AtackEnd();
-				return;
-			}
-			else if (Tutorial_2 != null && Tutorial_2.CanHissatu)	// 必殺技を発動してもいい状態なら必殺技を撃つ
+			if (Tutorial_2 != null && Tutorial_2.CanHissatu)	// 必殺技を発動してもいい状態なら必殺技を撃つ
 			{
 				Tutorial_2.HissatuInvocation = true;
 			}

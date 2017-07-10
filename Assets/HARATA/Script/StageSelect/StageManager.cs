@@ -321,10 +321,6 @@ public class StageManager : MonoBehaviour
 	// 決定ボタンを押された時
 	public void DecisionButton()
 	{
-		Debug.Log("bMoveTouch : " + bMoveTouch);
-		Debug.Log("bInertia : " + bInertia);
-		Debug.Log("bMovesCloser : " + bMovesCloser);
-		Debug.Log("bButtonMove : " + bButtonMove);
 
 		// なにかが行われている状態でなければ、ステージ決定
 		if (!bMoveTouch && !bInertia && !bMovesCloser && !bButtonMove)
@@ -476,9 +472,6 @@ public class StageManager : MonoBehaviour
 		{// マイナス方向に探索
 			fDistance = -fSpace - fPos;
 		}
-
-		//Debug.Log("fPos : " + fPos);
-		//Debug.Log("fDistance : " + fDistance);
 
 		return fDistance;
 	}

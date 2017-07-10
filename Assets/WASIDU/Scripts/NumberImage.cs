@@ -22,7 +22,7 @@ public class NumberImage : MonoBehaviour
         m_DrawNumber = 0;
     }
 
-    void Start()
+    void Awake()
     {
         if (m_NumberSprites == null)
         {

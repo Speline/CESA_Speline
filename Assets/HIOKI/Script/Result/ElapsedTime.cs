@@ -142,10 +142,10 @@ public class ElapsedTime : MonoBehaviour {
 	#region スキップ用
 	public void LastDisplay()
 	{
-		_TimeNomber_0.color = new Color(255.0f,255.0f,255.0f,1.0f);
-		_TimeNomber_1.color = new Color(255.0f,255.0f,255.0f,1.0f);
-		_TimeColon.color = new Color(255.0f,255.0f,255.0f,1.0f);
-		_TimeNomber_2.color = new Color(255.0f,255.0f,255.0f,1.0f);
+        _TimeNomber_0.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        _TimeNomber_1.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        _TimeColon.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        _TimeNomber_2.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
 		nSelect = 4;
 	}
 

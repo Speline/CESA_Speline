@@ -142,7 +142,7 @@ public class EnemyBase : MonoBehaviour
             m_HitFlgDictionary["+X,-Z"] && m_HitFlgDictionary["-X,+Z"])
         {
 			// チュートリアル用(敵撃破)
-			if(Tutorial_1 == null)
+			if(GameManager.GetStage == 0 && Tutorial_1 == null)
 			{
 				Tutorial_1 = GameObject.Find("Tutorial").GetComponent<TutorialManager_1>();		// スクリプト取得
 			}

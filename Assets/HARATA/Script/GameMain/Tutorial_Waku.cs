@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Tutorial_Waku : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class Tutorial_Waku : MonoBehaviour
 
 	bool bInitializ = true;
 	float fParameter;
-	SpriteRenderer sr;
+	Image image;
 	float fAlpha;
 
 	// Use this for initialization
@@ -59,7 +60,7 @@ public class Tutorial_Waku : MonoBehaviour
 	{
 		if (bInitializ)
 		{
-			sr = GetComponent<SpriteRenderer>();
+			image = GetComponent<Image>();
 			fAlpha = 1.0f;
 			bInitializ = false;
 		}
@@ -69,12 +70,12 @@ public class Tutorial_Waku : MonoBehaviour
 		{
 			bInitializ = true;
 
-			sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0.0f);
+            image.color = new Color(image.color.r, image.color.g, image.color.b, 0.0f);
 
 			return true;
 		}
 
-		sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, fAlpha);
+        image.color = new Color(image.color.r, image.color.g, image.color.b, fAlpha);
 		return false;
 	}
 }

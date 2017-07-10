@@ -32,18 +32,24 @@ public class Tutorial_Message_2 : MonoBehaviour
 
 		SetMessage();
 
-		if(GameManager.GetStage == 0)
-		{
-			DrawMessage = new string[szMessage1.GetLength(0)];
-			for(int i = 0 ; i < DrawMessage.GetLength(0) ; i ++)
-				DrawMessage[i] = szMessage1[i];
-		}
-		else if (GameManager.GetStage == 1)
-		{
-			DrawMessage = new string[szMessage2.GetLength(0)];
-			for (int i = 0; i < DrawMessage.GetLength(0); i++)
-				DrawMessage[i] = szMessage2[i];
-		}
+        if (GameManager.GetStage == 0)
+        {
+            DrawMessage = new string[szMessage1.GetLength(0)];
+            for (int i = 0; i < DrawMessage.GetLength(0); i++)
+                DrawMessage[i] = szMessage1[i];
+        }
+        else if (GameManager.GetStage == 1)
+        {
+            DrawMessage = new string[szMessage2.GetLength(0)];
+            for (int i = 0; i < DrawMessage.GetLength(0); i++)
+                DrawMessage[i] = szMessage2[i];
+        }
+        else
+        {
+            Destroy(this);
+            return;
+        }
+
 
 		text.text = DrawMessage[nMessageNum];
 
@@ -51,9 +57,9 @@ public class Tutorial_Message_2 : MonoBehaviour
 
 		// フォントサイズ変更
 		if(GameManager.GetStage == 0)
-			text.fontSize = 14;
+			text.fontSize = 55;
 		else if(GameManager.GetStage == 1)
-			text.fontSize = 10;
+			text.fontSize = 55;
 	}
 	
 	// Update is called once per frame
