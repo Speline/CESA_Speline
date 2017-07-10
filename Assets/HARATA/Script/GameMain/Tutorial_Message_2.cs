@@ -208,6 +208,6 @@ public class Tutorial_Message_2 : MonoBehaviour
 		szMessage2[2] = "目標クリアでストック獲得";
 		szMessage2[3] = "キャラを1人ダブルタップ";
 		szMessage2[4] = "残り2人をタップ";
-		szMessage2[5] = "あとは適当にがんばって";
+		szMessage2[5] = "最終目標を達成しましょう!";
 	}
 }
