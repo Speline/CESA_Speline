@@ -15,9 +15,20 @@ Platform assembly: C:\Users\nhs40050\Desktop\HAL\Unity\Cesa_Speline\Speline_Data
 Loading C:\Users\nhs40050\Desktop\HAL\Unity\Cesa_Speline\Speline_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
 Platform assembly: C:\Users\nhs40050\Desktop\HAL\Unity\Cesa_Speline\Speline_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
 Loading C:\Users\nhs40050\Desktop\HAL\Unity\Cesa_Speline\Speline_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-- Completed reload, in  0.036 seconds
+- Completed reload, in  0.044 seconds
 Platform assembly: C:\Users\nhs40050\Desktop\HAL\Unity\Cesa_Speline\Speline_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\nhs40050\Desktop\HAL\Unity\Cesa_Speline\Speline_Data\Managed\System.dll (this message is harmless)
 desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 3.818899 ms
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: 2714 -> priority: 1 
+  Thread -> id: 2750 -> priority: 1 
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.364564 ms
+
+Unloading 25 unused Assets to reduce memory usage. Loaded Objects now: 1224.
+Total: 0.586670 ms (FindLiveObjects: 0.097709 ms CreateObjectMapping: 0.040644 ms MarkObjects: 0.392071 ms  DeleteObjects: 0.055834 ms)
+

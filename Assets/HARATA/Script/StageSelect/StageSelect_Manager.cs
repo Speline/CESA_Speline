@@ -55,6 +55,11 @@ public class StageSelect_Manager : MonoBehaviour
 	{
 		Skip();
 
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
 		switch(State)
 		{
 			// 集団移動
