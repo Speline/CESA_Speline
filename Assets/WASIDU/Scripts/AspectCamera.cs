@@ -1,10 +1,17 @@
-﻿using UnityEngine;
+﻿//========================================================
+// アスペクト比固定(拾い物)
+//========================================================
+using UnityEngine;
 using System.Collections;
 
-public class AspectCamera : MonoBehaviour {
+public class AspectCamera : MonoBehaviour
+{
+    private Color32 backgroundColor = Color.black;
+    private static Camera _backgroundCamera; 
 
 	void Awake ()
     {
+        //--- プラットフォームにより処理するか変更
         if (Application.platform == RuntimePlatform.Android ||
             Application.platform == RuntimePlatform.IPhonePlayer ||
             Application.platform == RuntimePlatform.WindowsEditor)
@@ -12,6 +19,25 @@ public class AspectCamera : MonoBehaviour {
             Destroy(this);
             return;
         }
+         
+    	if (_backgroundCamera != null) 
+    		return; 
+    
+    
+    	var backGroundCameraObject = new GameObject ("Background Color Camera"); 
+    	_backgroundCamera = backGroundCameraObject.AddComponent<Camera> (); 
+    	_backgroundCamera.depth = -99; 
+    	_backgroundCamera.fieldOfView = 1; 
+    	_backgroundCamera.farClipPlane = 1.1f; 
+    	_backgroundCamera.nearClipPlane = 1;  
+    	_backgroundCamera.cullingMask = 0; 
+    	_backgroundCamera.depthTextureMode = DepthTextureMode.None; 
+    	_backgroundCamera.backgroundColor = backgroundColor; 
+    	_backgroundCamera.renderingPath = RenderingPath.VertexLit; 
+    	_backgroundCamera.clearFlags = CameraClearFlags.SolidColor; 
+    	_backgroundCamera.useOcclusionCulling = false; 
+    	backGroundCameraObject.hideFlags = HideFlags.NotEditable; 
+
 
 		Camera cam = gameObject.GetComponent<Camera>();
 		float baseAspect = 1600f/900f;		// 画面比率

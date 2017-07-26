@@ -8,15 +8,13 @@ using UnityEngine;
 public class ScoreManager : MonoBehaviour
 {
     //--- メンバ変数 ------------------------------------------------------------------------------------------------------------
-    //--- メンバ定数
-
     //--- メンバ変数
     [SerializeField] private NumberDraw m_ScoreNumberDrawScript; // スコア数字表示用スクリプト
     [SerializeField] private NumberDraw m_ComboNumberDrawScript; // コンボ数字表示用スクリプト
     [SerializeField] private GameObject m_ComboDraw;
 
     private int m_Score;    // スコア
-    private int m_ComboCnt;   // コンボ数
+    private int m_ComboCnt; // コンボ数
 
     // チュートリアル用
     TutorialManager_1 Tutorial_1;
@@ -35,6 +33,7 @@ public class ScoreManager : MonoBehaviour
         EnemyBase.ScoreManager = this;
         PlayerManager.ScoreManagerScript = this;
 
+        m_ComboNumberDrawScript.SetDrawCenter = true;
 
         Tutorial_1 = GameObject.Find("Tutorial").GetComponent<TutorialManager_1>();
         Tutorial_2 = GameObject.Find("Tutorial").GetComponent<TutorialManager_2>();
@@ -74,7 +73,7 @@ public class ScoreManager : MonoBehaviour
         {
             //--- コンボ初期値に
             m_ComboCnt = 0;
-            m_ComboNumberDrawScript.SetNumber(m_ComboCnt);
+            m_ComboNumberDrawScript.Reset();
 
             m_ComboDraw.SetActive(false);
         }

@@ -5,20 +5,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class MagicSquare : MonoBehaviour
+public class MagicSquare : GameMainObjectBase
 {
     //--- メンバ変数 ------------------------------------------------------------------------------------------------------------
     //--- 静的メンバ変数
     private static GameObject   m_FireBoal = null;
 
     //--- メンバ変数
-    private Vector3 m_SummonsVec;   // 召喚方向
-
-    private bool        m_UseFinisher;
-    private Material    m_Material;
-
-    private GameObject m_Effect;
+    private Vector3     m_SummonsVec;       // 召喚方向
+    private bool        m_UseFinisher;      // 必殺技を使うかの判定
+    private Material    m_ParticleMaterial; // パーティクルのマテリアル
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
     MagicSquare()
@@ -29,68 +25,34 @@ public class MagicSquare : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        m_Effect = transform.FindChild("SkillEnchant").gameObject;
-
         if (m_FireBoal == null)
         {
             m_FireBoal = Resources.Load("FireBoal") as GameObject;
         }
 
-        if (GameManager.Instance.NowState == GameManager.GameState.SETTING)
-        {
-            m_Effect.transform.localScale = new Vector3(0.0f, 0.0f, 0.0f);
-        }
-
-        m_Material = transform.FindChild("Mahoujinn").GetComponent<MeshRenderer>().material;
+        m_ParticleMaterial = transform.FindChild("SkillEnchant").gameObject.GetComponent<Renderer>().material;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void MagicSquareSetting()
     {
-        //transform.Rotate(new Vector3(0, 1.0f, 0), 1.0f);
+        GameManager.Instance.ChangeState(GameManager.GameState.PLAYER_SETTING);
+    }
 
+    protected override void GameStart()
+    {
+        Destroy(this.gameObject);
+    }
+
+    protected override void GameMain()
+    {
         if (m_UseFinisher)
         {
             float r = Mathf.Cos(2 * Mathf.PI * 3.0f * Time.fixedTime / 3 + 0.0f);
             float g = Mathf.Cos(2 * Mathf.PI * 3.0f * Time.fixedTime / 3 + 2.0f);
             float b = Mathf.Cos(2 * Mathf.PI * 3.0f * Time.fixedTime / 3 + 4.0f);
 
-            m_Material.color = new Color(r,g,b);
+            m_ParticleMaterial.SetColor("_TintColor", new Color(r, g, b, 0.3f));
         }
-
-        switch (GameManager.Instance.NowState)
-        {
-            case GameManager.GameState.SETTING:
-                break;
-
-            case GameManager.GameState.MAGIC_SQUARE_SETTING:
-                SquareSettingUpdate();
-                break;
-
-            case GameManager.GameState.PLAYER_SETTING:
-                break;
-
-            case GameManager.GameState.GAME_START:
-                Destroy(this.gameObject);
-                break;
-
-            case GameManager.GameState.GAME_MAIN:
-                break;
-
-            case GameManager.GameState.GAME_CLEAR:
-                break;
-
-            case GameManager.GameState.GAME_OVER:
-                break;
-        }
-    }
-
-    void SquareSettingUpdate()
-    {
-        m_Effect.transform.localScale += new Vector3(0.01f, 0.01f, 0.01f);
-
-        if (m_Effect.transform.localScale.x >= 0.7f)
-            GameManager.Instance.ChangeState(GameManager.GameState.PLAYER_SETTING);
     }
 
     // 召喚

@@ -26,13 +26,13 @@ public class FinisherAtackObj : MonoBehaviour
     private const float CHECK_SIZE = 0.6f;
 
     //--- 静的メンバ変数
-    private static GameObject m_EnemyParent;
-    private static Material m_FinisherAtackMaterial;    // マテリアル
+    private static GameObject   m_EnemyParent;
+    private static Material     m_FinisherAtackMaterial;    // マテリアル
 
     //--- メンバ変数
-    GameObject[] m_TriangleVertexPosObject; // 三角形の頂点位置のオブジェクト情報
-    Vector3[] m_TriangleVertex;             // 三角形の頂点情報
-    float m_LiveTime;                       // 生存時間
+    GameObject[]    m_TriangleVertexPosObject;  // 三角形の頂点位置のオブジェクト情報
+    Vector3[]       m_TriangleVertex;           // 三角形の頂点情報
+    float           m_LiveTime;                 // 生存時間
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
     // コンストラクタ
@@ -49,22 +49,13 @@ public class FinisherAtackObj : MonoBehaviour
         float PosX = (m_TriangleVertex[0].x + m_TriangleVertex[1].x + m_TriangleVertex[2].x) / 3.0f;
         float PosZ = (m_TriangleVertex[0].z + m_TriangleVertex[1].z + m_TriangleVertex[2].z) / 3.0f;
 
-
         ParticleManager.Instance.DeathblowObj.transform.position = new Vector3(PosX,0.0f,PosZ);
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
         m_LiveTime += Time.deltaTime;
-
-        if (m_LiveTime > 1.0f && m_LiveTime <= 1.1f)
-        {
-            SetMesh();
-            CheckHit();
-        }
 
         if (m_LiveTime > 3.0f)
         {
@@ -166,6 +157,8 @@ public class FinisherAtackObj : MonoBehaviour
 
         //--- 頂点位置のオブジェクト設定
         m_TriangleVertexPosObject = Obj;
+
+        SetMesh();
     }
 
     //--- メッシュ生成

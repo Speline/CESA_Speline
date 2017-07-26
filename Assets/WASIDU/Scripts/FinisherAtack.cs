@@ -26,10 +26,8 @@ public class FinisherAtack : GameMainObjectBase
     private const float CHECK_SIZE = 0.6f;
 
     //--- メンバ変数
-    [SerializeField] private TargetManager m_TargetManagerScript;
-    [SerializeField] private GameObject m_FinisherAtackObjPrefub;   // 必殺技オブジェクトプレハブ
-    //[SerializeField] private GameObject m_FinisherStockImagePrefub; // 必殺技ストック画像プレハブ
-    //[SerializeField] private GameObject m_FinisherStockImageParent; // 必殺技ストック画像親オブジェクト
+    [SerializeField] private TargetManager  m_TargetManagerScript;
+    [SerializeField] private GameObject     m_FinisherAtackObjPrefub;   // 必殺技オブジェクトプレハブ
 
     [SerializeField] private RenderTexture m_CutInImageA; // カットインイメージA
     [SerializeField] private RenderTexture m_CutInImageB; // カットインイメージB
@@ -42,11 +40,11 @@ public class FinisherAtack : GameMainObjectBase
     private GameObject m_CutInObjB; // カットインオブジェクトB
     private GameObject m_CutInObjC; // カットインオブジェクトC
 
-    //private List<GameObject>    m_FinisherStockImageList;
     private int m_FinisherAtackStockNum;
+
     private GameObject[]        m_TriangleVertexPosObject;  // 三角形の頂点位置のオブジェクト情報
     private float               m_FinisherAtackTime;        // 時間
-    private bool                m_UseFinisher;              // 必殺技を使うかのフラグ
+    private bool                m_UseFinisher;              // 必殺技を使っているかのフラグ
     private FinisherAtackObj    m_FinishSqript;
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
@@ -59,7 +57,7 @@ public class FinisherAtack : GameMainObjectBase
         m_FinisherState = FinisherState.START;
         m_NextChangeState = m_FinisherState;
 
-        //m_FinisherStockImageList = new List<GameObject>();
+
     }
 
     void Start()
@@ -128,18 +126,7 @@ public class FinisherAtack : GameMainObjectBase
                 break;
 
             case FinisherState.END:
-                m_FinisherAtackStockNum--;
-                m_UseFinisher = false;
-                m_TargetManagerScript.UpdateTime = true;
-                EnemyManager.AllMoveStart();
-                ChangeState(FinisherState.START);
-                m_TriangleVertexPosObject.ToList().ForEach(x => x.GetComponent<Player>().EndFinisherAtack());
-
-				// チュートリアル用(必殺技終了)
-				if (GameManager.GetStage == 1)
-				{
-					GameObject.Find("Tutorial").GetComponent<TutorialManager_2>().FinHissatu = true;
-				}
+                EndUpdate();
 				break;
 
         }
@@ -243,6 +230,22 @@ public class FinisherAtack : GameMainObjectBase
         }
     }
 
+    void EndUpdate()
+    {
+        m_FinisherAtackStockNum--;
+        m_UseFinisher = false;
+        m_TargetManagerScript.UpdateTime = true;
+        EnemyManager.AllMoveStart();
+        ChangeState(FinisherState.START);
+        m_TriangleVertexPosObject.ToList().ForEach(x => x.GetComponent<Player>().EndFinisherAtack());
+
+        // チュートリアル用(必殺技終了)
+        if (GameManager.GetStage == 1)
+        {
+            GameObject.Find("Tutorial").GetComponent<TutorialManager_2>().FinHissatu = true;
+        }
+    }
+
     //--- カットインオブジェクト全てのSetActive
     void CutinObjAllSetActive(bool Active)
     {
@@ -253,32 +256,16 @@ public class FinisherAtack : GameMainObjectBase
 
     void ChangeState(FinisherState NextState)
     {
-        m_NextChangeState = NextState;
+        m_NextChangeState   = NextState;
         m_FinisherAtackTime = 0.0f;
     }
 
     //--- 必殺技ストック加算
     public void AddFinisherStock()
     {
-        //GameObject FinissherStockImage = Instantiate(m_FinisherStockImagePrefub, Vector3.zero, Quaternion.identity);    // Image生成
-        //FinissherStockImage.transform.SetParent(m_FinisherStockImageParent.transform);  // 親設定
-        //FinissherStockImage.transform.position = m_FinisherStockImageParent.transform.position;
-        //FinissherStockImage.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
-
-        //m_FinisherStockImageList.Add(FinissherStockImage);
-
-        //int Count = m_FinisherStockImageList.Count;
-
-        //if (Count > 1)
-        //{
-        //    Vector3 pos = m_FinisherStockImageList[Count - 2].transform.position;
-        //    pos.x -= 10.0f;
-        //    m_FinisherStockImageList[Count - 1].transform.position = pos;
-        //}
-
         m_FinisherAtackStockNum++;
     }
 
-    public bool GetUseFinisher { get { return m_UseFinisher; } }
-    public int GetFinisherStock { get { return m_FinisherAtackStockNum; } }
+    public bool GetUseFinisher      { get { return m_UseFinisher; } }
+    public int  GetFinisherStock    { get { return m_FinisherAtackStockNum; } }
 }

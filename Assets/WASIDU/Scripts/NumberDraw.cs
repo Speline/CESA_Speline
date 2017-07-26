@@ -1,25 +1,30 @@
-﻿using System.Collections;
+﻿//========================================================
+// 数字描画用スクリプト
+//========================================================
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class NumberDraw : MonoBehaviour
 {
     //--- メンバ変数 ------------------------------------------------------------------------------------------------------------
     //--- メンバ定数
-    private const float NUMBER_DISPLAY_SPACING = 70.0f;
-    private const float NUMBER_DISPLAY_SPACING_EDITOR = 15.0f;
+    private const float NUMBER_DISPLAY_SPACING = 130.0f;
 
     //--- メンバ変数
     [SerializeField] private GameObject m_NumberObjectPrefub;   // 番号表示オブジェクトプレハブ
 
     private int m_DrawNumber;   // 表示数字
     private List<GameObject> m_NumberImageList;
+    private bool m_DrawParentPosCenter;
 
     //--- メンバ関数 ------------------------------------------------------------------------------------------------------------
     NumberDraw()
     {
         m_NumberImageList = new List<GameObject>();
         m_DrawNumber = 0;
+        m_DrawParentPosCenter = false;
     }
 
     void Awake ()
@@ -37,15 +42,13 @@ public class NumberDraw : MonoBehaviour
     //--- 表示設定
     private void SetDrawNumber()
     {
-        // スコア設定と処理がほぼ同じなので統合予定
-
         int OneDigit = 0;               // 一桁の情報
-        int ComboData = m_DrawNumber;   // 表示数字
+        int NumberData = m_DrawNumber;  // 表示数字
         int DigitNum = 0;               // 桁数
 
         while (true)
         {
-            OneDigit = ComboData % 10;
+            OneDigit = NumberData % 10;
 
             if (m_NumberImageList.Count <= DigitNum)
             {
@@ -55,9 +58,9 @@ public class NumberDraw : MonoBehaviour
             m_NumberImageList[DigitNum].GetComponent<NumberImage>().SetNumber(OneDigit);
 
             DigitNum++;
-            ComboData = ComboData / 10;
+            NumberData = NumberData / 10;
 
-            if (ComboData <= 0)
+            if (NumberData <= 0)
                 break;
         }
     }
@@ -72,23 +75,49 @@ public class NumberDraw : MonoBehaviour
 
         m_NumberImageList.Add(NumberObj);
 
-        int Count = m_NumberImageList.Count;
-
-        if (Count > 1)
+        //--- 桁数が二桁超えている場合
+        if (m_NumberImageList.Count > 1)
         {
-            Vector3 pos = m_NumberImageList[Count - 2].transform.position;
-
-            if (Application.platform == RuntimePlatform.Android ||
-                Application.platform == RuntimePlatform.IPhonePlayer)
-            {
-                pos.x -= NUMBER_DISPLAY_SPACING;
-            }
-            else
-            {
-                pos.x -= NUMBER_DISPLAY_SPACING_EDITOR;
-            }
-
-            m_NumberImageList[Count - 1].transform.position = pos;
+            SetPosition();
         }
     }
+
+    //--- 位置設定
+    private void SetPosition()
+    {
+        int Count = m_NumberImageList.Count;
+
+        Vector3 pos = m_NumberImageList[Count - 2].transform.localPosition;
+
+        pos.x -= NUMBER_DISPLAY_SPACING;
+
+        m_NumberImageList[Count - 1].transform.localPosition = pos;
+
+        if (m_DrawParentPosCenter)
+        {
+            m_NumberImageList.ForEach(Obj =>
+            {
+                pos = Obj.transform.localPosition;
+
+                pos.x += NUMBER_DISPLAY_SPACING / 2f;
+                Obj.transform.localPosition = pos;
+            });
+        }
+    }
+
+    public void Reset()
+    {
+        m_NumberImageList.ForEach(Obj =>
+        {
+            Destroy(Obj);
+        });
+
+        m_NumberImageList.Clear();
+
+        m_DrawNumber = 0;
+
+        SetDrawNumber();
+    }
+
+    public bool SetDrawCenter { set { m_DrawParentPosCenter = value; } }
 }

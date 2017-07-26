@@ -5,8 +5,6 @@ using UnityEngine;
 public class BockSwitchButton : MonoBehaviour
 {
     //--- メンバ変数 ------------------------------------------------------------------------------------------------------------
-    //--- メンバ定数
-
     //--- メンバ変数
     private GameObject m_ONObject;
     private GameObject m_OFFObject;
@@ -15,7 +13,7 @@ public class BockSwitchButton : MonoBehaviour
 	// Use this for initialization
     void Start()
     {
-        m_ONObject = transform.FindChild("ON").gameObject;
+        m_ONObject  = transform.FindChild("ON").gameObject;
         m_OFFObject = transform.FindChild("OFF").gameObject;
 
         m_ONObject.SetActive(true);

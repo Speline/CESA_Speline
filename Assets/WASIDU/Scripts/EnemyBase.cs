@@ -17,8 +17,6 @@ public class EnemyBase : MonoBehaviour
 	// チュートリアル用
 	TutorialManager_1 Tutorial_1;
 
-
-
     //--- メンバ関数
     // コンストラクタ
     protected EnemyBase()
@@ -177,18 +175,18 @@ public class EnemyBase : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    //--- 移動開始(アニメーション関係の設定がされてないので追加あるか)
+    //--- 移動開始
     public void MoveStart()
     {
         m_Move = true;
-        //gameObject.transform.FindChild("EnemyA").GetComponent<Animator>().speed = 1.0f;
+        gameObject.transform.GetChild(0).GetComponent<Animator>().speed = 1.0f;
     }
 
-    // 移動停止(アニメーション関係の設定がされてないので追加あるか)
+    // 移動停止
     public void MoveStop()
     {
         m_Move = false;
-        //gameObject.transform.FindChild("EnemyA").GetComponent<Animator>().speed = 0.0f;
+        gameObject.transform.GetChild(0).GetComponent<Animator>().speed = 0.0f;
     }
 
     //--- 情報設定
